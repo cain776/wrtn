@@ -357,7 +357,7 @@ a:hover{text-decoration:underline;}
           <span class="etxt"><span class="et"><span class="ecode">4-3</span>제품 로드맵</span><span class="es">Phase별 배포 계획 · 타임라인(리소스 가정) · 의존성·리스크</span></span>
           <span class="earw">→</span>
         </a>
-        <a class="entry compact" href="#pr-7">
+        <a class="entry compact" href="#prd-15">
           <span class="eico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24H5a2 2 0 0 0-2 2v4.59c0 .53.21 1.04.59 1.41l9.58 9.59a2 2 0 0 0 2.83 0l4.59-4.59a2 2 0 0 0 0-2.83z"/><circle cx="7.5" cy="7.5" r="1" fill="#fff"/></svg></span>
           <span class="etxt"><span class="et"><span class="ecode">4-4</span>가격 전략</span><span class="es">구축형/SaaS 구조 · 성과 과금 미터링 상세 · 가격 근거</span></span>
           <span class="earw">→</span>
@@ -413,7 +413,7 @@ a:hover{text-decoration:underline;}
     <tr><td>4-1</td><td>제품 기획서(PRD)</td><td><a href="#prd-1">제품 기획서</a></td><td>제품 정의, 시장 전략, MVP 워크플로우, 기능 요구사항, KPI</td></tr>
     <tr><td>4-2</td><td>화면 설계 + 제품 데모</td><td><a href="app.html?screen=admin&amp;tab=dashboard" target="_blank" rel="noopener">인터랙티브 데모</a> · <a href="#ui-intro">화면 설계 문서</a></td><td>관리자 콘솔, 검토자 큐, 고객사 온보딩 7단계</td></tr>
     <tr><td>4-3</td><td>제품 로드맵</td><td><a href="#rm-intro">제품 로드맵</a></td><td>Phase별 배포 계획, 개발 리소스 가정, 의존성, 리스크</td></tr>
-    <tr><td>4-4</td><td>가격 전략</td><td><a href="#prd-15">PRD §15</a> · <a href="#pr-7">가격 전략 북</a></td><td>구축형/SaaS 가격 구조, 사용량·성과 기반 미터링, ROI 근거</td></tr>
+    <tr><td>4-4</td><td>가격 전략</td><td><a href="#prd-15">PRD §15 가격 전략</a></td><td>구축형/SaaS 가격 구조, 사용량·성과 기반 미터링, ROI 근거</td></tr>
   </tbody>
 </table>
 
@@ -1406,7 +1406,7 @@ a:hover{text-decoration:underline;}
   document.getElementById('logout').addEventListener('click', function(){
     sessionStorage.removeItem('foa_in'); appEl.classList.add('hidden'); loginEl.classList.remove('gone'); });
   document.getElementById('burger').addEventListener('click', function(){ document.querySelector('.app').classList.toggle('nav-open'); });
-  if(sessionStorage.getItem('foa_in')){ loginEl.classList.add('gone'); appEl.classList.remove('hidden'); route(); }
+  if(sessionStorage.getItem('foa_in') || location.hash){ loginEl.classList.add('gone'); appEl.classList.remove('hidden'); route(); }
 })();
 </script>
 </body>
