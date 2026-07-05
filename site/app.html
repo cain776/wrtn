@@ -64,14 +64,27 @@
       </div>
     </div>
     <div style="width:1px;height:26px;background:#E4E7ED"></div>
-    <button style="display:flex;align-items:center;gap:9px;height:36px;margin-left:14px;padding:0 12px;border:1px solid #E4E7ED;border-radius:8px;background:#FBFBFC;cursor:pointer" data-hv="0">
-      <span style="display:grid;place-items:center;width:22px;height:22px;border-radius:5px;background:#EAF0FF;color:#2B50D8;font-size:11px;font-weight:700">한</span>
-      <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.1">
-        <span style="font-size:12.5px;font-weight:600">㈜한빛리테일</span>
-        <span style="font-size:9.5px;color:#8B93A3">유통 · Tenant #RTL-0042</span>
-      </span>
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="margin-left:2px"><path d="M4 6l4 4 4-4" stroke="#8B93A3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-    </button>
+    <div style="position:relative;margin-left:14px">
+      <button data-ev-click="{{ tenantToggle }}" style="display:flex;align-items:center;gap:9px;height:36px;padding:0 12px;border:1px solid #E4E7ED;border-radius:8px;background:#FBFBFC;cursor:pointer" data-hv="0">
+        <span style="display:grid;place-items:center;width:22px;height:22px;border-radius:5px;background:#EAF0FF;color:#2B50D8;font-size:11px;font-weight:700">한</span>
+        <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.1">
+          <span style="font-size:12.5px;font-weight:600">㈜한빛리테일</span>
+          <span style="font-size:9.5px;color:#8B93A3">유통 · Tenant #RTL-0042</span>
+        </span>
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="margin-left:2px"><path d="M4 6l4 4 4-4" stroke="#8B93A3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <sc-if value="{{ tenantOpen }}"><div data-ev-click="{{ tenantClose }}" style="position:fixed;inset:0;z-index:40"></div><div style="position:absolute;top:42px;left:0;min-width:272px;background:#fff;border:1px solid #E4E7ED;border-radius:11px;box-shadow:0 14px 34px rgba(20,24,31,.16);padding:6px;z-index:50;animation:fo-fade .14s ease">
+        <div style="padding:8px 11px 7px;font-size:10px;font-weight:700;letter-spacing:.08em;color:#A2AAB8;text-transform:uppercase">테넌트 전환</div>
+        <sc-for list="{{ tenants }}" as="t" hint-placeholder-count="3">
+          <button data-ev-click="{{ t.go }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:9px 11px;margin-bottom:2px;border:none;background:{{ t.bg }};border-radius:8px;cursor:pointer;text-align:left" data-hv="1">
+            <span style="display:grid;place-items:center;width:26px;height:26px;border-radius:6px;background:{{ t.iconBg }};color:{{ t.iconFg }};font-size:11px;font-weight:700;flex:none">{{ t.initial }}</span>
+            <span style="flex:1;display:flex;flex-direction:column;line-height:1.2"><span style="font-size:12.5px;font-weight:600;color:#23272F">{{ t.name }}</span><span style="font-size:10px;color:#8B93A3">{{ t.meta }}</span></span>
+            <sc-if value="{{ t.current }}"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" style="flex:none"><path d="M2.5 8.5l3.5 3.5 7.5-8" stroke="#2B50D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+          </button>
+        </sc-for>
+        <div style="margin-top:4px;padding:9px 11px 6px;border-top:1px solid #EEF0F4;font-size:10.5px;color:#8B93A3;line-height:1.5">데모 환경에서는 ㈜한빛리테일 테넌트만 활성화되어 있습니다.</div>
+      </div></sc-if>
+    </div>
 
     <!-- persona / screen switcher -->
     <div style="flex:1;display:flex;justify-content:center;align-items:center;gap:9px">
@@ -101,10 +114,30 @@
         <span style="font-size:11.5px;font-weight:500">검색</span>
         <span class="mono" style="font-size:10px;padding:1px 5px;border:1px solid #E4E7ED;border-radius:4px;background:#fff">⌘K</span>
       </button>
-      <button data-ev-click="{{ showNotifications }}" style="position:relative;display:grid;place-items:center;width:34px;height:34px;border:1px solid #E4E7ED;border-radius:8px;background:#FBFBFC;cursor:pointer;color:#545C6B" data-hv="0">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2a4 4 0 0 0-4 4v2.5L3 11h10l-1-2.5V6a4 4 0 0 0-4-4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path><path d="M6.5 13a1.5 1.5 0 0 0 3 0" stroke="currentColor" stroke-width="1.4"></path></svg>
-        <span style="position:absolute;top:7px;right:8px;width:6px;height:6px;border-radius:50%;background:#DA2C38;border:1.5px solid #FBFBFC"></span>
-      </button>
+      <div style="position:relative">
+        <button data-ev-click="{{ notifToggle }}" style="position:relative;display:grid;place-items:center;width:34px;height:34px;border:1px solid #E4E7ED;border-radius:8px;background:#FBFBFC;cursor:pointer;color:#545C6B" data-hv="0">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2a4 4 0 0 0-4 4v2.5L3 11h10l-1-2.5V6a4 4 0 0 0-4-4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path><path d="M6.5 13a1.5 1.5 0 0 0 3 0" stroke="currentColor" stroke-width="1.4"></path></svg>
+          <sc-if value="{{ hasUnread }}"><span style="position:absolute;top:7px;right:8px;width:6px;height:6px;border-radius:50%;background:#DA2C38;border:1.5px solid #FBFBFC"></span></sc-if>
+        </button>
+        <sc-if value="{{ notifOpen }}"><div data-ev-click="{{ notifClose }}" style="position:fixed;inset:0;z-index:40"></div><div style="position:absolute;top:42px;right:0;width:348px;background:#fff;border:1px solid #E4E7ED;border-radius:12px;box-shadow:0 14px 34px rgba(20,24,31,.16);padding:6px;z-index:50;animation:fo-fade .14s ease">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px 9px;border-bottom:1px solid #EEF0F4;margin-bottom:5px">
+            <span style="font-size:12.5px;font-weight:700;color:#171B22">알림 <span style="font-weight:600;color:#8B93A3">· {{ notifCountLabel }}</span></span>
+            <button data-ev-click="{{ notifReadAll }}" style="height:24px;padding:0 9px;border:1px solid #E4E7ED;border-radius:6px;background:#FBFBFC;cursor:pointer;font-size:10.5px;font-weight:600;color:#545C6B" data-hv="1">모두 읽음</button>
+          </div>
+          <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="4">
+            <button data-ev-click="{{ n.open }}" style="display:flex;align-items:flex-start;gap:10px;width:100%;padding:10px 11px;margin-bottom:2px;border:none;background:{{ n.bg }};border-radius:9px;cursor:pointer;text-align:left" data-hv="1">
+              <span style="display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:{{ n.iconBg }};color:{{ n.iconFg }};font-size:12px;font-weight:800;flex:none">{{ n.icon }}</span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35">
+                <span style="font-size:12.5px;font-weight:600;color:#23272F">{{ n.title }}</span>
+                <span style="font-size:11px;color:#8B93A3">{{ n.meta }}</span>
+                <span style="margin-top:3px;font-size:10px;color:#A4AEBE">{{ n.time }}</span>
+              </span>
+              <sc-if value="{{ n.unread }}"><span style="margin-top:4px;width:7px;height:7px;border-radius:50%;background:#2B50D8;flex:none"></span></sc-if>
+            </button>
+          </sc-for>
+          <button data-ev-click="{{ notifViewAll }}" style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:34px;margin-top:4px;border:none;border-top:1px solid #EEF0F4;background:transparent;cursor:pointer;font-size:11.5px;font-weight:600;color:#2B50D8" data-hv="1">감사 로그에서 전체 이력 보기 →</button>
+        </div></sc-if>
+      </div>
       <div style="position:relative">
         <div data-ev-click="{{ userMenuToggle }}" style="display:flex;align-items:center;gap:9px;height:34px;padding:0 8px 0 4px;border-radius:8px;cursor:pointer" data-hv="0">
           <span style="display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#2B50D8,#6B4DF5);color:#fff;font-size:11px;font-weight:700">승</span>
@@ -1266,6 +1299,50 @@
     </div>
   </sc-if>
 
+  <sc-if value="{{ profileOpen }}">
+    <div data-ev-click="{{ profileClose }}" style="position:fixed;inset:0;z-index:95;background:rgba(20,24,31,.28);backdrop-filter:blur(2px)"></div>
+    <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100;width:min(448px,calc(100vw - 32px));max-height:calc(100vh - 48px);overflow-y:auto;background:#fff;border:1px solid #DDE2EA;border-radius:16px;box-shadow:0 24px 70px rgba(20,24,31,.26);animation:fo-scalein .16s ease">
+      <div style="display:flex;align-items:center;gap:13px;padding:18px 18px 15px;border-bottom:1px solid #EEF0F4">
+        <span style="display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#2B50D8,#6B4DF5);color:#fff;font-size:17px;font-weight:700;flex:none">승</span>
+        <span style="flex:1;display:flex;flex-direction:column;line-height:1.25">
+          <span style="display:flex;align-items:center;gap:8px"><span style="font-size:15.5px;font-weight:700;color:#171B22">김승욱</span><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:#E6F5EE;color:#0A7D57">접속 중</span></span>
+          <span style="font-size:11.5px;color:#8B93A3;margin-top:2px">경영지원본부 · 기획팀 · Tenant Admin</span>
+        </span>
+        <button data-ev-click="{{ profileClose }}" style="display:grid;place-items:center;width:30px;height:30px;border:1px solid #E4E7ED;border-radius:8px;background:#FBFBFC;cursor:pointer;color:#8B93A3;flex:none" data-hv="1"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg></button>
+      </div>
+      <div style="padding:14px 18px 0">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:#F8F9FB;border:1px solid #EEF0F4;border-radius:9px"><span style="font-size:9.5px;font-weight:700;letter-spacing:.07em;color:#A2AAB8;text-transform:uppercase">이메일</span><span style="font-size:12px;font-weight:600;color:#23272F">swkim@hanbitretail.co.kr</span></div>
+          <div style="display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:#F8F9FB;border:1px solid #EEF0F4;border-radius:9px"><span style="font-size:9.5px;font-weight:700;letter-spacing:.07em;color:#A2AAB8;text-transform:uppercase">연락처</span><span class="mono" style="font-size:12px;font-weight:600;color:#23272F">010-9248-1274</span></div>
+          <div style="display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:#F8F9FB;border:1px solid #EEF0F4;border-radius:9px"><span style="font-size:9.5px;font-weight:700;letter-spacing:.07em;color:#A2AAB8;text-transform:uppercase">역할</span><span style="font-size:12px;font-weight:600;color:#23272F">Tenant Admin</span></div>
+          <div style="display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:#F8F9FB;border:1px solid #EEF0F4;border-radius:9px"><span style="font-size:9.5px;font-weight:700;letter-spacing:.07em;color:#A2AAB8;text-transform:uppercase">데이터 범위</span><span style="font-size:12px;font-weight:600;color:#23272F">전사 · 비용센터 48개</span></div>
+          <div style="display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:#F8F9FB;border:1px solid #EEF0F4;border-radius:9px"><span style="font-size:9.5px;font-weight:700;letter-spacing:.07em;color:#A2AAB8;text-transform:uppercase">승인 한도</span><span class="mono" style="font-size:12px;font-weight:600;color:#23272F">₩5,000,000</span></div>
+          <div style="display:flex;flex-direction:column;gap:3px;padding:10px 12px;background:#F8F9FB;border:1px solid #EEF0F4;border-radius:9px"><span style="font-size:9.5px;font-weight:700;letter-spacing:.07em;color:#A2AAB8;text-transform:uppercase">최근 접속</span><span class="mono" style="font-size:12px;font-weight:600;color:#23272F">06-16 08:52 · SSO</span></div>
+        </div>
+      </div>
+      <div style="padding:14px 18px 0">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#A2AAB8;text-transform:uppercase;margin-bottom:8px">보유 권한</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <span style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;background:#EAF0FF;color:#2B50D8">온톨로지 편집</span>
+          <span style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;background:#EAF0FF;color:#2B50D8">워크플로우 배포</span>
+          <span style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;background:#EAF0FF;color:#2B50D8">규정 문서 승인</span>
+          <span style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;background:#EAF0FF;color:#2B50D8">감사 로그 조회</span>
+          <span style="font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;background:#EAF0FF;color:#2B50D8">미터링 조회</span>
+        </div>
+      </div>
+      <div style="padding:14px 18px 2px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#A2AAB8;text-transform:uppercase;margin-bottom:8px">최근 활동</div>
+        <div style="display:flex;align-items:center;gap:9px;padding:8px 2px"><span style="width:7px;height:7px;border-radius:50%;background:#0E9F6E;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">법인카드 자동 승인 42건 결과 확인</span><span class="mono" style="font-size:10.5px;color:#A4AEBE">오늘 09:41</span></div>
+        <div style="display:flex;align-items:center;gap:9px;padding:8px 2px;border-top:1px solid #F2F4F7"><span style="width:7px;height:7px;border-radius:50%;background:#2B50D8;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">법인카드 워크플로우 임계값 90→92 검토</span><span class="mono" style="font-size:10.5px;color:#A4AEBE">오늘 09:12</span></div>
+        <div style="display:flex;align-items:center;gap:9px;padding:8px 2px;border-top:1px solid #F2F4F7"><span style="width:7px;height:7px;border-radius:50%;background:#6B4DF5;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">온보딩 4단계 조직·권한 매핑 승인</span><span class="mono" style="font-size:10.5px;color:#A4AEBE">어제 17:26</span></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;padding:14px 18px 16px;border-top:1px solid #EEF0F4;margin-top:12px">
+        <button data-ev-click="{{ securitySettings }}" style="height:34px;padding:0 14px;border:1px solid #E4E7ED;border-radius:8px;background:#FBFBFC;cursor:pointer;font-size:12px;font-weight:600;color:#3D4658" data-hv="1">보안 설정</button>
+        <button data-ev-click="{{ profileClose }}" style="height:34px;padding:0 16px;border:none;border-radius:8px;background:#2B50D8;color:#fff;cursor:pointer;font-size:12px;font-weight:700" data-hv="3">닫기</button>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ hasToast }}">
     <div style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:120;display:flex;align-items:center;gap:11px;padding:11px 18px 11px 14px;background:#171B22;color:#fff;border-radius:11px;box-shadow:0 12px 36px rgba(20,24,31,.34);animation:fo-fade .22s ease">
       <span style="display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:rgba(14,159,110,.24);color:#4ADE8A"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8l3.5 3.5L14 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
@@ -1440,6 +1517,10 @@ class Component extends DCLogic {
     syncRunning: false,
     toast: null,
     userMenu: false,
+    notifOpen: false,
+    notifReadIds: ['n4'],
+    profileOpen: false,
+    tenantOpen: false,
   };
 
   set(k, v) { this.setState({ [k]: v }); }
@@ -1529,7 +1610,7 @@ class Component extends DCLogic {
   toggleBatch = () => this.setState(s => ({ batch: !s.batch, batchSel: [] }));
   toggleBatchItem(id){ this.setState(s => ({ batchSel: s.batchSel.includes(id) ? s.batchSel.filter(x=>x!==id) : [...s.batchSel, id] })); }
   _advance(label){ const s=this.state; const order = s.reviewWf==='card'?this._cardOrder:this._invOrder; const idx=order.indexOf(s.reviewSel); this.toast(label+' 처리되었습니다'); if(idx>=0 && idx<order.length-1) this.setState({reviewSel:order[idx+1]}); }
-  componentDidMount(){ this._key=(e)=>{ const t=(e.target&&e.target.tagName)||''; const k=(e.key||'').toLowerCase(); if((e.metaKey||e.ctrlKey)&&k==='k'){ e.preventDefault(); this.openSearch(); return; } if(k==='escape'&&this.state.searchOpen){ e.preventDefault(); this.closeSearch(); return; } if(this.state.app!=='reviewer'||this.state.batch) return; if(t==='INPUT'||t==='TEXTAREA') return; if(k==='a'){this._advance('승인');} else if(k==='r'){this._advance('반려');} }; this._popRoute=()=>this.setState(this._routeFromUrl()); window.addEventListener('keydown', this._key); window.addEventListener('popstate', this._popRoute); this._syncRoute({replace:true}); }
+  componentDidMount(){ this._key=(e)=>{ const t=(e.target&&e.target.tagName)||''; const k=(e.key||'').toLowerCase(); if((e.metaKey||e.ctrlKey)&&k==='k'){ e.preventDefault(); this.openSearch(); return; } if(k==='escape'&&this.state.searchOpen){ e.preventDefault(); this.closeSearch(); return; } if(k==='escape'&&(this.state.notifOpen||this.state.profileOpen||this.state.tenantOpen||this.state.userMenu)){ e.preventDefault(); this.setState({notifOpen:false,profileOpen:false,tenantOpen:false,userMenu:false}); return; } if(this.state.app!=='reviewer'||this.state.batch) return; if(t==='INPUT'||t==='TEXTAREA') return; if(k==='a'){this._advance('승인');} else if(k==='r'){this._advance('반려');} }; this._popRoute=()=>this.setState(this._routeFromUrl()); window.addEventListener('keydown', this._key); window.addEventListener('popstate', this._popRoute); this._syncRoute({replace:true}); }
   componentWillUnmount(){ if(this._key) window.removeEventListener('keydown', this._key); if(this._popRoute) window.removeEventListener('popstate', this._popRoute); }
   componentDidUpdate(prev){
     const p=this.props||{}, pp=prev||{};
@@ -1797,6 +1878,24 @@ class Component extends DCLogic {
       return `${item.title} ${item.meta} ${item.section}`.toLowerCase().includes(q);
     }).slice(0, 7);
 
+    const NOTIFS = [
+      { id:'n1', title:'직무분리(SoD) 경고 1건', meta:'검토자 승인 + 임계값 변경 권한 중복 — 권한 관리 확인 필요', time:'9분 전', icon:'!', iconBg:'#FBE7E9', iconFg:'#DA2C38', nav:navTo('roles') },
+      { id:'n2', title:'카드사 수집 재처리 대기', meta:'현대카드 매입내역 892건 타임아웃 — 재처리 큐 대기 중', time:'32분 전', icon:'⟳', iconBg:'#FBF0DB', iconFg:'#C77A0A', nav:navTo('integration') },
+      { id:'n3', title:'검토 대기 신규 6건 배정', meta:'법인카드 고위험 2건 포함 — 검토자 화면에서 처리', time:'1시간 전', icon:'검', iconBg:'#E6F5EE', iconFg:'#0A7D57', nav:appTo('reviewer') },
+      { id:'n4', title:'규정 임베딩 완료', meta:'여비교통비 지급 규정 v1.7 — 검색 가능 상태 전환', time:'어제', icon:'✓', iconBg:'#EAF0FF', iconFg:'#2B50D8', nav:navTo('policy') },
+    ];
+    const notifs = NOTIFS.map(n => Object.assign({}, n, {
+      unread: !s.notifReadIds.includes(n.id),
+      bg: s.notifReadIds.includes(n.id) ? 'transparent' : '#F7F9FF',
+      open: () => { this.setState({ notifOpen: false, notifReadIds: Array.from(new Set(s.notifReadIds.concat(n.id))) }); n.nav(); },
+    }));
+    const notifUnread = notifs.filter(n => n.unread).length;
+    const tenants = [
+      { initial:'한', name:'㈜한빛리테일', meta:'유통 · #RTL-0042 · Pro 플랜', iconBg:'#EAF0FF', iconFg:'#2B50D8', current:true, bg:'#F5F8FF', go:()=>{ this.set('tenantOpen', false); this.toast('㈜한빛리테일 테넌트를 사용 중입니다'); } },
+      { initial:'세', name:'세종식품 주식회사', meta:'식품 제조 · #FMC-0018 · Starter', iconBg:'#E6F5EE', iconFg:'#0A7D57', current:false, bg:'transparent', go:()=>{ this.set('tenantOpen', false); this.toast('데모에서는 ㈜한빛리테일 테넌트만 활성화되어 있습니다'); } },
+      { initial:'B', name:'한국BPO파트너스', meta:'회계 BPO · #BPO-0007 · Partner', iconBg:'#EFEBFE', iconFg:'#6B4DF5', current:false, bg:'transparent', go:()=>{ this.set('tenantOpen', false); this.toast('데모에서는 ㈜한빛리테일 테넌트만 활성화되어 있습니다'); } },
+    ];
+
     return {
       dashboardRangeLabel: s.dashboardRange === '7' ? '최근 7일' : (s.dashboardRange === '90' ? '최근 90일' : '최근 30일'),
       cycleDashboardRange: this.cycleDashboardRange,
@@ -1808,7 +1907,18 @@ class Component extends DCLogic {
       searchQuery: s.searchQuery,
       searchResults,
       searchEmpty: searchResults.length === 0,
-      showNotifications: () => this.toast('확인하지 않은 운영 알림 3건이 있습니다'),
+      notifOpen: s.notifOpen,
+      notifToggle: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(x => ({ notifOpen: !x.notifOpen, userMenu: false, tenantOpen: false })); },
+      notifClose: () => this.set('notifOpen', false),
+      notifs,
+      hasUnread: notifUnread > 0,
+      notifCountLabel: notifUnread > 0 ? `안 읽음 ${notifUnread}건` : '모두 읽음',
+      notifReadAll: () => { this.setState({ notifReadIds: NOTIFS.map(n => n.id) }); this.toast('모든 알림을 읽음으로 표시했습니다'); },
+      notifViewAll: () => { this.setState({ notifOpen: false }); this.goAdminTab('audit'); },
+      tenants,
+      tenantOpen: s.tenantOpen,
+      tenantToggle: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(x => ({ tenantOpen: !x.tenantOpen, userMenu: false, notifOpen: false })); },
+      tenantClose: () => this.set('tenantOpen', false),
       setOntView: {
         standard: () => { set('ontView', 'standard'); this.toast('표준 온톨로지 보기로 전환했습니다'); },
         overlay: () => { set('ontView', 'overlay'); this.toast('고객사 Overlay 보기로 전환했습니다'); },
@@ -1875,9 +1985,12 @@ class Component extends DCLogic {
       isOnboarding: s.app === 'onboarding',
       appIs: { admin: s.app === 'admin', reviewer: s.app === 'reviewer', onboarding: s.app === 'onboarding' },
       userMenuOpen: s.userMenu,
-      userMenuToggle: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(x => ({ userMenu: !x.userMenu })); },
+      userMenuToggle: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(x => ({ userMenu: !x.userMenu, notifOpen: false, tenantOpen: false })); },
       userMenuClose: () => this.set('userMenu', false),
-      goProfile: () => { this.set('userMenu', false); this.toast('김승욱 · 기획팀 — 내 정보', 'ok'); },
+      goProfile: () => this.setState({ userMenu: false, profileOpen: true }),
+      profileOpen: s.profileOpen,
+      profileClose: () => this.set('profileOpen', false),
+      securitySettings: () => { this.set('profileOpen', false); this.toast('보안 설정 변경은 데모 범위에 포함되지 않습니다'); },
       logout: () => { this.set('userMenu', false); try { sessionStorage.removeItem('foa_in'); } catch (e) {} location.href = 'index.html'; },
       setApp: {
         admin: () => this.goApp('admin'),
