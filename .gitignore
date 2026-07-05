@@ -1,0 +1,17 @@
+.venv-docx/
+__pycache__/
+*.py[cod]
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.env
+.env.*
+!.env.example
+
+node_modules/
+dist/
+build/
+
+supanova-design-skill/

@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finance Ontology Platform · Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* 숫자 전용 고정폭 — 전체 컨텐츠의 숫자 글자만 Geist Mono(tabular)로 렌더, 한글·영문은 Pretendard 유지 */
+@font-face{
+  font-family:"GeistNum"; font-style:normal; font-weight:100 900; font-display:swap;
+  src:url(https://fonts.gstatic.com/s/geistmono/v6/or3nQ6H-1_WfwkMZI_qYFrcdmg.woff2) format("woff2");
+  unicode-range:U+0024, U+0025, U+0030-0039;
+}
+.mono{font-family:"Geist Mono","GeistNum",ui-monospace,"SFMono-Regular","IBM Plex Mono",monospace; font-feature-settings:"tnum" 1; font-variant-numeric:tabular-nums; letter-spacing:-0.008em;}
+:root{
+  --accent:#ff6a1a; --accent-2:#ff3b2f; --accent-soft:#fff1e8; --accent-strong:#e85300; --accent-line:#ffd3b5;
+  --ink:#1f2328; --ink-soft:#5b6472; --muted:#8b93a3;
+  --line:#e8eaee; --bg:#ffffff; --bg-side:#fbfbfd; --bg-alt:#f7f8fa; --code-bg:#f1f3f6;
+}
+*{box-sizing:border-box}
+html,body{margin:0; height:100%;}
+body{color:var(--ink); font-size:15.5px; line-height:1.72;
+  font-family:"GeistNum","Pretendard","Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;
+  -webkit-font-smoothing:antialiased;}
+.hidden{display:none !important;}
+a{color:var(--accent-strong); text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* ============ LOGIN ============ */
+#login{position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(1100px 650px at 82% -12%, #DCE6FB 0%, transparent 58%),
+             radial-gradient(900px 620px at -8% 112%, #E6E0FB 0%, transparent 55%),
+             linear-gradient(160deg,#F4F6FA 0%,#EDEFF3 60%,#E9ECF2 100%);
+  overflow:hidden; transition:opacity .5s ease;}
+#login.gone{opacity:0; pointer-events:none;}
+#login .logo{width:38px;height:38px; display:grid; place-items:center; border-radius:11px;
+  background:#FFFFFF; border:1px solid #E4E7ED; box-shadow:0 1px 2px rgba(23,27,34,.06);}
+.blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.45; animation:float 14s ease-in-out infinite;}
+.blob.b1{width:420px;height:420px; background:#C9D6FF; top:-120px; left:-80px;}
+.blob.b2{width:360px;height:360px; background:#DDD5FB; bottom:-120px; right:-60px; animation-delay:-5s;}
+.blob.b3{width:280px;height:280px; background:#CFEDE0; top:40%; left:55%; opacity:.35; animation-delay:-9s;}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(24px,-28px) scale(1.06);}}
+.login-card{position:relative; z-index:2; width:400px; max-width:92vw; padding:40px 36px 32px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); border-radius:22px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45); backdrop-filter:blur(22px) saturate(140%); color:#fff;}
+.brand-row{display:flex; align-items:center; gap:11px; margin-bottom:26px;}
+.logo{width:38px;height:38px; display:grid; place-items:center; border-radius:11px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 8px 22px rgba(255,106,26,.5);}
+.logo svg{width:22px;height:22px;}
+.brand-row .bt{font-weight:750; font-size:15px; letter-spacing:.2px;}
+.brand-row .bs{font-size:11.5px; color:rgba(255,255,255,.6);}
+.login-card h1{font-size:23px; font-weight:750; margin:2px 0 6px;}
+.login-card .sub{font-size:13.5px; color:rgba(255,255,255,.66); margin-bottom:26px; line-height:1.5;}
+.field{margin-bottom:15px;}
+.field label{display:block; font-size:12px; color:#545C6B; margin-bottom:7px; font-weight:600; letter-spacing:.02em;}
+.field input{width:100%; padding:12px 14px; border-radius:11px; font-size:14px; color:#171B22;
+  background:#FFFFFF; border:1px solid #D5DAE2; outline:none; transition:.18s;}
+.field input::placeholder{color:#A4AEBE;}
+.field input:focus{border-color:#2B50D8; box-shadow:0 0 0 3px #DCE6FB;}
+.btn-primary{width:100%; margin-top:8px; padding:13px; border:0; border-radius:11px; cursor:pointer;
+  font-size:14.5px; font-weight:700; color:#fff; letter-spacing:.02em;
+  background:#2B50D8; box-shadow:0 10px 24px rgba(43,80,216,.28); transition:.18s;}
+.btn-primary:hover{transform:translateY(-1px); background:#2444BE; box-shadow:0 14px 30px rgba(43,80,216,.36);}
+.sso{display:flex; gap:10px; margin-top:14px;}
+.sso button{flex:1; padding:11px; border-radius:11px; cursor:pointer; font-size:13px; font-weight:600;
+  color:#545C6B; background:#FFFFFF; border:1px solid #E4E7ED; transition:.18s;}
+.sso button:hover{background:#F2F4F7; border-color:#D5DAE2;}
+.divider{display:flex; align-items:center; gap:12px; margin:20px 0 6px; color:#A4AEBE; font-size:11.5px;}
+.divider::before,.divider::after{content:""; flex:1; height:1px; background:#E4E7ED;}
+.hint{margin-top:20px; font-size:11.5px; color:#8B93A3; text-align:center;}
+.hint b{color:#545C6B; font-weight:600;}
+
+/* ============ ENTRY PORTAL ============ */
+.portal{position:relative; z-index:2; width:760px; max-width:94vw; color:#171B22; overflow:hidden;
+  background:#FFFFFF; border:1px solid #E4E7ED; border-radius:24px;
+  box-shadow:0 24px 70px rgba(23,27,34,.13);}
+.portal-head{display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:22px 32px; border-bottom:1px solid #EEF0F4;}
+.portal-brand{display:flex; align-items:center; gap:12px;}
+.portal-brand .bt{font-weight:750; font-size:15px; letter-spacing:.2px;}
+.portal-brand .bs{font-size:11.5px; color:#8B93A3;}
+.portal-tags{display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+.portal-tag{flex:none; font-size:11.5px; font-weight:600; color:#6B7385;
+  border:1px solid #E4E7ED; background:#FFFFFF; padding:6px 12px; border-radius:99px; white-space:nowrap;}
+.portal-tag.applicant{color:#2B50D8; border-color:#C7D6F8; background:#EAF0FF;}
+.portal-tag.applicant b{font-weight:750; color:#2444BE;}
+.portal-body{display:block;}
+.pcol{padding:28px 32px;}
+.pcol.nav{background:#F7F8FB;}
+.pcol h2{font-size:19px; font-weight:750; margin:0 0 7px;}
+.pcol .csub{font-size:12.5px; color:#6B7385; line-height:1.55; margin-bottom:20px;}
+.nav-label{font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  color:#8B93A3; margin:0 0 12px;}
+.nav-label.mt{margin-top:20px;}
+.entry{display:flex; align-items:center; gap:13px; padding:13px 15px; margin-bottom:9px; border-radius:13px;
+  border:1px solid #E4E7ED; background:#FFFFFF; color:#171B22; transition:.16s;
+  box-shadow:0 1px 2px rgba(23,27,34,.04);}
+.entry:hover{background:#F7F9FF; border-color:#B9C9F3;
+  transform:translateY(-1px); text-decoration:none;}
+.entry .eico{flex:none; width:34px; height:34px; border-radius:10px; display:grid; place-items:center;
+  background:#EAF0FF; border:1px solid #DCE6FB; color:#2B50D8;}
+.entry .eico svg{width:17px; height:17px; stroke:currentColor;}
+.entry .eico svg [fill="#fff"]{fill:currentColor;}
+.entry .etxt{flex:1; min-width:0;}
+.entry .et{display:block; font-size:13.5px; font-weight:700; line-height:1.3;}
+.entry .es{display:block; font-size:11.5px; color:#6B7385; line-height:1.4; margin-top:2px;}
+.entry.compact{padding:10px 13px; margin-bottom:7px; border-radius:11px;}
+.entry.compact .eico{width:30px; height:30px; border-radius:8px;}
+.entry.compact .eico svg{width:15px; height:15px;}
+.entry.compact .et{font-size:12.5px;}
+.entry.compact .es{font-size:10.5px;}
+.ecode{display:inline-block; margin-right:7px; padding:1px 7px; border-radius:7px; font-size:10.5px; font-weight:800;
+  letter-spacing:.03em; background:#EEF0F4; border:1px solid #E0E4EB; color:#545C6B; vertical-align:1px;}
+.entry.primary .ecode{background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.32); color:#fff;}
+.demo-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:9px;}
+.dentry{display:flex; flex-direction:column; align-items:center; gap:7px; padding:12px 8px; border-radius:12px;
+  text-decoration:none; color:#171B22; background:#FFFFFF; border:1px solid #E4E7ED; transition:.18s;
+  box-shadow:0 1px 2px rgba(23,27,34,.04);}
+.dentry:hover{background:#F7F9FF; border-color:#B9C9F3; text-decoration:none; transform:translateY(-1px);}
+.dentry svg{width:17px; height:17px; stroke:#2B50D8;}
+.dentry svg [fill="#fff"]{fill:#2B50D8;}
+.dentry .dt{font-size:12px; font-weight:700; line-height:1.2; text-align:center;}
+.dentry .ds{font-size:10px; color:#8B93A3;}
+.entry .earw{flex:none; color:#A4AEBE; font-size:15px; font-weight:700;}
+.entry:hover .earw{color:#2B50D8;}
+.entry.primary{background:#2B50D8; color:#fff;
+  border-color:transparent; box-shadow:0 12px 28px rgba(43,80,216,.30);}
+.entry.primary:hover{background:#2444BE; box-shadow:0 14px 32px rgba(43,80,216,.38);}
+.entry.primary .eico{background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.24); color:#fff;}
+.entry.primary .es{color:rgba(255,255,255,.8);}
+.entry.primary .earw{color:rgba(255,255,255,.85);}
+@media (max-width:760px){
+  .portal-body{grid-template-columns:1fr;}
+  .pcol.nav{border-left:0; border-top:1px solid rgba(255,255,255,.12);}
+  .portal-head{flex-wrap:wrap;}
+}
+
+/* ============ APP ============ */
+.app{display:grid; grid-template-columns:400px 1fr; height:100vh;}
+.sidebar{background:var(--bg-side); border-right:1px solid var(--line); height:100vh; overflow-y:auto; display:flex; flex-direction:column;}
+.side-head{padding:18px 18px 12px; border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--bg-side); z-index:5;}
+.side-brand{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+.side-brand .logo{width:32px;height:32px;border-radius:9px;}
+.side-brand .logo svg{width:18px;height:18px;}
+.side-brand .bt{font-weight:750; font-size:14px;}
+.side-brand .bs{font-size:11px; color:var(--muted);}
+.book-switch{display:flex; gap:6px; margin-bottom:12px;}
+.book-pill{flex:1; padding:8px 6px; border-radius:9px; cursor:pointer; font-size:12.5px; font-weight:600;
+  border:1px solid var(--line); background:#fff; color:var(--ink-soft); transition:.15s;}
+.book-pill.active{background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 12px rgba(255,106,26,.32);}
+.search-wrap{position:relative;}
+.search-wrap svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); width:15px;height:15px; color:var(--muted);}
+#search{width:100%; padding:9px 12px 9px 33px; border-radius:9px; border:1px solid var(--line); background:#fff; font-size:13px; outline:none;}
+#search:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+.nav-tree{padding:12px 12px 40px; flex:1;}
+.nav-group{margin-bottom:6px;}
+.nav-group-h{width:100%; display:flex; align-items:center; justify-content:space-between; gap:8px;
+  padding:8px 10px; background:none; border:0; cursor:pointer; font-size:11.5px; font-weight:700;
+  letter-spacing:.05em; text-transform:uppercase; color:var(--muted);}
+.nav-group-h .chev{width:8px;height:8px; border-right:1.6px solid var(--muted); border-bottom:1.6px solid var(--muted);
+  transform:rotate(45deg); transition:.2s;}
+.nav-group.collapsed .chev{transform:rotate(-45deg);}
+.nav-group.collapsed .nav-item{display:none;}
+.nav-item{display:block; padding:7px 12px; margin:1px 0; border-radius:8px; font-size:13.5px;
+  color:var(--ink-soft); border-left:2px solid transparent; line-height:1.4;}
+.nav-item:hover{background:#eef0f4; color:var(--ink); text-decoration:none;}
+.nav-item.active{background:var(--accent-soft); color:var(--accent-strong); font-weight:650; border-left-color:var(--accent);}
+.side-foot{border-top:1px solid var(--line); padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:8px; background:var(--bg-side); position:sticky; bottom:0;}
+.user-chip{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-soft);}
+.avatar{width:28px;height:28px;border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; display:grid; place-items:center; font-size:12px; font-weight:700;}
+#logout{font-size:12px; color:var(--muted); background:none; border:1px solid var(--line); border-radius:7px; padding:5px 9px; cursor:pointer;}
+#logout:hover{color:var(--ink); border-color:var(--muted);}
+
+.main{height:100vh; overflow-y:auto;}
+.topbar{position:sticky; top:0; z-index:6; display:flex; align-items:center; gap:12px;
+  padding:0 28px; height:54px; background:rgba(255,255,255,.86); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+#burger{display:none; background:none; border:0; cursor:pointer; font-size:20px; line-height:1;}
+.crumb{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--muted); flex-wrap:wrap;}
+.crumb i{font-style:normal; color:var(--line);}
+.crumb strong{color:var(--ink); font-weight:650;}
+
+.content-wrap{display:grid; grid-template-columns:minmax(0,900px) 220px; gap:48px; justify-content:start; margin:0; padding:32px 40px 90px;}
+.content-wrap.no-outline{grid-template-columns:minmax(0,940px);}
+.content{min-width:0;}
+.outline{position:sticky; top:78px; align-self:start; font-size:12.5px;}
+.outline-t{font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:0 0 8px 10px;}
+.outline a{position:relative; display:block; padding:5px 10px; color:var(--ink-soft); border-radius:8px; line-height:1.4; transition:background .15s, color .15s;}
+.outline a:hover{color:var(--accent-strong); background:var(--accent-soft); text-decoration:none;}
+.outline a.ol-h3{padding-left:22px; color:var(--muted); font-size:12px;}
+.outline a.ol-h3::before{content:""; position:absolute; left:11px; top:50%; width:3px; height:3px; margin-top:-1.5px; border-radius:50%; background:var(--line);}
+.outline a.ol-h3:hover::before{background:var(--accent);}
+
+/* content typography */
+.page-title{font-size:30px; font-weight:800; letter-spacing:-.01em; margin:0 0 22px; padding-bottom:16px; border-bottom:1px solid var(--line);}
+.content h2{font-size:21px; font-weight:750; margin:38px 0 14px;}
+.content h3{font-size:17px; font-weight:700; margin:28px 0 10px; color:#111827;}
+.content h4{font-size:14.5px; font-weight:700; margin:20px 0 8px; color:var(--accent);}
+.content p{margin:12px 0;}
+.content strong{font-weight:700; color:#111827;}
+.content ul,.content ol{margin:12px 0; padding-left:22px;}
+.content li{margin:5px 0;}
+.content li::marker{color:var(--muted);}
+/* 순서 목록 → 단계 플로우 (원형 번호 + 연결선) */
+.content ol{list-style:none; counter-reset:step; padding-left:2px; margin:18px 0;}
+.content ol>li{counter-increment:step; position:relative; padding:1px 0 16px 44px; margin:0;}
+.content ol>li::marker{content:none;}
+.content ol>li::before{content:counter(step); position:absolute; left:0; top:-2px; width:28px; height:28px; border-radius:50%; background:var(--accent-soft); color:var(--accent-strong); border:1.5px solid var(--accent-line); font-weight:700; font-size:12.5px; display:grid; place-items:center;}
+.content ol>li::after{content:""; position:absolute; left:13.5px; top:29px; bottom:-3px; width:1.5px; background:var(--accent-line);}
+.content ol>li:last-child{padding-bottom:2px;}
+.content ol>li:last-child::after{display:none;}
+/* 간트 타임라인 — 가로 길이=소요 기간(개월) 비례, 두께·색=투입 강도 */
+.gnt{border:1px solid var(--line); border-radius:14px; margin:20px 0; background:#fff; overflow:hidden; box-shadow:0 1px 3px rgba(31,35,40,.05);}
+.gnt-scroll{overflow-x:auto;}
+.gnt-inner{min-width:660px;}
+.gnt-head{display:flex; background:linear-gradient(#fbfbfd,#f5f6f8); border-bottom:1px solid var(--line);}
+.gnt-side{flex:0 0 200px; min-width:0; padding:8px 14px; display:flex; align-items:center;}
+.gnt-head .gnt-side{font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--muted);}
+.gnt-axis{flex:1; display:flex;}
+.gnt-ph{border-left:1px solid var(--line); padding:7px 2px 6px; text-align:center; line-height:1.3;}
+.gnt-ph b{display:block; font-size:12px; font-weight:750; color:var(--ink);}
+.gnt-ph i{font-style:normal; font-size:10px; font-weight:600; color:var(--muted);}
+.gnt-row{display:flex; border-top:1px solid #f1f2f5; transition:background .15s;}
+.gnt-row:hover{background:var(--accent-soft);}
+.gnt-row .gnt-side{font-size:12.5px; font-weight:600; color:var(--ink-soft); line-height:1.35;}
+.gnt-cells{flex:1; display:flex; align-items:stretch;}
+.gcell{position:relative; display:flex; align-items:center; padding:10px 3px; border-left:1px solid var(--line);
+  background-image:linear-gradient(to left,#dde1e8 1px,transparent 1px);}
+.gcell.m1{background-image:none;}
+.gcell.m2{background-size:calc(100%/2) 100%;}
+.gcell.m3{background-size:calc(100%/3) 100%;}
+.gcell.m6{background-size:calc(100%/6) 100%;}
+.gbar{flex:1; border-radius:99px; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+.gbar.g3{height:16px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 2px 6px rgba(255,106,26,.32);}
+.gbar.g2{height:11px; background:#ff9d5c;}
+.gbar.g1{height:6px; background:#ffd9bd;}
+.gbar .glabel{font-size:9px; font-weight:700; color:#fff; letter-spacing:.02em; line-height:1; white-space:nowrap; padding:0 4px;}
+.gnt-scale{display:flex; border-top:1px solid #f1f2f5; background:#fbfbfd;}
+.gnt-scale .gnt-side{padding:3px 14px;}
+.gnt-scale .gnt-cells>div{border-left:1px solid transparent; text-align:right; font-size:9.5px; font-weight:600; color:var(--muted); padding:3px 4px 3px 0;}
+.gnt-foot{display:flex; flex-wrap:wrap; align-items:center; gap:14px; padding:9px 14px; border-top:1px solid var(--line); background:#fbfbfd; font-size:11.5px; color:var(--ink-soft);}
+.gnt-foot .gsw{display:inline-flex; align-items:center; gap:6px; font-weight:600;}
+.gnt-foot .gsw i{display:inline-block; width:26px; border-radius:99px;}
+.gnt-foot .gsw.s3 i{height:12px; background:linear-gradient(135deg,var(--accent),var(--accent-2));}
+.gnt-foot .gsw.s2 i{height:9px; background:#ff9d5c;}
+.gnt-foot .gsw.s1 i{height:5px; background:#ffd9bd;}
+.gnt-foot .gnote{margin-left:auto; color:var(--muted); font-size:11px;}
+@media (max-width:820px){ .gnt-side{flex-basis:150px;} }
+/* 크리티컬 패스 → 세로 플로우 */
+.content .flow{margin:20px 0; max-width:520px;}
+.content .flow-node{background:var(--accent-soft); border:1px solid var(--accent-line); border-left:3px solid var(--accent); border-radius:9px; padding:9px 13px; font-size:13px; font-weight:600; color:#7c2d12;}
+.content .flow-arrow{text-align:center; color:var(--accent); font-size:15px; line-height:1; margin:2px 0;}
+/* 표 셀 퍼센트 바 (마진·KPI 등) */
+.content .pctwrap{display:block;}
+.content .pctwrap i{display:block; height:4px; margin-top:5px; border-radius:3px; background:var(--accent); opacity:.85;}
+/* 가격 티어 카드 */
+.content .tiers{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin:20px 0;}
+.content .tier{border:1px solid var(--line); border-radius:12px; padding:16px 16px 14px; background:var(--bg); transition:border-color .15s, box-shadow .15s;}
+.content .tier:hover{border-color:var(--accent); box-shadow:0 8px 22px rgba(255,106,26,.12);}
+.content .tier-name{font-weight:700; font-size:13.5px; color:var(--accent-strong);}
+.content .tier-price{font-size:19px; font-weight:800; margin:5px 0 10px; color:#111827;}
+.content .tier-feat{font-size:12.5px; color:var(--ink-soft); line-height:1.5;}
+.content .tier-feat b,.content .tier-extra b{color:var(--muted); font-weight:600;}
+.content .tier-extra{font-size:11.5px; color:var(--ink-soft); margin-top:9px; padding-top:9px; border-top:1px dashed var(--line);}
+/* 워크플로우 상태 파이프라인 */
+.content .pipeline{margin:18px 0; border-left:2px solid var(--accent-line); padding-left:18px;}
+.content .pl-step{position:relative; display:flex; align-items:baseline; gap:12px; padding:6px 0;}
+.content .pl-step::before{content:""; position:absolute; left:-23px; top:11px; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 2px var(--bg);}
+.content .pl-chip{flex:0 0 160px; font-weight:700; font-size:12px; color:var(--accent-strong); font-family:"Geist Mono","SFMono-Regular",Consolas,Menlo,monospace;}
+.content .pl-desc{font-size:13px; color:var(--ink-soft);}
+@media (max-width:560px){.content .pl-chip{flex-basis:104px;} .content .pl-step{flex-wrap:wrap;}}
+.content hr{border:0; border-top:1px solid var(--line); margin:34px 0;}
+.content blockquote{margin:16px 0; padding:12px 18px; background:var(--accent-soft); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; color:#8a3a12; font-size:14px;}
+.content blockquote strong{color:#7c2d12;}
+.content code{background:var(--code-bg); padding:1.5px 6px; border-radius:5px; font-size:12.5px; font-family:"Geist Mono","SFMono-Regular",Consolas,Menlo,monospace; color:#c7254e;}
+.content pre{background:#f6f8fa; border:1px solid var(--line); border-radius:9px; padding:14px 16px; overflow-x:auto; font-size:12.5px; line-height:1.55; margin:16px 0;}
+.content pre code{background:none; color:var(--ink); padding:0;}
+.tablewrap{overflow-x:auto; margin:18px 0;}
+.content table{border-collapse:collapse; width:100%; font-size:13px;}
+.content th,.content td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top;}
+.content th{background:#f3f4f7; font-weight:700; color:#111827; white-space:nowrap;}
+.content tbody tr:nth-child(even){background:var(--bg-alt);}
+.content tbody tr:hover{background:var(--accent-soft);}
+
+.pager{display:flex; gap:14px; margin-top:44px; padding-top:24px; border-top:1px solid var(--line);}
+.pg{flex:1; padding:14px 16px; border:1px solid var(--line); border-radius:11px; font-size:14px; font-weight:600; color:var(--ink); transition:.15s;}
+.pg:hover{border-color:var(--accent); background:var(--accent-soft); text-decoration:none;}
+.pg span{display:block; font-size:11px; font-weight:600; color:var(--muted); margin-bottom:3px;}
+.pg.next{text-align:right;}
+
+@media (max-width:1120px){ .content-wrap{grid-template-columns:minmax(0,1fr);} .outline{display:none;} }
+@media (max-width:820px){
+  .app{grid-template-columns:1fr;}
+  .sidebar{position:fixed; z-index:20; width:300px; left:0; top:0; transform:translateX(-100%); transition:.25s; box-shadow:0 0 40px rgba(0,0,0,.2);}
+  .app.nav-open .sidebar{transform:translateX(0);}
+  #burger{display:block;}
+  .content-wrap{padding:24px 18px 70px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ENTRY PORTAL -->
+<div id="login">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="portal">
+    <div class="portal-head">
+      <div class="portal-brand">
+        <span class="logo"><svg viewBox="0 0 26 26" fill="none" style="width:22px;height:22px"><circle cx="13" cy="5" r="3.1" fill="#2B50D8"/><circle cx="5.2" cy="19" r="3.1" fill="#6B4DF5"/><circle cx="20.8" cy="19" r="3.1" fill="#0E9F6E"/><path d="M13 8 L6.4 16.4 M13 8 L19.6 16.4 M8 19 L18 19" stroke="#C2C9D6" stroke-width="1.5"/></svg></span>
+        <div><div class="bt">Finance Ontology Platform</div><div class="bs">재무·회계 AI 자동화 솔루션 제품화 기획</div></div>
+      </div>
+      <div class="portal-tags">
+        <span class="portal-tag">뤼튼 AX PM · Ontology 과제 전형</span>
+        <span class="portal-tag applicant">지원자 <b>김승욱</b> · 010-9248-1274</span>
+      </div>
+    </div>
+    <div class="portal-body">
+      <!-- 바로가기 -->
+      <div class="pcol nav">
+        <div class="nav-label">제품 데모 · 실제 화면 실행</div>
+        <a class="entry primary" href="app.html?screen=admin&tab=dashboard" target="_blank" rel="noopener">
+          <span class="eico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1.5" y1="14" x2="6.5" y2="14"/><line x1="9.5" y1="8" x2="14.5" y2="8"/><line x1="17.5" y1="16" x2="22.5" y2="16"/></svg></span>
+          <span class="etxt"><span class="et"><span class="ecode">LIVE</span>관리자 콘솔 실행</span><span class="es">대시보드 · 도메인별 메뉴 · 온톨로지/워크플로우/감사/미터링</span></span>
+          <span class="earw">→</span>
+        </a>
+        <div class="demo-grid">
+          <a class="dentry" href="app.html?screen=admin&tab=ontology" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="18" r="2.4"/><circle cx="19" cy="18" r="2.4"/><path d="M12 7.5 6.3 15.8M12 7.5l5.7 8.3M7.6 18h8.8"/></svg>
+            <span class="dt">온톨로지</span><span class="ds">객체·관계 ↗</span>
+          </a>
+          <a class="dentry" href="app.html?screen=reviewer&wf=card" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="M3.5 6l1 1 2-2"/><path d="M3.5 12l1 1 2-2"/><path d="M3.5 18l1 1 2-2"/></svg>
+            <span class="dt">검토자</span><span class="ds">워크리스트 ↗</span>
+          </a>
+          <a class="dentry" href="app.html?screen=onboarding&step=2" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <span class="dt">온보딩</span><span class="ds">7단계 위저드 ↗</span>
+          </a>
+        </div>
+
+        <div class="nav-label mt">제출 산출물 · 과제 요구 4-1 ~ 4-4</div>
+        <a class="entry compact" href="#prd-1" id="enter-doc">
+          <span class="eico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></span>
+          <span class="etxt"><span class="et"><span class="ecode">4-1</span>제품 기획서 (PRD)</span><span class="es">비전·포지셔닝 · 핵심 워크플로우 2종 · KPI</span></span>
+          <span class="earw">→</span>
+        </a>
+        <a class="entry compact" href="#ui-intro">
+          <span class="eico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><circle cx="6" cy="6.5" r=".6" fill="#fff"/><circle cx="8.5" cy="6.5" r=".6" fill="#fff"/></svg></span>
+          <span class="etxt"><span class="et"><span class="ecode">4-2</span>화면 설계 기획서</span><span class="es">통합 데모 v1.0 · 화면 구조 · 기능 동작 명세</span></span>
+          <span class="earw">→</span>
+        </a>
+        <a class="entry compact" href="#rm-1">
+          <span class="eico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3.5 3.5M14 13.5L17 16.5"/></svg></span>
+          <span class="etxt"><span class="et"><span class="ecode">4-3</span>제품 로드맵</span><span class="es">Phase별 배포 계획 · 타임라인(리소스 가정) · 의존성·리스크</span></span>
+          <span class="earw">→</span>
+        </a>
+        <a class="entry compact" href="#pr-7">
+          <span class="eico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24H5a2 2 0 0 0-2 2v4.59c0 .53.21 1.04.59 1.41l9.58 9.59a2 2 0 0 0 2.83 0l4.59-4.59a2 2 0 0 0 0-2.83z"/><circle cx="7.5" cy="7.5" r="1" fill="#fff"/></svg></span>
+          <span class="etxt"><span class="et"><span class="ecode">4-4</span>가격 전략</span><span class="es">구축형/SaaS 구조 · 성과 과금 미터링 상세 · 가격 근거</span></span>
+          <span class="earw">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app hidden" id="app">
+  <aside class="sidebar">
+    <div class="side-head">
+      <div class="side-brand"><span class="logo"><svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="16" cy="6" r="3" fill="#fff" stroke="none"/><circle cx="6" cy="24" r="3" fill="#fff" stroke="none"/><circle cx="26" cy="24" r="3" fill="#fff" stroke="none"/><line x1="16" y1="8" x2="7" y2="22"/><line x1="16" y1="8" x2="25" y2="22"/><line x1="9" y1="24" x2="23" y2="24"/></svg></span>
+        <div><div class="bt">Finance Ontology</div><div class="bs">Product Docs</div></div></div>
+      <div class="book-switch" id="book-switch"></div>
+      <div class="search-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg><input id="search" placeholder="문서 내 검색…"></div>
+    </div>
+    <div class="nav-tree" id="nav-tree"></div>
+    <div class="side-foot">
+      <div class="user-chip"><span class="avatar">P</span><span>PM · wrtn</span></div>
+      <button id="logout">로그아웃</button>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar"><button id="burger">☰</button><div class="crumb" id="crumb"></div></div>
+    <div class="content-wrap">
+      <article class="content" id="content"></article>
+      <nav class="outline" id="outline"></nav>
+    </div>
+    <div style="max-width:980px;margin:0;padding:0 40px 60px;"><div class="pager" id="pager"></div></div>
+  </div>
+</div>
+
+<script type="application/json" id="nav-data">{"books": [{"id": "prd", "label": "제품 기획서", "sub": "4-1 · Finance Ontology PRD", "groups": [{"label": "시작", "pages": [{"id": "prd-intro", "title": "문서 정보"}]}, {"label": "개요 · 문제", "pages": [{"id": "prd-1", "title": "1. Executive Summary"}, {"id": "prd-2", "title": "2. 문제 정의"}]}, {"label": "전략", "pages": [{"id": "prd-3", "title": "3. 제품 비전과 포지셔닝"}, {"id": "prd-4", "title": "4. 시장 전략"}]}, {"label": "사용자 · 구조", "pages": [{"id": "prd-5", "title": "5. 사용자와 페르소나"}, {"id": "prd-6", "title": "6. 제품 구조"}]}, {"label": "핵심 기능", "pages": [{"id": "prd-7", "title": "7. MVP 범위"}, {"id": "prd-8", "title": "8. 핵심 워크플로우 1: 법인카드 내역 자동 검토"}, {"id": "prd-9", "title": "9. 핵심 워크플로우 2: 세금계산서 3-Way Matching"}, {"id": "prd-10", "title": "10. 기능 요구사항"}]}, {"label": "실행 · 운영", "pages": [{"id": "prd-11", "title": "11. 기존 자산 활용 계획과 신규 개발 범위"}, {"id": "prd-12", "title": "12. 우선순위"}, {"id": "prd-13", "title": "13. 성공 지표"}, {"id": "prd-14", "title": "14. 로드맵"}, {"id": "prd-15", "title": "15. 가격 전략"}, {"id": "prd-16", "title": "16. 리스크와 대응 방안"}]}, {"label": "부록", "pages": [{"id": "prd-17", "title": "17. 명시적 가정"}, {"id": "prd-18", "title": "18. 오픈 질문"}, {"id": "prd-19", "title": "19. 참고 자료"}]}]}, {"id": "rm", "label": "제품 로드맵", "sub": "4-3 · Roadmap", "groups": [{"label": "시작", "pages": [{"id": "rm-intro", "title": "소개"}]}, {"label": "로드맵 (4-3)", "pages": [{"id": "rm-1", "title": "1. 로드맵 원칙 — Land → Expand → Scale"}, {"id": "rm-2", "title": "2. Phase별 기능 배포 계획"}, {"id": "rm-3", "title": "3. 타임라인 & 개발 리소스 가정"}, {"id": "rm-4", "title": "4. 의존성 (Dependencies)"}, {"id": "rm-5", "title": "5. 리스크 레지스터"}, {"id": "rm-6", "title": "6. 마일스톤 & 졸업 게이트"}]}]}, {"id": "pr", "label": "가격 전략", "sub": "4-4 · Finance Pricing", "groups": [{"label": "가격 전략 (4-4)", "pages": [{"id": "pr-7", "title": "7. 가격 철학 & 고객 경제학"}, {"id": "pr-8", "title": "8. 구축형 가격 구조"}, {"id": "pr-9", "title": "9. SaaS형 가격 구조"}, {"id": "pr-10", "title": "10. 성과 기반 과금 모델 상세"}, {"id": "pr-11", "title": "11. 경쟁력 있는 가격 포인트 근거"}, {"id": "pr-12", "title": "12. 명시적 가정"}]}]}, {"id": "ui", "label": "화면 설계", "sub": "4-2 · UI Mockups", "groups": [{"label": "화면 설계 (4-2)", "pages": [{"id": "ui-intro", "title": "화면 설계 기획서 · 통합 데모"}]}, {"label": "화면별 상세", "pages": [{"id": "ui-admin", "title": "관리자 콘솔 (8탭)"}, {"id": "ui-reviewer", "title": "검토자 화면"}, {"id": "ui-onboarding", "title": "고객사 온보딩 (7단계)"}]}]}]}</script>
+<script type="text/html" data-page="prd-intro"><h1 class="page-title">문서 정보</h1>
+<table>
+  <tbody>
+    <tr><th>제출 패키지 버전</th><td>v1.1</td></tr>
+    <tr><th>기준일</th><td>2026-07-05</td></tr>
+    <tr><th>대상 과제</th><td>뤼튼테크놀로지스 AX Product Manager(Ontology) 과제 전형</td></tr>
+    <tr><th>제품명</th><td>Finance Ontology AI Automation Platform</td></tr>
+    <tr><th>작성자</th><td>김승욱 · 010-9248-1274</td></tr>
+    <tr><th>문서 성격</th><td>제출용 제품 기획 패키지 · PRD, 화면 설계, 로드맵, 가격 전략, 인터랙티브 데모 포함</td></tr>
+  </tbody>
+</table>
+<blockquote>본 사이트는 문서 뷰어이자 제품 데모 진입점이다. 첫 화면의 <strong>관리자 콘솔 실행</strong> 버튼은 실제 인터랙티브 데모(<code>app.html?screen=admin&amp;tab=dashboard</code>)로 연결되고, 좌측 문서 내비게이션에서는 4-1~4-4 산출물을 순서대로 검토할 수 있다.</blockquote>
+
+<h2>제출물 구성</h2>
+<table>
+  <thead><tr><th>과제 요구</th><th>산출물</th><th>검토 위치</th><th>핵심 내용</th></tr></thead>
+  <tbody>
+    <tr><td>4-1</td><td>제품 기획서(PRD)</td><td><a href="#prd-1">제품 기획서</a></td><td>제품 정의, 시장 전략, MVP 워크플로우, 기능 요구사항, KPI</td></tr>
+    <tr><td>4-2</td><td>화면 설계 + 제품 데모</td><td><a href="app.html?screen=admin&amp;tab=dashboard" target="_blank" rel="noopener">인터랙티브 데모</a> · <a href="#ui-intro">화면 설계 문서</a></td><td>관리자 콘솔, 검토자 큐, 고객사 온보딩 7단계</td></tr>
+    <tr><td>4-3</td><td>제품 로드맵</td><td><a href="#rm-intro">제품 로드맵</a></td><td>Phase별 배포 계획, 개발 리소스 가정, 의존성, 리스크</td></tr>
+    <tr><td>4-4</td><td>가격 전략</td><td><a href="#prd-15">PRD §15</a> · <a href="#pr-7">가격 전략 북</a></td><td>구축형/SaaS 가격 구조, 사용량·성과 기반 미터링, ROI 근거</td></tr>
+  </tbody>
+</table>
+
+<h2>권장 검토 순서</h2>
+<ol>
+  <li><strong>관리자 콘솔 실행</strong>으로 제품의 실제 화면과 도메인별 메뉴 구조를 먼저 확인한다.</li>
+  <li><strong>4-1 PRD</strong>에서 왜 Finance Ontology가 SI 원가를 SaaS 마진 구조로 바꾸는지 검토한다.</li>
+  <li><strong>4-2 화면 설계</strong>에서 관리자·검토자·온보딩 흐름이 PRD 요구사항을 어떻게 화면화했는지 확인한다.</li>
+  <li><strong>4-3/4-4</strong>에서 출시 순서, 리소스 제약, 가격·미터링 가설을 확인한다.</li>
+</ol>
+
+<h2>버전 관계</h2>
+<table>
+  <thead><tr><th>문서/화면</th><th>버전</th><th>상태</th></tr></thead>
+  <tbody>
+    <tr><td>PRD</td><td>v0.8</td><td>통합 인터랙티브 데모 기준으로 화면 설계 범위 반영 완료</td></tr>
+    <tr><td>화면 설계 기획서</td><td>v1.0</td><td>관리자 8탭, 검토자 2개 워크플로우, 온보딩 7단계 반영</td></tr>
+    <tr><td>제품 데모</td><td>v1.1</td><td>첫 화면을 데모 진입 패널로 정리, 관리자 메뉴를 도메인별로 재구성</td></tr>
+    <tr><td>로드맵/가격</td><td>v0.4</td><td>로드맵·미터링·가격 전략 가설 포함</td></tr>
+  </tbody>
+</table>
+
+<h2>개정 메모</h2>
+<ul>
+  <li><strong>PRD v0.8</strong> — 화면 설계 산출물을 단일 <code>app.html</code> 데모로 통합하고 딥링크(<code>?screen</code>, <code>?tab</code>, <code>?wf</code>, <code>?step</code>)를 지원한다.</li>
+  <li><strong>화면 설계 v1.0</strong> — 관리자 콘솔 8탭, 검토자 법인카드/세금계산서 큐, 고객사 온보딩 7단계를 제출용 스크린샷과 함께 문서화했다.</li>
+  <li><strong>제출 사이트 v1.1</strong> — 첫 화면의 불필요한 입력 폼을 제거하고, 실제 제품 데모 실행과 제출 산출물 링크만 남겼다.</li>
+</ul></script>
+<script type="text/html" data-page="prd-1"><h1 class="page-title">1. Executive Summary</h1>
+<h3 id="h1">1.1 제품 한 줄 정의</h3>
+<p><strong>Finance Ontology AI Automation Platform은 고객사별 회계 규정, 권한, ERP 환경, 검토 프로세스 차이를 온톨로지로 흡수해 재무·회계 반복 업무를 안전하게 자동화하는 엔터프라이즈 AI 운영 플랫폼이다.</strong></p>
+<h3 id="h2">1.2 핵심 관점</h3>
+<p>이 제품은 단순한 회계 자동화 도구가 아니다. 기존 RPA, OCR, AP 자동화 솔루션이 특정 업무를 자동화하는 데 초점을 둔다면, 본 제품은 기업마다 다른 <strong>회계 개념, 데이터 관계, 승인 권한, 내부 규정, ERP 구조</strong>를 온톨로지로 모델링하고 이를 기반으로 자동화 워크플로우를 확장한다.</p>
+<p>제품화의 핵심은 기존 구축형 프로젝트에서 반복되던 커스터마이징 요소를 <strong>설정 가능한 제품 레이어</strong>로 바꾸는 것이다.</p>
+<ul><li>고객사별 계정과목, 전표, 증빙, 거래처, 세무항목 매핑</li><li>고객사별 조직, 역할, 데이터 접근 권한</li><li>고객사별 사내 회계 규정과 예외 처리 정책</li><li>고객사별 SAP 환경 차이</li><li>업무별 자동 승인 기준과 Human Review 기준</li></ul>
+<p>이를 통해 고객은 코드 개발 없이 자동화 범위를 확장하고, 공급자는 SI성 구축 매출을 반복 가능한 SaaS/플랫폼 매출로 전환할 수 있다.</p>
+<h3 id="h3">1.3 추천 MVP</h3>
+<p>MVP는 다음 두 워크플로우를 중심으로 출시한다.</p>
+<ol><li><strong>법인카드 내역 자동 검토</strong></li><li><strong>세금계산서 3-Way Matching</strong></li></ol>
+<p>두 업무는 처리량이 많고, 회계 규정·증빙·거래처·SAP 데이터 간 관계가 중요하며, 자동화 성과를 자동 처리율, 절감 시간, 예외 탐지율로 측정하기 쉽다.</p>
+<h3 id="h4">1.4 핵심 전략 논지: 온톨로지 = 마진 엔진</h3>
+<p>과제의 최종 질문은 "가장 많은 이익을 낼 수 있는 관점"이다. 이 제품이 이익을 극대화하는 근본 이유는 온톨로지가 <strong>SI 사업을 SaaS 마진 구조로 전환하는 원가 자산</strong>이기 때문이다.</p>
+<ul><li>온톨로지가 없으면 고객마다 계정과목·규정·권한·SAP 매핑을 코드로 새로 짜야 하고, 온보딩 원가가 고객당 수개월로 고정된다(= SI 마진 30~45%, 인건비 지배).</li><li>온톨로지가 있으면 고객 차이가 "코드"가 아니라 "설정 데이터"로 흡수되어, 온보딩이 개발이 아니라 매핑 작업이 된다. 반복될수록 표준 온톨로지·산업 템플릿이 두꺼워져 한계원가가 계속 내려간다(= SaaS 마진 70~80% 지향).</li></ul>
+<p>즉 온톨로지는 "설명 가능성"이라는 기능이기 이전에, <strong>고객이 늘어도 인력이 그만큼 늘지 않는 구조</strong>를 만드는 이익 엔진이다. 상세는 §3.4 참조.</p>
+<p>다만 이 마진은 자동으로 실현되지 않는다. 온톨로지의 강점이 가장 큰 고객(규정·권한·SAP가 복잡한 대기업)일수록 온보딩도 무거워, 통제하지 못하면 그대로 SI 원가로 되돌아간다. 그래서 온톨로지는 마진의 <em>필요조건</em>일 뿐이고, <strong>시장 선택과 온보딩 제품화가 충분조건</strong>이다. 이 PRD가 초기 타겟을 대기업이 아니라 중견기업·BPO로 잡는 근거가 여기에 있다(§3.4, §4).</p></script>
+<script type="text/html" data-page="prd-2"><h1 class="page-title">2. 문제 정의</h1>
+<h3 id="h1">2.1 고객 문제</h3>
+<p>중견기업과 대량 회계 처리 조직은 반복 업무를 자동화하고 싶지만, 실제 운영에서는 다음 이유로 자동화가 제한된다.</p>
+<ul><li>계정과목, 비용 정책, 승인 권한이 회사마다 다르다.</li><li>SAP는 고객사별 커스터마이징이 많아 표준 연동만으로는 부족하다.</li><li>법인카드, 세금계산서, 구매오더, 입고, 전표, 증빙이 서로 다른 시스템에 흩어져 있다.</li><li>AI가 결론을 제안해도 회계 담당자는 판단 근거, 참조 규정, 감사 추적 없이는 신뢰하기 어렵다.</li><li>고위험 건은 자동 처리보다 검토자 개입이 필요하다.</li><li>자동화 성과를 비용 절감이나 처리량 기준으로 측정하기 어렵다.</li></ul>
+<h3 id="h2">2.2 기존 접근의 한계</h3>
+<div class="tablewrap"><table><thead><tr><th>접근</th><th>강점</th><th>한계</th></tr></thead><tbody><tr><td>RPA</td><td>화면 조작 자동화가 빠름</td><td>화면 변경, 예외 상황, 규정 변경에 취약</td></tr><tr><td>OCR</td><td>문서 데이터 추출에 강함</td><td>회계적 판단, 권한, 내부 규정 반영이 약함</td></tr><tr><td>일반 LLM</td><td>자연어 처리와 요약에 강함</td><td>설명 가능성, 권한 통제, 감사 추적, 데이터 정합성에 약함</td></tr><tr><td>ERP Add-on</td><td>ERP 내부 프로세스와 밀접</td><td>고객사별 확장성과 비ERP 데이터 결합에 한계</td></tr><tr><td>SI 구축</td><td>고객 맞춤 구현 가능</td><td>반복 판매가 어렵고 구축 기간·비용이 큼</td></tr></tbody></table></div>
+<h3 id="h3">2.3 제품 기회</h3>
+<p>회계 자동화 시장은 이미 AP 자동화, 비용 관리, ERP 연동 중심으로 형성되어 있다. 그러나 엔터프라이즈 고객은 단순 문서 처리보다 <strong>복잡한 내부 규정, 권한, SAP 커스터마이징, 감사 대응</strong>을 함께 해결해야 한다.</p>
+<p>따라서 본 제품의 기회는 "AI로 회계 업무를 자동화한다"가 아니라, <strong>고객사별 회계 운영 모델을 온톨로지로 구성하고 그 위에서 AI 자동화를 안전하게 실행한다</strong>에 있다.</p></script>
+<script type="text/html" data-page="prd-3"><h1 class="page-title">3. 제품 비전과 포지셔닝</h1>
+<h3 id="h1">3.1 제품 비전</h3>
+<p>회계팀이 반복 검토 업무에 시간을 쓰는 대신, 예외 판단과 재무적 의사결정에 집중할 수 있도록 재무·회계 업무의 운영 지식을 제품화한다.</p>
+<h3 id="h2">3.2 포지셔닝 문장</h3>
+<p><strong>SAP를 사용하는 중견기업과 회계 BPO/SSC를 위한 온톨로지 기반 Finance AI Automation Platform.</strong></p>
+<p>본 제품은 법인카드, 세금계산서, 전표, 증빙, 거래처, 계정과목, 세무항목, 권한, 내부 규정을 하나의 의미 모델로 연결하고, AI 판단 근거와 신뢰도를 제공하여 자동 처리와 Human Review를 안전하게 분기한다.</p>
+<h3 id="h3">3.3 차별점</h3>
+<div class="tablewrap"><table><thead><tr><th>차별점</th><th>설명</th></tr></thead><tbody><tr><td>온톨로지 기반 회계 모델</td><td>계정과목, 전표, 증빙, 거래처, 세무항목, 권한, 워크플로우를 연결된 도메인 모델로 관리</td></tr><tr><td>설정형 워크플로우</td><td>자동화 업무를 코드 수정이 아니라 온톨로지 편집과 정책 설정으로 확장</td></tr><tr><td>설명 가능한 AI</td><td>AI 판단 결과와 함께 참조 규정, 과거 사례, 데이터 관계, 신뢰도 근거를 노출</td></tr><tr><td>Human-in-the-loop</td><td>신뢰도 임계값에 따라 자동 처리와 검토자 처리 분기</td></tr><tr><td>SAP 어댑터 전략</td><td>ECC BAPI, S/4HANA OData, 커스텀 RFC 등 고객사별 SAP 차이를 어댑터로 흡수</td></tr><tr><td>성과 기반 과금 가능성</td><td>처리 건수, 자동 처리율, 절감 시간, 예외 탐지 건수를 제품 로그로 측정</td></tr></tbody></table></div>
+<h3 id="h4">3.4 온톨로지 기반 접근의 제품화 경제성 (핵심 논지)</h3>
+<p>온톨로지의 강점은 기술 자랑이 아니라 <strong>원가 구조</strong>로 번역할 때 사업적 의미가 생긴다. 이 절이 "가장 많은 이익" 요구에 대한 본 제품의 직접적 답이다.</p>
+<h4 id="h5">SI vs Product 경제학</h4>
+<div class="tablewrap"><table><thead><tr><th>항목</th><th>구축형(SI)</th><th>온톨로지 기반 Product</th></tr></thead><tbody><tr><td>매출 인식</td><td>프로젝트 단발</td><td>구독(반복)</td></tr><tr><td>온보딩 원가</td><td>고객당 수개월 인력 투입</td><td>고객당 수일 설정(셀프서비스 + CSM)</td></tr><tr><td>매출 ↔ 인력 관계</td><td>선형 (고객↑ = 인력↑)</td><td>준선형 (고객↑ ≫ 인력↑)</td></tr><tr><td>매출총이익률</td><td><span class="pctwrap">30~45% (인건비 지배)<i style="width:45%"></i></span></td><td><span class="pctwrap">70~80% 지향<i style="width:80%"></i></span></td></tr><tr><td>지식 재사용</td><td>프로젝트 종료 시 사장</td><td>온톨로지·규정 템플릿으로 축적·재판매</td></tr></tbody></table></div>
+<p>핵심은 온보딩 원가다. 온톨로지가 고객 차이를 "설정 데이터"로 흡수하는 순간, 온보딩이 개발이 아니라 매핑 작업이 되고, 고객이 늘수록 표준 온톨로지·산업 템플릿이 두꺼워져 <strong>한계원가가 복리로 하락</strong>한다. 이것이 반복 판매 가능한 SaaS 마진을 만든다.</p>
+<h4 id="h6">제품화가 살려야 할 온톨로지 강점 6가지</h4>
+<ol><li><strong>설정형 확장</strong> — 새 워크플로우·규정을 코드 배포 없이 온톨로지·정책 편집으로 추가 → 신규 자동화 한계원가↓, 출시 속도↑.</li><li><strong>차이 흡수</strong> — 고객사별 계정과목·규정·조직·SAP 환경을 매핑/어댑터로 흡수 → 온보딩 표준화.</li><li><strong>설명 가능한 판단</strong> — AI 결론을 LLM 확률이 아니라 규정·과거사례·객체 관계 그래프로 근거화 → 감사 추적 등 회계 도메인 필수 요건 충족.</li><li><strong>권한·데이터 범위 내장</strong> — 자동화와 권한 모델이 한 그래프에 있어 내부통제·직무분리(SoD)를 자동 충족 → 엔터프라이즈 진입 장벽 통과.</li><li><strong>재사용 자산 축적</strong> — 산업별 온톨로지 템플릿·규정 팩이 쌓일수록 신규 온보딩이 빨라지는 복리 효과(네트워크성 원가 우위).</li><li><strong>멀티ERP 이식성</strong> — 판단 로직이 SAP에 종속되지 않고 온톨로지에 있어, 어댑터만 교체하면 시장 확장 가능(향후 TAM 확대).</li></ol>
+<blockquote>한 줄 메시지: <strong>"온톨로지는 기능이 아니라, SI를 SaaS 마진으로 바꾸는 원가 자산이다."</strong></blockquote>
+<h4 id="h7">단, 이 마진은 자동으로 오지 않는다 (조건부 논지)</h4>
+<p>위 표의 70~80% 마진은 "목표"이지 "기본값"이 아니다. 온톨로지의 강점이 가장 크게 드러나는 고객(규정·권한·SAP가 복잡한 대기업)은 동시에 온보딩이 가장 무거운 고객이다. 즉 <strong>차별성이 극대화되는 조건 = 제품화가 가장 어려운 조건</strong>이라는 긴장이 존재한다. 이 긴장을 통제하지 못하면 온톨로지 매핑·규정 세팅이 매 고객마다 사람에 의존하는 커스텀 작업으로 번지고, 앞서 벗어나려던 SI 원가로 그대로 회귀한다.</p>
+<p>따라서 마진의 실제 결정 변수는 "온톨로지가 있느냐"가 아니라 다음 세 가지다.</p>
+<ol><li><strong>시장 선택</strong> — 복잡도를 통제할 수 있는 고객부터 시작한다. (§4: 중견기업 + BPO/SSC 우선, 대기업은 Phase 2)</li><li><strong>온보딩 제품화</strong> — 표준 온톨로지 선탑재 + 추천 매핑 + 산업 템플릿으로 초기 세팅을 사람이 아니라 제품이 처리하게 만든다.</li><li><strong>SI화 방어 규율</strong> — 고객 요청마다 코드를 여는 대신 설정·정책·템플릿으로 흡수한다. (§16: 제품화보다 SI화 리스크)</li></ol>
+<p>정리하면 <strong>온톨로지는 마진 엔진의 필요조건이고, 시장 선택과 온보딩 제품화가 충분조건</strong>이다. 이 셋이 맞물릴 때만 SI 마진(30~45%)이 SaaS 마진(70~80%)으로 실제 전환된다.</p></script>
+<script type="text/html" data-page="prd-4"><h1 class="page-title">4. 시장 전략</h1>
+<h3 id="h1">4.1 시장 선택 원칙</h3>
+<p>이 제품은 대기업으로 갈수록 ROI가 커지지만, 동시에 제품화 난이도와 현금 회수 리스크도 커진다. 따라서 초기 시장은 "가장 큰 고객"이 아니라 <strong>온톨로지의 재사용 효과를 빠르게 증명할 수 있고, 세일즈 사이클이 짧으며, SI화 위험을 통제할 수 있는 고객</strong>으로 잡는다.</p>
+<p>시장 선택 기준:</p>
+<ul><li>월 회계 처리량이 충분히 많아 자동화 ROI가 명확할 것</li><li>고객사별 규정·권한·계정과목 차이가 있어 온톨로지 차별성이 드러날 것</li><li>단일 워크플로우 PoC로 4~6주 안에 가치 검증이 가능할 것</li><li>SAP 또는 표준 ERP 연동 범위를 읽기 중심으로 시작할 수 있을 것</li><li>고객이 너무 보수적이지 않아 AI 보조 검토를 실제 운영에 태워볼 수 있을 것</li><li>한 번 만든 온톨로지·규정·워크플로우 템플릿을 다른 고객에게 재사용할 수 있을 것</li></ul>
+<h3 id="h2">4.2 1차 타겟 ICP</h3>
+<p>초기 타겟은 <strong>SAP 사용 중견기업 + 회계 BPO/SSC</strong>로 설정한다. 대기업은 높은 ACV가 매력적이지만, 초기 제품이 바로 들어가기에는 세일즈 사이클, 보안 심사, PoC 관문, 커스터마이징 부담이 크다. 따라서 대기업은 레퍼런스와 템플릿이 쌓인 뒤 Phase 2에서 공략한다.</p>
+<div class="tablewrap"><table><thead><tr><th>타겟</th><th>우선순위</th><th>선정 이유</th><th>주요 리스크</th><th>대응</th></tr></thead><tbody><tr><td>SAP 사용 중견기업</td><td>Beachhead</td><td>처리량과 ROI가 충분하고 대기업보다 의사결정이 빠름</td><td>SAP 커스터마이징, 온보딩 부담</td><td>단일 워크플로우 PoC, 읽기 연동 우선, 표준 매핑 템플릿</td></tr><tr><td>회계 BPO / 기장·세무 대행 / 회계 아웃소싱</td><td>Beachhead</td><td>1개 고객이 다수 고객사의 회계 업무를 처리해 온톨로지 재사용 효과가 큼</td><td>고객사별 편차, 데이터 품질</td><td>멀티테넌트 템플릿, 고객사별 Overlay, 처리량 기반 과금</td></tr><tr><td>그룹사 SSC</td><td>Phase 1.5</td><td>계열사별 반복 업무가 많고 표준화 니즈가 강함</td><td>내부 이해관계자와 권한 복잡도</td><td>한 계열사 또는 한 업무로 시작 후 확장</td></tr><tr><td>SAP 대기업</td><td>Phase 2</td><td>ACV가 크고 내부통제·감사 니즈가 강함</td><td>6~18개월 세일즈 사이클, 보안·법무·PoC 장벽</td><td>중견/BPO 레퍼런스 확보 후 진입, 구축형 패키지로 분리</td></tr></tbody></table></div>
+<p>1차 업종은 다음 순서로 공략한다.</p>
+<div class="tablewrap"><table><thead><tr><th>우선순위</th><th>섹터</th><th>선정 이유</th></tr></thead><tbody><tr><td>1</td><td>유통·리테일·프랜차이즈</td><td>매장·지점·거래처·법인카드 사용량이 많고 예외 검토 부담이 큼</td></tr><tr><td>2</td><td>제조 중견기업</td><td>구매오더, 입고, 세금계산서, SAP 데이터가 연결되어 3-Way Matching 가치가 큼</td></tr><tr><td>3</td><td>플랫폼·커머스</td><td>거래처와 정산 데이터가 많고 빠른 마감이 중요</td></tr><tr><td>4</td><td>회계 BPO·SSC</td><td>다수 고객사 또는 계열사에 같은 워크플로우를 반복 적용할 수 있음</td></tr></tbody></table></div>
+<h3 id="h3">4.3 왜 이 시장인가: 장점과 리스크를 함께 본다</h3>
+<p>SAP 기반 중견·대기업 시장은 겉으로는 매력적이지만, 그 매력은 곧 리스크이기도 하다. 따라서 초기 전략은 대기업 정면 돌파가 아니라 <strong>중견+BPO에서 반복 가능한 제품 패턴을 먼저 증명하고, 대기업은 검증된 패키지로 확장</strong>하는 것이다.</p>
+<div class="tablewrap"><table><thead><tr><th>장점으로 보이는 요소</th><th>뒤집으면 생기는 리스크</th><th>제품 전략</th></tr></thead><tbody><tr><td>처리량이 많아 ROI가 크다</td><td>이미 SAP 자체 기능, RPA, SI, 컨설팅사가 진입한 경쟁 시장이다</td><td>대기업 정면 경쟁보다 법인카드·세금계산서 단일 워크플로우로 빠른 PoC</td></tr><tr><td>규정·권한이 복잡해 온톨로지가 빛난다</td><td>온보딩이 지옥이 되고 SI로 회귀할 수 있다</td><td>표준 Finance Ontology + 고객사 Overlay + 산업별 템플릿으로 설정화</td></tr><tr><td>SAP 커넥터가 진입장벽이다</td><td>우리에게도 개발·유지보수 부담이 큰 장벽이다</td><td>MVP는 읽기 연동·파일 업로드·제한된 posting부터 시작하고 어댑터를 점진 확대</td></tr><tr><td>높은 ACV를 기대할 수 있다</td><td>세일즈 사이클이 길고 현금 회수가 느리다</td><td>중견/BPO에서 4~6주 PoC와 월 구독/사용량 과금으로 빠른 매출 검증</td></tr><tr><td>감사·내부통제가 구매 이유다</td><td>AI 오류에 대한 허용도가 낮고 도입 의사결정이 보수적이다</td><td>자동 승인보다 Human Review와 일괄 승인 후보로 시작, 감사 로그와 근거 노출을 기본 제공</td></tr></tbody></table></div>
+<p>이 접근의 핵심은 "대기업을 포기한다"가 아니다. 대기업이 요구하는 수준의 제품 안정성은 최종적으로 필요하지만, 처음부터 대기업의 복잡도를 모두 떠안으면 제품이 아니라 SI가 된다. 초기에는 중견기업과 BPO에서 반복 가능한 온톨로지·워크플로우·온보딩 패턴을 축적하고, 이를 대기업 진입권으로 사용한다.</p>
+<h3 id="h4">4.4 시장 근거</h3>
+<p>시장 근거는 정량 추정치보다 방향성 중심으로 사용한다.</p>
+<ul><li>SAP는 Finance 영역에서 AI 기반 프로세스가 예측 정확도, 보고 주기 단축, 의사결정, 리스크 및 컴플라이언스 관리 개선에 기여한다고 설명한다.</li><li>국내 전자세금계산서는 법인사업자에게 의무화되어 있고, 개인사업자도 매출 기준에 따라 의무 발급 대상이 확대되어 왔다. 이는 세금계산서 데이터가 디지털 형태로 축적되는 기반이 된다.</li><li>연결 내부회계관리제도는 자산 규모별로 순차 적용되어 상장사와 그룹사의 내부통제·감사 대응 부담을 키운다.</li><li>글로벌 AP 자동화 제품들은 invoice capture, PO matching, approval routing, ERP sync, audit trail을 핵심 가치로 제시한다. 이 영역은 이미 수요가 검증된 시장이다.</li></ul>
+<h3 id="h5">4.5 초기 GTM</h3>
+<p>초기 Go-To-Market은 대기업 장기 세일즈보다 <strong>고빈도 단일 워크플로우 PoC → 유료 운영 → 워크플로우 확장</strong>이 적합하다.</p>
+<ol><li>SAP 사용 중견기업 또는 회계 BPO를 대상으로 1개 워크플로우 PoC를 제안한다.</li><li>법인카드 검토 또는 세금계산서 3-Way Matching 중 고객의 처리량이 가장 큰 업무로 시작한다.</li><li>초기 PoC는 4~6주로 제한하고, SAP write-back 없이 읽기 연동·파일 업로드·샘플 데이터로 가치를 먼저 검증한다.</li><li>자동 처리 후보율, 검토 시간 절감, 예외 탐지 유효율, 검토자 수정률을 측정한다.</li><li>PoC 성공 시 월 구독 + 처리량 과금으로 유료 운영 전환한다.</li><li>같은 고객 안에서 두 번째 워크플로우 또는 다수 고객사/계열사로 확장한다.</li><li>반복 설정은 표준 온톨로지와 산업별 템플릿으로 흡수해 대기업 Phase 2 진입 자산으로 만든다.</li></ol></script>
+<script type="text/html" data-page="prd-5"><h1 class="page-title">5. 사용자와 페르소나</h1>
+<h3 id="h1">5.1 CFO</h3>
+<p>주요 관심사:</p>
+<ul><li>비용 절감</li><li>마감 리드타임 단축</li><li>내부통제 강화</li><li>회계 인력 생산성 향상</li></ul>
+<p>성공 기준:</p>
+<ul><li>자동화로 절감된 시간과 비용이 명확히 측정됨</li><li>감사 리스크와 오류가 감소함</li><li>추가 인력 없이 처리량 증가를 감당함</li></ul>
+<h3 id="h2">5.2 회계팀장 / Controller</h3>
+<p>주요 관심사:</p>
+<ul><li>반복 검토 업무 감소</li><li>예외 건 우선순위화</li><li>업무 표준화</li><li>규정 변경 반영</li></ul>
+<p>성공 기준:</p>
+<ul><li>검토자는 예외 건에만 집중함</li><li>AI 판단 근거가 회계 실무자가 납득할 수준으로 제공됨</li><li>규정 변경 시 운영자가 직접 정책을 수정할 수 있음</li></ul>
+<h3 id="h3">5.3 회계 담당자 / Reviewer</h3>
+<p>주요 관심사:</p>
+<ul><li>오늘 처리해야 할 검토 건을 빠르게 파악</li><li>AI 추천의 근거 확인</li><li>일괄 처리</li><li>수정 결과가 다음 추천에 반영됨</li></ul>
+<p>성공 기준:</p>
+<ul><li>검토 화면에서 필요한 근거를 한 번에 확인</li><li>반복적인 정상 건은 자동 또는 일괄 승인</li><li>오류 건은 빠르게 반려 또는 보류 처리</li></ul>
+<h3 id="h4">5.4 IT / SAP 관리자</h3>
+<p>주요 관심사:</p>
+<ul><li>SAP 연동 안정성</li><li>권한과 보안</li><li>운영 장애 최소화</li><li>커스터마이징 부담 감소</li></ul>
+<p>성공 기준:</p>
+<ul><li>SAP 연결 상태와 동기화 로그를 확인 가능</li><li>장애 발생 시 재처리와 원인 추적 가능</li><li>고객사별 SAP 차이를 설정과 어댑터로 흡수</li></ul>
+<h3 id="h5">5.5 내부감사 / 컴플라이언스 담당자</h3>
+<p>주요 관심사:</p>
+<ul><li>의사결정 로그</li><li>권한 통제</li><li>정책 위반 추적</li><li>감사 대응 증빙</li></ul>
+<p>성공 기준:</p>
+<ul><li>누가, 언제, 어떤 근거로 승인했는지 추적 가능</li><li>AI 자동 승인 건도 판단 근거와 신뢰도 로그가 남음</li><li>정책 변경 이력과 영향 범위를 확인 가능</li></ul></script>
+<script type="text/html" data-page="prd-6"><h1 class="page-title">6. 제품 구조</h1>
+<h3 id="h1">6.1 핵심 구성</h3>
+<div class="tablewrap"><table><thead><tr><th>구성 요소</th><th>설명</th></tr></thead><tbody><tr><td>Finance Ontology Core</td><td>회계 객체, 관계, 속성, 권한, 워크플로우를 정의하는 도메인 모델</td></tr><tr><td>Tenant Ontology Overlay</td><td>고객사별 계정과목, 조직, 규정, 승인 권한, SAP 매핑을 표준 온톨로지 위에 확장</td></tr><tr><td>Knowledge Layer</td><td>사내 규정, 세법, 과거 처리 사례, 분개 패턴을 RAG와 그래프로 결합</td></tr><tr><td>Workflow Engine</td><td>업무별 자동화 단계, 조건, 예외 분기, 신뢰도 임계값 실행</td></tr><tr><td>AI Decision Service</td><td>분류, 매칭, 이상 탐지, 분개 추천, 판단 근거 생성</td></tr><tr><td>Human Review UI</td><td>예외 검토, 근거 확인, 일괄 처리, 수정 피드백</td></tr><tr><td>Integration Layer</td><td>SAP, 홈택스, 카드사, 문서 저장소, ERP 연동</td></tr><tr><td>Audit &amp; Metering Layer</td><td>의사결정 로그, 권한 로그, 처리량, 자동화 성과, 과금 이벤트 기록</td></tr></tbody></table></div>
+<h3 id="h2">6.2 온톨로지 기반 제품화 원칙</h3>
+<p>제품화 단계에서 온톨로지는 내부 기술이 아니라 고객 가치로 노출되어야 한다.</p>
+<p>원칙:</p>
+<ul><li>표준 Finance Ontology를 기본 제공한다.</li><li>고객사는 자신의 계정과목, 조직, 권한, 규정을 표준 모델에 매핑한다.</li><li>워크플로우는 회계 객체와 관계를 기반으로 구성된다.</li><li>AI 판단은 참조한 객체, 규정, 과거 사례와 함께 설명된다.</li><li>고객사의 수정·승인 패턴은 온톨로지와 지식 기반 개선에 반영된다.</li></ul>
+<h3 id="h3">6.3 데이터 흐름</h3>
+<ol><li>외부 시스템에서 원천 데이터 수집</li><li>표준 Finance Ontology 객체로 정규화</li><li>고객사별 Tenant Overlay와 매핑</li><li>RAG/그래프 기반 관련 규정과 과거 사례 검색</li><li>Workflow Engine이 업무별 판단 단계 실행</li><li>AI Decision Service가 추천 결과, 신뢰도, 근거 생성</li><li>신뢰도 임계값에 따라 자동 처리 또는 Human Review 분기</li><li>처리 결과를 SAP에 반영</li><li>모든 이벤트를 Audit &amp; Metering Layer에 기록</li></ol></script>
+<script type="text/html" data-page="prd-7"><h1 class="page-title">7. MVP 범위</h1>
+<h3 id="h1">7.1 MVP 목표</h3>
+<p>MVP 목표는 1~2개 고객사에서 다음을 증명하는 것이다.</p>
+<ul><li>고객사별 회계 규정과 SAP 매핑을 설정형으로 흡수할 수 있다.</li><li>두 가지 고빈도 회계 워크플로우에서 자동 처리율과 절감 시간을 측정할 수 있다.</li><li>검토자가 AI 판단 근거와 신뢰도를 보고 실제 업무 처리에 사용할 수 있다.</li><li>제품 로그를 기반으로 사용량/성과 기반 과금이 가능하다.</li></ul>
+<h3 id="h2">7.2 MVP 포함 기능</h3>
+<ul><li>법인카드 내역 자동 검토</li><li>세금계산서 3-Way Matching</li><li>관리자 콘솔 기본형</li><li>검토자 Review UI</li><li>고객사 온보딩 기본형</li><li>SAP 연동 패키지</li><li>사내 규정 문서 업로드 및 RAG 검색</li><li>신뢰도 임계값 기반 자동/수동 분기</li><li>처리 이벤트 로그와 KPI 대시보드</li></ul>
+<h3 id="h3">7.3 MVP 제외 기능</h3>
+<ul><li>완전한 노코드 워크플로우 빌더</li><li>모든 ERP 지원</li><li>전표 자동분개 전면 자동화</li><li>산업별 온톨로지 마켓플레이스</li><li>고객사 간 벤치마크 리포트</li><li>완전 셀프서브 가입과 결제</li></ul></script>
+<script type="text/html" data-page="prd-8"><h1 class="page-title">8. 핵심 워크플로우 1: 법인카드 내역 자동 검토</h1>
+<h3 id="h1">8.1 목적</h3>
+<p>법인카드 사용 내역을 사내 규정, 증빙, 조직, 비용 유형, 과거 처리 패턴과 비교하여 정상 건은 자동 처리하고, 리스크가 있는 건은 검토자에게 전달한다.</p>
+<h3 id="h2">8.2 입력 데이터</h3>
+<ul><li>카드 승인 내역</li><li>카드 매입 내역</li><li>영수증·증빙 이미지 또는 전자 증빙</li><li>사용자, 부서, 직급, 비용센터</li><li>사내 비용 규정</li><li>계정과목표</li><li>과거 유사 처리 사례</li><li>SAP 전표 또는 비용 처리 데이터</li></ul>
+<h3 id="h3">8.3 주요 판단 항목</h3>
+<ul><li>증빙 누락 여부</li><li>사용 가능 시간·장소·업종 위반 여부</li><li>한도 초과 여부</li><li>주말·심야·휴일 사용 여부</li><li>개인 사용 가능성</li><li>중복 청구 가능성</li><li>적정 계정과목</li><li>부가세 공제 가능 여부</li><li>승인권자 필요 여부</li></ul>
+<h3 id="h4">8.4 기본 흐름</h3>
+<ol><li>카드 승인 내역과 증빙을 수집한다.</li><li>거래처, 업종, 금액, 시간, 사용자, 부서를 표준 객체로 변환한다.</li><li>고객사 비용 규정과 조직 권한을 조회한다.</li><li>과거 유사 처리 사례와 분개 패턴을 검색한다.</li><li>정책 위반 가능성과 적정 계정과목을 판단한다.</li><li>AI 판단 근거와 신뢰도 점수를 생성한다.</li><li>신뢰도와 리스크 수준에 따라 자동 승인, 일괄 승인 후보, 수동 검토로 분기한다.</li><li>승인 건은 SAP 전표 생성 또는 전표 생성 후보로 전달한다.</li><li>검토자의 수정 결과를 학습 피드백으로 기록한다.</li></ol>
+<h3 id="h5">8.5 상태 정의</h3>
+<div class="pipeline"><div class="pl-step"><span class="pl-chip">Imported</span><span class="pl-desc">원천 데이터 수집 완료</span></div><div class="pl-step"><span class="pl-chip">Normalized</span><span class="pl-desc">온톨로지 객체 변환 완료</span></div><div class="pl-step"><span class="pl-chip">Evidence Matched</span><span class="pl-desc">증빙 매칭 완료</span></div><div class="pl-step"><span class="pl-chip">Policy Checked</span><span class="pl-desc">사내 규정 검토 완료</span></div><div class="pl-step"><span class="pl-chip">AI Suggested</span><span class="pl-desc">AI 추천과 근거 생성 완료</span></div><div class="pl-step"><span class="pl-chip">Auto Approved</span><span class="pl-desc">자동 승인 완료</span></div><div class="pl-step"><span class="pl-chip">Review Required</span><span class="pl-desc">검토자 확인 필요</span></div><div class="pl-step"><span class="pl-chip">Reviewer Edited</span><span class="pl-desc">검토자 수정 완료</span></div><div class="pl-step"><span class="pl-chip">Posted to SAP</span><span class="pl-desc">SAP 반영 완료</span></div><div class="pl-step"><span class="pl-chip">Exception Closed</span><span class="pl-desc">예외 처리 완료</span></div></div>
+<h3 id="h6">8.6 검토자 UX</h3>
+<p>검토자 화면은 다음 정보를 제공한다.</p>
+<ul><li>리스크 점수순 검토 대기 목록</li><li>정책 위반 가능성 태그</li><li>AI 추천 계정과목과 대체 후보</li><li>참조된 사내 규정 문구</li><li>과거 유사 처리 사례</li><li>신뢰도 점수와 점수 구성 요인</li><li>증빙 원본 미리보기</li><li>승인, 수정 승인, 반려, 보류, 일괄 처리 액션</li></ul>
+<p>일괄 처리는 "동일 규정, 동일 계정과목, 동일 리스크 수준"으로 묶인 건에 한정한다.</p>
+<h3 id="h7">8.7 자동 처리 기준</h3>
+<p>초기 MVP에서는 보수적으로 설정한다.</p>
+<ul><li>증빙이 존재한다.</li><li>금액이 정책 한도 내에 있다.</li><li>거래처와 업종이 허용 범위에 있다.</li><li>과거 유사 처리와 계정과목 추천이 일치한다.</li><li>AI 신뢰도가 90점 이상이다.</li><li>최근 30일 내 동일 조건의 검토자 반려 이력이 없다.</li></ul>
+<p>조건을 모두 만족하면 자동 승인 후보가 된다. 운영 초기에는 자동 승인 대신 일괄 승인 후보로 먼저 제공하고, 고객이 임계값을 조정할 수 있게 한다.</p>
+<h3 id="h8">8.8 KPI</h3>
+<ul><li>자동 승인 후보율</li><li>실제 자동 승인율</li><li>검토자 수정률</li><li>건당 평균 검토 시간</li><li>정책 위반 탐지 건수</li><li>증빙 누락 탐지율</li><li>SAP 전표 생성 자동화율</li></ul></script>
+<script type="text/html" data-page="prd-9"><h1 class="page-title">9. 핵심 워크플로우 2: 세금계산서 3-Way Matching</h1>
+<h3 id="h1">9.1 목적</h3>
+<p>거래처 발행 세금계산서, 홈택스 데이터, SAP 구매·입고 데이터를 대조하여 정상 건은 자동 매칭하고, 금액·수량·거래처·품목 불일치 건은 검토자에게 전달한다.</p>
+<h3 id="h2">9.2 입력 데이터</h3>
+<ul><li>거래처 발행 세금계산서</li><li>홈택스 전자세금계산서 수취 데이터</li><li>SAP 구매오더</li><li>SAP 입고·검수 데이터</li><li>거래처 마스터</li><li>품목 마스터</li><li>계약·단가 정보</li><li>과거 매칭 이력</li></ul>
+<h3 id="h3">9.3 주요 판단 항목</h3>
+<ul><li>공급자 사업자번호 일치 여부</li><li>공급가액·세액·합계금액 일치 여부</li><li>구매오더와 품목·수량 일치 여부</li><li>입고·검수 완료 여부</li><li>중복 세금계산서 여부</li><li>단가 차이 허용 범위 여부</li><li>분할 납품 또는 부분 청구 여부</li><li>거래처별 반복 오류 패턴</li></ul>
+<h3 id="h4">9.4 기본 흐름</h3>
+<ol><li>세금계산서와 홈택스 데이터를 수집한다.</li><li>SAP 구매오더, 입고, 검수 데이터를 조회한다.</li><li>거래처, 품목, 금액, 수량을 표준 객체로 정규화한다.</li><li>세금계산서, 홈택스, SAP 데이터를 3-Way로 대조한다.</li><li>불일치 항목과 원인 후보를 생성한다.</li><li>신뢰도 높은 정상 건은 자동 매칭한다.</li><li>예외 건은 검토자 화면으로 전달한다.</li><li>검토자는 승인, 보류, 거래처 문의, SAP 수정 요청을 수행한다.</li><li>처리 결과를 SAP에 반영하고 감사 로그를 남긴다.</li></ol>
+<h3 id="h5">9.5 상태 정의</h3>
+<div class="pipeline"><div class="pl-step"><span class="pl-chip">Invoice Imported</span><span class="pl-desc">세금계산서 수집 완료</span></div><div class="pl-step"><span class="pl-chip">Hometax Matched</span><span class="pl-desc">홈택스 데이터 매칭 완료</span></div><div class="pl-step"><span class="pl-chip">SAP Data Linked</span><span class="pl-desc">SAP 구매·입고 데이터 연결 완료</span></div><div class="pl-step"><span class="pl-chip">Matching Completed</span><span class="pl-desc">3-Way Matching 완료</span></div><div class="pl-step"><span class="pl-chip">Auto Matched</span><span class="pl-desc">자동 매칭 완료</span></div><div class="pl-step"><span class="pl-chip">Exception Found</span><span class="pl-desc">불일치 발견</span></div><div class="pl-step"><span class="pl-chip">Review Required</span><span class="pl-desc">검토자 확인 필요</span></div><div class="pl-step"><span class="pl-chip">Vendor Inquiry</span><span class="pl-desc">거래처 문의 필요</span></div><div class="pl-step"><span class="pl-chip">SAP Correction Requested</span><span class="pl-desc">SAP 데이터 수정 요청</span></div><div class="pl-step"><span class="pl-chip">Posted / Closed</span><span class="pl-desc">처리 완료</span></div></div>
+<h3 id="h6">9.6 검토자 UX</h3>
+<p>검토자 화면은 세 가지 데이터를 나란히 비교할 수 있어야 한다.</p>
+<ul><li>세금계산서 데이터</li><li>홈택스 데이터</li><li>SAP 구매오더·입고 데이터</li></ul>
+<p>필수 UX:</p>
+<ul><li>불일치 필드 하이라이트</li><li>허용 오차 범위 표시</li><li>AI가 추정한 원인 후보</li><li>참조 규정 또는 계약 조건</li><li>거래처별 반복 이슈 패턴</li><li>자동 매칭 가능한 유사 건 묶음</li><li>승인, 보류, 거래처 문의, SAP 수정 요청, 일괄 승인 액션</li></ul>
+<h3 id="h7">9.7 자동 처리 기준</h3>
+<ul><li>사업자번호, 공급가액, 세액, 합계금액이 일치한다.</li><li>구매오더와 입고 데이터가 존재한다.</li><li>수량과 단가가 허용 오차 범위 내다.</li><li>중복 세금계산서가 아니다.</li><li>거래처가 정상 상태다.</li><li>신뢰도가 95점 이상이다.</li></ul>
+<p>금액 관련 업무는 리스크가 크므로 법인카드보다 높은 신뢰도 임계값을 적용한다.</p>
+<h3 id="h8">9.8 KPI</h3>
+<ul><li>자동 매칭률</li><li>예외 건 비율</li><li>예외 처리 평균 시간</li><li>월 마감 리드타임 감소</li><li>중복·오류 세금계산서 탐지 건수</li><li>거래처 문의 건수 감소율</li><li>검토자 수정률</li></ul></script>
+<script type="text/html" data-page="prd-10"><h1 class="page-title">10. 기능 요구사항</h1>
+<h3 id="h1">10.1 공통 기능</h3>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>요구사항</th><th>우선순위</th></tr></thead><tbody><tr><td>FR-001</td><td>고객사별 Tenant Ontology Overlay를 생성할 수 있다</td><td>MVP</td></tr><tr><td>FR-002</td><td>계정과목, 거래처, 증빙, 전표, 세무항목 객체를 관리할 수 있다</td><td>MVP</td></tr><tr><td>FR-003</td><td>사내 규정 문서를 업로드하고 검색 가능 상태로 만들 수 있다</td><td>MVP</td></tr><tr><td>FR-004</td><td>워크플로우별 신뢰도 임계값을 설정할 수 있다</td><td>MVP</td></tr><tr><td>FR-005</td><td>AI 판단 결과에 참조 규정과 데이터 근거를 연결한다</td><td>MVP</td></tr><tr><td>FR-006</td><td>검토자의 승인·수정·반려 이력을 감사 로그로 남긴다</td><td>MVP</td></tr><tr><td>FR-007</td><td>처리 이벤트를 과금 가능한 미터링 이벤트로 기록한다</td><td>MVP</td></tr><tr><td>FR-008</td><td>고객사별 권한과 데이터 범위를 설정할 수 있다</td><td>Phase 2</td></tr><tr><td>FR-009</td><td>워크플로우를 노코드로 추가·수정할 수 있다</td><td>Phase 2</td></tr><tr><td>FR-010</td><td>산업별 온톨로지 템플릿을 제공한다</td><td>Future</td></tr></tbody></table></div>
+<h3 id="h2">10.2 비기능 요구사항</h3>
+<div class="tablewrap"><table><thead><tr><th>ID</th><th>요구사항</th><th>우선순위</th></tr></thead><tbody><tr><td>NFR-001</td><td>모든 자동 처리와 검토자 처리에 감사 로그를 남긴다</td><td>MVP</td></tr><tr><td>NFR-002</td><td>고객사별 데이터는 테넌시 단위로 분리한다</td><td>MVP</td></tr><tr><td>NFR-003</td><td>민감 데이터는 고객 정책에 따라 사내 LLM 또는 외부 API로 라우팅한다</td><td>MVP</td></tr><tr><td>NFR-004</td><td>SAP 연동 실패 시 재처리 큐와 오류 로그를 제공한다</td><td>MVP</td></tr><tr><td>NFR-005</td><td>주요 화면 응답 시간은 일반 조회 기준 3초 이내를 목표로 한다</td><td>MVP</td></tr><tr><td>NFR-006</td><td>권한 없는 사용자는 데이터와 판단 근거에 접근할 수 없다</td><td>MVP</td></tr><tr><td>NFR-007</td><td>설정 변경 이력과 변경자를 추적한다</td><td>Phase 2</td></tr><tr><td>NFR-008</td><td>대량 처리 시 배치와 실시간 처리를 분리한다</td><td>Phase 2</td></tr></tbody></table></div></script>
+<script type="text/html" data-page="prd-11"><h1 class="page-title">11. 기존 자산 활용 계획과 신규 개발 범위</h1>
+<h3 id="h1">11.1 기존 자산 활용</h3>
+<div class="tablewrap"><table><thead><tr><th>기존 자산</th><th>활용 방식</th></tr></thead><tbody><tr><td>Finance Ontology 코어</td><td>표준 Finance Ontology로 제품화</td></tr><tr><td>온톨로지 기반 권한 모델</td><td>고객사별 조직·역할·데이터 범위 관리에 활용</td></tr><tr><td>온톨로지 기반 워크플로우 정의</td><td>Workflow Builder의 실행 모델로 활용</td></tr><tr><td>회계규정·세법·분개패턴 RAG</td><td>AI 판단 근거와 추천 설명에 활용</td></tr><tr><td>테넌시별 문서 관리</td><td>고객사별 규정 문서 업로드와 지식 격리에 활용</td></tr><tr><td>LLM 라우터</td><td>민감 데이터 처리 정책에 활용</td></tr><tr><td>법인카드 검토 구축 사례</td><td>MVP 워크플로우 1로 제품화</td></tr><tr><td>세금계산서 3-Way Matching 구축 사례</td><td>MVP 워크플로우 2로 제품화</td></tr><tr><td>SAP Connector</td><td>초기 ERP 연동 핵심 자산으로 활용</td></tr><tr><td>관리자 콘솔 / Review UI</td><td>제품 수준 UI로 재설계</td></tr></tbody></table></div>
+<h3 id="h2">11.2 신규 개발 범위</h3>
+<div class="tablewrap"><table><thead><tr><th>영역</th><th>신규 개발 필요 내용</th></tr></thead><tbody><tr><td>온보딩</td><td>고객사 셀프서비스 설정 플로우</td></tr><tr><td>제품형 관리자 콘솔</td><td>설정 변경 영향도, 매핑 상태, 워크플로우 운영 상태</td></tr><tr><td>Review UX 고도화</td><td>AI 근거, 참조 규정, 신뢰도 구성, 일괄 처리</td></tr><tr><td>미터링</td><td>처리 건수, 자동 처리 건수, 절감 시간, 과금 이벤트 수집</td></tr><tr><td>KPI 대시보드</td><td>자동화 성과, 예외율, 수정률, ROI 표시</td></tr><tr><td>패키징</td><td>구축형과 SaaS형 배포 모델 분리</td></tr><tr><td>가격 정책 엔진</td><td>기본료, 사용량, 성과 기반 과금을 계산할 수 있는 로그 체계</td></tr><tr><td>운영 도구</td><td>SAP 연동 상태, 재처리, 장애 추적</td></tr></tbody></table></div></script>
+<script type="text/html" data-page="prd-12"><h1 class="page-title">12. 우선순위</h1>
+<h3 id="h1">12.1 MVP</h3>
+<ul><li>법인카드 자동 검토</li><li>세금계산서 3-Way Matching</li><li>SAP 연동 기본 패키지</li><li>규정 문서 업로드와 RAG 검색</li><li>AI 판단 근거와 신뢰도</li><li>Review UI</li><li>고객사 온보딩 기본형</li><li>자동 처리율과 절감 시간 대시보드</li><li>미터링 이벤트 로그</li></ul>
+<h3 id="h2">12.2 Phase 2</h3>
+<ul><li>마감 체크리스트 자동 트래킹</li><li>계정잔액 이상치 탐지</li><li>Workflow Builder 고도화</li><li>권한 모델 고도화</li><li>감사 리포트</li><li>고객사별 정책 시뮬레이션</li><li>과금 대시보드</li><li>전표 자동분개 제안 고도화</li></ul>
+<h3 id="h3">12.3 Future</h3>
+<ul><li>전표 자동분개 자동 승인 확대</li><li>멀티 ERP 지원</li><li>산업별 Finance Ontology 템플릿</li><li>고객사 간 익명 벤치마크</li><li>회계팀 Copilot</li><li>온톨로지 기반 자동 워크플로우 추천</li><li>성과 기반 과금 자동 정산</li></ul></script>
+<script type="text/html" data-page="prd-13"><h1 class="page-title">13. 성공 지표</h1>
+<p><strong>North Star Metric:</strong> <strong>"검토자 개입 없이 정상 완료된 자동 처리 건수(Auto-completed transactions)"</strong>. 이 지표는 제품 가치(검토 시간 절감)와 매출(처리량·성과 과금)이 동시에 붙는 단일 지표로, 아래 제품·사업·운영 KPI는 모두 이 값을 끌어올리는 방향으로 정렬된다. 자동 처리 건수↑ = 고객 절감↑ = 미터링 매출↑ = 마진↑(§3.4)의 선순환이 핵심이다.</p>
+<h3 id="h1">13.1 제품 KPI</h3>
+<div class="tablewrap"><table><thead><tr><th>KPI</th><th>정의</th><th>MVP 목표</th></tr></thead><tbody><tr><td>Time to Value</td><td>계약 후 첫 자동화 성과 확인까지 걸리는 시간</td><td>8주 이내</td></tr><tr><td>자동 처리율</td><td>전체 처리 건 중 검토자 개입 없이 처리된 비율</td><td>법인카드 40% 이상, 세금계산서 30% 이상</td></tr><tr><td>자동 승인 후보율</td><td>자동 승인 조건을 만족한 건의 비율</td><td>법인카드 60% 이상</td></tr><tr><td>검토자 수정률</td><td>AI 추천 대비 검토자가 수정한 비율</td><td><span class="pctwrap">10% 이하<i style="width:10%"></i></span></td></tr><tr><td>예외 탐지 정확도</td><td>검토자가 유효하다고 판단한 예외 탐지 비율</td><td><span class="pctwrap">85% 이상<i style="width:85%"></i></span></td></tr><tr><td>평균 검토 시간</td><td>수동 검토 건당 평균 처리 시간</td><td>기존 대비 50% 감소</td></tr><tr><td>근거 노출률</td><td>AI 판단에 참조 규정 또는 데이터 근거가 연결된 비율</td><td><span class="pctwrap">95% 이상<i style="width:95%"></i></span></td></tr></tbody></table></div>
+<h3 id="h2">13.2 사업 KPI</h3>
+<div class="tablewrap"><table><thead><tr><th>KPI</th><th>정의</th><th>목표</th></tr></thead><tbody><tr><td>PoC 전환율</td><td>PoC 후 유료 계약 전환 비율</td><td><span class="pctwrap">50% 이상<i style="width:50%"></i></span></td></tr><tr><td>ARR per Customer</td><td>고객당 연간 반복 매출</td><td>1억 원 이상</td></tr><tr><td>Gross Margin</td><td>SaaS/라이선스 매출 총이익률</td><td><span class="pctwrap">70% 이상<i style="width:70%"></i></span></td></tr><tr><td>Expansion Revenue</td><td>동일 고객 내 워크플로우·계열사 확장 매출</td><td>12개월 내 30% 이상</td></tr><tr><td>Implementation Ratio</td><td>구축·설정 비용 대비 반복 매출 비율</td><td>2년 내 반복 매출 우위</td></tr></tbody></table></div>
+<blockquote><strong>ARR per Customer 1억+는 확장 후 목표</strong>다. Starter 단독(월 500만·연 6,000만, §15)이 아니라 <strong>Starter로 진입 → 12개월 내 Pro 전환·2차 워크플로우·계열사 확장(Expansion Revenue)</strong>으로 고객당 1억+에 도달하는 land-and-expand 경로를 전제한다.</blockquote>
+<h3 id="h3">13.3 운영 KPI</h3>
+<div class="tablewrap"><table><thead><tr><th>KPI</th><th>정의</th><th>목표</th></tr></thead><tbody><tr><td>SAP 동기화 성공률</td><td>SAP 연동 작업 중 성공 비율</td><td><span class="pctwrap">99% 이상<i style="width:99%"></i></span></td></tr><tr><td>재처리 성공률</td><td>실패 이벤트 재처리 성공 비율</td><td><span class="pctwrap">95% 이상<i style="width:95%"></i></span></td></tr><tr><td>장애 대응 시간</td><td>고객 영향 장애 탐지 후 1차 대응 시간</td><td>1시간 이내</td></tr><tr><td>감사 로그 완전성</td><td>처리 건 중 감사 로그가 누락되지 않은 비율</td><td>99.9% 이상</td></tr></tbody></table></div></script>
+<script type="text/html" data-page="prd-14"><h1 class="page-title">14. 로드맵</h1>
+<h3 id="h1">14.1 리소스 가정</h3>
+<p>MVP 개발 리소스는 다음으로 가정한다.</p>
+<div class="tablewrap"><table><thead><tr><th>역할</th><th>인원</th></tr></thead><tbody><tr><td>Product Manager</td><td>1</td></tr><tr><td>Product Designer</td><td>1</td></tr><tr><td>Frontend Engineer</td><td>2</td></tr><tr><td>Backend Engineer</td><td>3</td></tr><tr><td>AI/ML Engineer</td><td>2</td></tr><tr><td>Data/Integration Engineer</td><td>2</td></tr><tr><td>QA Engineer</td><td>1</td></tr><tr><td>Solution Architect / CSM</td><td>1</td></tr></tbody></table></div>
+<h3 id="h2">14.2 Phase 0: Discovery &amp; Packaging, 0~4주</h3>
+<p>목표:</p>
+<ul><li>기존 구축 자산을 제품 모듈로 분해</li><li>MVP 고객 시나리오 확정</li><li>온톨로지 표준 모델과 고객사 Overlay 구조 정의</li></ul>
+<p>주요 산출물:</p>
+<ul><li>표준 Finance Ontology v0.1</li><li>법인카드·세금계산서 워크플로우 제품 스펙</li><li>SAP 연동 범위 정의</li><li>KPI와 미터링 이벤트 정의</li></ul>
+<h3 id="h3">14.3 Phase 1: MVP Build, 1~3개월</h3>
+<p>목표:</p>
+<ul><li>두 워크플로우를 실제 고객 데이터로 운영 가능한 수준까지 구현</li></ul>
+<p>주요 기능:</p>
+<ul><li>법인카드 자동 검토</li><li>세금계산서 3-Way Matching</li><li>Review UI</li><li>관리자 콘솔 기본형</li><li>온보딩 기본형</li><li>규정 문서 RAG</li><li>SAP 연동 패키지</li><li>KPI 대시보드</li></ul>
+<h3 id="h4">14.4 Phase 2: Controlled Launch, 3~6개월</h3>
+<p>목표:</p>
+<ul><li>2~3개 고객사에서 유료 PoC 또는 초기 상용 운영</li><li>반복되는 설정 작업을 제품 기능으로 흡수</li></ul>
+<p>주요 기능:</p>
+<ul><li>Workflow Builder 고도화</li><li>권한 모델 고도화</li><li>감사 로그 리포트</li><li>미터링 기반 과금 리포트</li><li>계정잔액 이상치 탐지</li><li>마감 체크리스트 자동 트래킹</li></ul>
+<h3 id="h5">14.5 Phase 3: Scale, 6~12개월</h3>
+<p>목표:</p>
+<ul><li>산업별 템플릿과 멀티 고객 확장</li><li>구축형과 SaaS형 가격 패키지 분리</li></ul>
+<p>주요 기능:</p>
+<ul><li>산업별 온톨로지 템플릿</li><li>전표 자동분개 고도화</li><li>멀티 ERP 지원</li><li>고객사별 벤치마크</li><li>성과 기반 과금 정산</li><li>회계팀 Copilot</li></ul></script>
+<script type="text/html" data-page="prd-15"><h1 class="page-title">15. 가격 전략</h1>
+<p>가격은 구축형과 SaaS형을 분리하되, 공통적으로 <strong>기본료 + 사용량 + 성과 기반 옵션</strong>을 적용한다.</p>
+<p>아래 가격은 과제 답안을 위한 가설이다. 실제 가격은 고객 규모, 처리 건수, SAP 커스터마이징 난이도, 보안 요구사항, 자동화 범위에 따라 검증이 필요하다.</p>
+<h3 id="h1">15.1 구축형 가격</h3>
+<p>대상:</p>
+<ul><li>대기업</li><li>보안·내부망 요구가 큰 고객</li><li>SAP 커스터마이징이 많은 고객</li><li>프라이빗 클라우드 또는 온프레미스 배포가 필요한 고객</li></ul>
+<p>가격 구조:</p>
+<div class="tablewrap"><table><thead><tr><th>항목</th><th>가격 가설</th><th>설명</th></tr></thead><tbody><tr><td>진단/PoC</td><td>8천만~1.5억 원</td><td>8~12주, 1개 워크플로우 기준</td></tr><tr><td>초기 구축비</td><td>3억~8억 원</td><td>SAP 연동, 온톨로지 매핑, 권한, 규정 문서 세팅</td></tr><tr><td>연간 라이선스</td><td>1.2억~3억 원</td><td>워크플로우 2개, 기본 사용량 포함</td></tr><tr><td>유지보수</td><td>라이선스 또는 구축비의 18~22%</td><td>운영 지원, 업데이트, 장애 대응</td></tr><tr><td>워크플로우 추가</td><td>5천만~1.5억 원</td><td>업무 복잡도와 연동 범위에 따라 과금</td></tr><tr><td>전용 LLM/보안 옵션</td><td>별도 견적</td><td>사내 LLM, 프라이빗 배포, 고급 보안 옵션</td></tr></tbody></table></div>
+<h3 id="h2">15.2 SaaS형 가격</h3>
+<p>대상:</p>
+<ul><li>중견기업</li><li>회계 BPO, 세무·기장 대행사, 그룹사 SSC</li><li>표준 SAP 또는 클라우드 ERP를 사용하는 기업</li><li>빠른 도입과 낮은 초기비를 원하는 고객</li></ul>
+<p>가격 구조:</p>
+<div class="tiers"><div class="tier"><div class="tier-name">Starter</div><div class="tier-price">월 500만 원</div><div class="tier-feat"><b>포함 범위</b> 1개 워크플로우, 월 5천 건, 기본 Review UI</div></div><div class="tier"><div class="tier-name">Pro</div><div class="tier-price">월 1,500만 원</div><div class="tier-feat"><b>포함 범위</b> 2개 워크플로우, 월 3만 건, SAP 연동, KPI 대시보드</div></div><div class="tier"><div class="tier-name">BPO / SSC</div><div class="tier-price">월 2,000만 원 + 테넌트당 과금</div><div class="tier-feat"><b>포함 범위</b> 다수 고객사/계열사 관리, 공통 템플릿, 고객사별 Overlay</div></div><div class="tier"><div class="tier-name">Enterprise SaaS</div><div class="tier-price">월 3,000만 원 이상</div><div class="tier-feat"><b>포함 범위</b> 3개 이상 워크플로우, 월 10만 건 이상, 고급 권한, 감사 리포트</div></div></div>
+<p>초과 사용량:</p>
+<ul><li>일반 처리 건: 건당 50~150원</li><li>AI 판단 근거 생성 포함 건: 건당 100~300원</li><li>SAP posting 또는 reverse sync 포함 건: 건당 100~500원</li><li>고급 이상 탐지 또는 분개 추천: 건당 300~1,000원</li></ul>
+<h3 id="h3">15.3 성과 기반 과금</h3>
+<p>성과 기반 과금은 고객 신뢰를 위해 처음부터 절감액 배분 방식만 적용하지 않는다. MVP 단계에서는 측정 가능한 이벤트 기반 과금을 중심으로 한다.</p>
+<p>추천 모델:</p>
+<ol><li>기본 구독료</li><li>처리량 기반 과금</li><li>자동 처리 성과 보너스</li><li>엔터프라이즈 고객 대상 절감액 공유 옵션</li></ol>
+<p>미터링 이벤트:</p>
+<div class="tablewrap"><table><thead><tr><th>이벤트</th><th>정의</th><th>활용</th></tr></thead><tbody><tr><td>processed_item</td><td>워크플로우가 처리한 전체 건</td><td>사용량 과금</td></tr><tr><td>auto_approved_item</td><td>검토자 개입 없이 승인된 건</td><td>성과 과금</td></tr><tr><td>reviewer_touched_item</td><td>검토자가 확인한 건</td><td>자동화율 계산</td></tr><tr><td>reviewer_overridden_item</td><td>검토자가 AI 추천을 수정한 건</td><td>품질 지표</td></tr><tr><td>exception_detected_item</td><td>정책 위반·불일치가 탐지된 건</td><td>리스크 탐지 성과</td></tr><tr><td>time_saved_minutes</td><td>기준 시간 대비 절감 시간</td><td>ROI 리포트</td></tr><tr><td>sap_posted_item</td><td>SAP에 반영된 건</td><td>고급 사용량 과금</td></tr></tbody></table></div>
+<p>성과 과금 예시:</p>
+<div class="tablewrap"><table><thead><tr><th>모델</th><th>과금 방식</th></tr></thead><tbody><tr><td>자동 처리 건 기반</td><td>자동 승인 완료 건당 100~300원</td></tr><tr><td>절감 시간 기반</td><td>고객과 합의한 시간당 비용 × 절감 시간 × 10~15%</td></tr><tr><td>예외 탐지 기반</td><td>유효 예외 탐지 건당 1,000~5,000원</td></tr><tr><td>마감 단축 보너스</td><td>월 마감 일정 목표 달성 시 월 정액 보너스</td></tr></tbody></table></div>
+<p>성과 기반 과금의 전제:</p>
+<ul><li>도입 전 기준 처리 시간을 고객과 합의한다.</li><li>자동 처리와 검토자 처리의 기준을 명확히 정의한다.</li><li>검토자 수정 또는 반려 건은 성과 과금에서 제외한다.</li><li>성과 과금은 월 구독료의 20~30%를 상한으로 두어 예측 가능성을 확보한다.</li></ul>
+<h3 id="h4">15.4 가격 포인트 근거</h3>
+<p>글로벌 AP 자동화 제품은 월 구독, 사용자 기반 과금, 거래량 기반 과금을 혼합한다. SMB/미드마켓 제품은 낮은 월 기본료로 시작하지만, 엔터프라이즈 고객은 ERP 연동, 감사 통제, 다법인 구조, 글로벌 권한, 처리량에 따라 가격이 올라간다.</p>
+<p>본 제품은 단순 AP 자동화가 아니라 회계 운영 모델을 온톨로지로 구성하는 제품이므로, 가격 기준은 저가형 AP SaaS보다 높게 잡아야 한다. 다만 초기에는 대기업 가격을 먼저 밀어붙이기보다 중견기업과 BPO/SSC에서 PoC로 자동 처리율, 절감 시간, 예외 탐지 성과를 증명해 가격 저항을 낮춘다.</p>
+<p><strong>ROI 근거 (value-based pricing):</strong> 회계 담당자 1인 인건비를 연 6,000만 원으로 가정하면(가정치), Beachhead 고객이 자동화로 1~2 FTE 상당의 검토 시간을 절감할 경우 연간 절감 효과는 약 6천만~1.2억 원이다. Starter 플랜(연 6,000만 원)은 단일 워크플로우만으로 ROI를 설명할 수 있고, Pro 플랜(월 1,500만 원 = 연 1.8억 원)은 처리량이 큰 중견기업 또는 BPO/SSC에서 다수 고객사·계열사 업무를 묶을 때 정당화된다. 즉 가격은 "고객이 얻는 절감 가치의 일부만 청구"하는 구조로 정당화되고, 이 구조가 고객에게는 남는 장사이면서 공급사에는 높은 마진(§3.4)을 남긴다. 실제 단가는 고객별 처리량·인건비 수준에 따라 PoC에서 보정한다.</p></script>
+<script type="text/html" data-page="prd-16"><h1 class="page-title">16. 리스크와 대응 방안</h1>
+<div class="tablewrap"><table><thead><tr><th>리스크</th><th>설명</th><th>대응</th></tr></thead><tbody><tr><td>고객사별 SAP 차이</td><td>SAP 커스터마이징이 많아 표준 연동이 어려울 수 있음</td><td>어댑터 패턴과 연동 진단 체크리스트 제공</td></tr><tr><td>자동 승인 신뢰 부족</td><td>회계팀이 AI 자동 승인을 부담스러워할 수 있음</td><td>초기에는 일괄 승인 후보로 시작하고 임계값 조정 제공</td></tr><tr><td>규정 문서 품질 문제</td><td>고객사 규정 문서가 오래되었거나 모호할 수 있음</td><td>문서 신뢰도, 적용 범위, 누락 항목 점검 기능 제공</td></tr><tr><td>과금 지표 논쟁</td><td>절감 시간과 자동 처리 성과 산정에 이견이 생길 수 있음</td><td>사전 기준선 합의와 이벤트 로그 기반 리포트 제공</td></tr><tr><td>제품화보다 SI화</td><td>고객 요청마다 커스텀 개발이 늘어날 수 있음</td><td>표준 온톨로지, 설정형 워크플로우, 템플릿 우선 원칙</td></tr><tr><td>대기업 선진입 리스크</td><td>ACV는 크지만 세일즈 사이클과 보안·법무·PoC 장벽이 큼</td><td>중견기업·BPO에서 레퍼런스와 템플릿 확보 후 Phase 2로 진입</td></tr><tr><td>AI 오류</td><td>잘못된 추천이 회계 오류로 이어질 수 있음</td><td>신뢰도 임계값, Human Review, 감사 로그, 롤백 프로세스</td></tr><tr><td>보안·개인정보</td><td>회계 데이터와 민감 정보 처리 부담</td><td>테넌시 분리, LLM 라우터, 권한 통제, 데이터 마스킹</td></tr></tbody></table></div></script>
+<script type="text/html" data-page="prd-17"><h1 class="page-title">17. 명시적 가정</h1>
+<p>본 PRD는 과제에서 제공된 정보와 공개 자료를 바탕으로 작성했으며, 부족한 정보는 다음과 같이 가정한다.</p>
+<ul><li>초기 고객은 SAP를 사용하는 중견기업, 회계 BPO, 그룹사 SSC로 가정한다. SAP 대기업은 레퍼런스 확보 이후 Phase 2 타겟으로 둔다.</li><li>기존 SAP Connector는 ECC BAPI, S/4HANA OData, 커스텀 RFC를 일정 수준 지원한다.</li><li>고객사는 사내 회계 규정 문서를 보유하고 있으며, 이를 제품에 업로드할 수 있다.</li><li>법인카드와 세금계산서 데이터는 API, 파일, 배치 중 하나의 방식으로 수집 가능하다.</li><li>자동 승인은 초기에는 저위험·고신뢰 건에 한정한다.</li><li>성과 측정을 위해 도입 전 평균 처리 시간과 도입 후 처리 시간을 비교할 수 있다.</li><li>가격은 실제 고객 인터뷰와 PoC 결과에 따라 조정이 필요하다.</li></ul></script>
+<script type="text/html" data-page="prd-18"><h1 class="page-title">18. 오픈 질문</h1>
+<ul><li>기존 구축 고객의 산업별 분포는 어떻게 되는가?</li><li>가장 재사용성이 높은 구축 사례는 법인카드, 세금계산서, 마감, 계정잔액 중 무엇인가?</li><li>SAP Connector의 현재 제품화 수준은 어느 정도인가?</li><li>고객사가 직접 온톨로지를 편집할 수 있는가, 아니면 내부 운영자/CSM이 설정해야 하는가?</li><li>자동 승인에 대한 고객사의 리스크 허용 범위는 어느 정도인가?</li><li>LLM 라우터에서 사내 LLM과 외부 API를 나누는 정책 기준은 이미 정의되어 있는가?</li><li>가격은 고정 라이선스 중심으로 갈 것인가, 사용량 중심으로 갈 것인가?</li></ul></script>
+<script type="text/html" data-page="prd-19"><h1 class="page-title">19. 참고 자료</h1>
+<p>아래는 시장 방향성과 가격 전략 가설을 잡기 위해 <strong>참고</strong>한 자료다.</p>
+<ul><li>SAP Cloud ERP Finance: https://www.sap.com/products/erp/s4hana/features/finance.html</li><li>국세청 전자세금계산서 발급의무대상자: https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7787&amp;mi=2461</li><li>금융위원회 연결내부회계관리제도 의무도입 보도자료: https://www.fsc.go.kr/no010101/77061</li><li>Tipalti Pricing: https://tipalti.com/pricing/</li><li>Tipalti AP Automation: https://tipalti.com/ap-automation/</li><li>BILL Pricing: https://www.bill.com/product/pricing</li><li>BILL Accounts Payable: https://www.bill.com/product/accounts-payable</li><li>Medius AP Automation for SAP S/4HANA: https://www.medius.com/solutions/for-your-erp/sap/</li></ul></script>
+<script type="text/html" data-page="rm-intro"><h1 class="page-title">소개</h1>
+<p>문서 버전: v0.4<br>작성일: 2026-07-01 (v0.4 개정 2026-07-05)<br>대상 과제: 뤼튼테크놀로지스 AX Product Manager(Ontology) 과제 전형 — <strong>4-3 제품 로드맵 · 4-4 가격 전략</strong><br>관련 문서: 제품 기획서 <a href="#prd-1">PRD</a> (v0.8) · 화면 설계 <a href="#ui-intro">v1.0</a><br>문서 성격: 제출용 딜리버러블</p>
+<blockquote><strong>전략 전제 (PRD v0.8 계승)</strong> — 초기 타겟 = SAP/표준 ERP 중견기업 + 회계 BPO/SSC(Beachhead), 대기업 = Phase 2. 온톨로지는 마진의 <em>필요조건</em>이고, <strong>시장 선택·온보딩 제품화가 충분조건</strong>이다. MVP 워크플로우 = 법인카드 자동 검토 · 세금계산서 3-Way Matching.</blockquote>
+<h3 id="h1">과제 요구사항 커버리지</h3>
+<div class="tablewrap"><table><thead><tr><th>과제 항목</th><th>세부 요구</th><th>대응 섹션</th></tr></thead><tbody><tr><td>4-3 로드맵</td><td>Phase별 기능 배포 계획</td><td>§2</td></tr><tr><td>4-3 로드맵</td><td>타임라인(개발 리소스 가정 포함)</td><td>§3</td></tr><tr><td>4-3 로드맵</td><td>의존성 및 리스크</td><td>§4, §5</td></tr><tr><td>4-4 가격</td><td>구축형 / SaaS형 가격 구조</td><td>§8, §9</td></tr><tr><td>4-4 가격</td><td>성과 기반 과금 상세(단가·미터링 방식)</td><td>§10</td></tr><tr><td>4-4 가격</td><td>경쟁력 있는 가격 포인트 근거</td><td>§11</td></tr></tbody></table></div>
+<hr></script>
+<script type="text/html" data-page="rm-1"><h1 class="page-title">1. 로드맵 원칙 — Land → Expand → Scale</h1>
+<p>로드맵은 "기능을 빨리 많이 낸다"가 아니라 <strong>온톨로지 재사용 패턴을 단계적으로 증명하며 마진 구조를 확보한다</strong>는 원칙으로 설계한다.</p>
+<ul><li><strong>Land (Phase 0–1):</strong> 단일 고객·단일 워크플로우 PoC로 가치를 증명한다. SAP는 <em>읽기 연동</em> 우선, write-back은 최소화해 리스크·기간을 줄인다.</li><li><strong>Expand (Phase 2):</strong> 같은 고객 안에서 두 번째 워크플로우·다수 테넌트로 확장하고, 반복되는 설정을 <strong>제품 기능(온보딩·미터링·과금)</strong> 으로 흡수한다.</li><li><strong>Scale (Phase 3):</strong> 산업별 템플릿·멀티 ERP로 신규 온보딩 원가를 낮추고, 검증된 패키지로 <strong>대기업(구축형)</strong> 에 진입한다.</li></ul>
+<p>각 Phase는 다음 Phase로 넘어가기 위한 <strong>졸업 게이트(정량 조건, §6)</strong> 를 통과해야 한다. 게이트를 못 넘으면 기능 확장 대신 온보딩·정확도 개선에 리소스를 재배치한다 — 이것이 SI화 회귀를 막는 규율이다.</p></script>
+<script type="text/html" data-page="rm-2"><h1 class="page-title">2. Phase별 기능 배포 계획</h1>
+<div class="tablewrap"><table><thead><tr><th>Phase</th><th>기간</th><th>목표</th><th>핵심 배포 기능</th></tr></thead><tbody><tr><td><strong>P0 · Discovery &amp; Packaging</strong></td><td>0–1개월</td><td>기존 SI 자산을 제품 모듈로 분해, MVP 시나리오 확정</td><td>표준 Finance Ontology v0.1, 법인카드·세금계산서 제품 스펙, SAP 연동 범위 정의, KPI·미터링 이벤트 스키마</td></tr><tr><td><strong>P1 · MVP Build</strong></td><td>1–3개월</td><td>1개 고객에서 2개 워크플로우 실운영</td><td>법인카드 자동 검토, 세금계산서 3-Way Matching, 검토자 Review UI, 관리자 콘솔 기본형, 셀프 온보딩 기본형, 규정 문서 RAG, SAP <strong>읽기 연동</strong> 패키지, KPI 대시보드</td></tr><tr><td><strong>P2 · Controlled Launch</strong></td><td>3–6개월</td><td>2–3개 유료 고객 + BPO 1곳, 반복 설정의 제품화</td><td>Workflow Builder 고도화, 권한 모델 고도화(SoD 검증), 감사 로그 리포트, <strong>미터링 기반 과금</strong>, 계정잔액 이상치 탐지, 마감 체크리스트, BPO <strong>멀티테넌트 관리</strong>, SAP write-back(전표 posting)</td></tr><tr><td><strong>P3 · Scale</strong></td><td>6–12개월</td><td>산업 템플릿·멀티 ERP, 대기업 진입</td><td>산업별 온톨로지 템플릿(2종+), 전표 자동분개 고도화, 멀티 ERP 어댑터(1종+), 고객사 벤치마크 리포트, <strong>성과 기반 과금 자동 정산</strong>, 회계팀 Copilot, 대기업 <strong>구축형 패키지</strong> 분리</td></tr></tbody></table></div>
+<p>배포 우선순위 원칙: <strong>P1은 "증명"에 필요한 최소 기능만</strong> 담고, 과금·빌더·멀티테넌트 등 "반복 판매를 위한 제품화"는 P2로 미룬다. P1에서 제품화 기능을 욕심내면 첫 PoC가 늦어져 현금 회수가 밀린다.</p></script>
+<script type="text/html" data-page="rm-3"><h1 class="page-title">3. 타임라인 &amp; 개발 리소스 가정</h1>
+<h3 id="h1">3.1 팀 구성 가정 (총 13명, 단계적 램프업)</h3>
+<div class="tablewrap"><table><thead><tr><th>역할</th><th>인원</th><th>비고</th></tr></thead><tbody><tr><td>Product Manager</td><td>1</td><td>전 기간</td></tr><tr><td>Product Designer</td><td>1</td><td>전 기간</td></tr><tr><td>Frontend Engineer</td><td>2</td><td>P1 집중</td></tr><tr><td>Backend Engineer</td><td>3</td><td>온톨로지·워크플로우·플랫폼</td></tr><tr><td>AI/ML Engineer</td><td>2</td><td>판단·RAG·신뢰도</td></tr><tr><td>Data/Integration Engineer</td><td>2</td><td>SAP·홈택스·카드사 커넥터</td></tr><tr><td>QA Engineer</td><td>1</td><td>P1 중반 합류</td></tr><tr><td>Solution Architect / CSM</td><td>1</td><td>PoC·온보딩 리드</td></tr></tbody></table></div>
+<blockquote>가정: P0은 PM·SA·BE 일부(약 5명)로 시작, P1에 풀팀 램프업, P3에서 GTM·CS 인력 별도 증원(로드맵 외).</blockquote>
+<h3 id="h2">3.2 워크스트림 × Phase 간트</h3>
+<p>막대의 <strong>가로 길이 = 실제 소요 기간(개월)에 비례</strong>하고, <strong>두께·색 = 투입 강도</strong>다. P3(6개월)가 전체 12개월의 절반을 차지하는 것이 한눈에 드러난다.</p>
+<div class="gnt"><div class="gnt-scroll"><div class="gnt-inner">
+<div class="gnt-head"><div class="gnt-side">워크스트림</div><div class="gnt-axis"><div class="gnt-ph" style="width:8.333%"><b>P0</b><i>1개월</i></div><div class="gnt-ph" style="width:16.667%"><b>P1</b><i>2개월</i></div><div class="gnt-ph" style="width:25%"><b>P2</b><i>3개월</i></div><div class="gnt-ph" style="width:50%"><b>P3</b><i>6개월</i></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS1 온톨로지·플랫폼 코어</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g3" title="P0 (0–1M) · 집중 개발"></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g3" title="P1 (1–3M) · 집중 개발"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g2" title="P2 (3–6M) · 부분 진행"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g1" title="P3 (6–12M) · 유지·확장"></span></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS2 워크플로우 엔진(법인카드·세금계산서)</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g2" title="P0 (0–1M) · 부분 진행"></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g3" title="P1 (1–3M) · 집중 개발"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g2" title="P2 (3–6M) · 부분 진행"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g1" title="P3 (6–12M) · 유지·확장"></span></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS3 AI 판단·RAG·신뢰도</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g1" title="P0 (0–1M) · 유지·확장"></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g3" title="P1 (1–3M) · 집중 개발"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g2" title="P2 (3–6M) · 부분 진행"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g2" title="P3 (6–12M) · 부분 진행"></span></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS4 연동(SAP 읽기→쓰기·홈택스·카드사)</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g2" title="P0 (0–1M) · 부분 진행"></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g3" title="P1 (1–3M) · 집중 개발"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g3" title="P2 (3–6M) · 집중 개발"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g2" title="P3 (6–12M) · 부분 진행"></span></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS5 검토자 UX·관리자 콘솔</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g1" title="P0 (0–1M) · 유지·확장"></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g3" title="P1 (1–3M) · 집중 개발"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g2" title="P2 (3–6M) · 부분 진행"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g1" title="P3 (6–12M) · 유지·확장"></span></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS6 셀프서비스 온보딩</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g1" title="P0 (0–1M) · 유지·확장"></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g2" title="P1 (1–3M) · 부분 진행"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g3" title="P2 (3–6M) · 집중 개발"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g2" title="P3 (6–12M) · 부분 진행"></span></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS7 미터링·과금</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g2" title="P0 (0–1M) · 이벤트 스키마 정의"><span class="glabel">스키마</span></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g1" title="P1 (1–3M) · 유지·확장"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g3" title="P2 (3–6M) · 집중 개발"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g3" title="P3 (6–12M) · 집중 개발"></span></div></div></div>
+<div class="gnt-row"><div class="gnt-side">WS8 GTM·PoC·CS</div><div class="gnt-cells"><div class="gcell m1" style="width:8.333%"><span class="gbar g2" title="P0 (0–1M) · 부분 진행"></span></div><div class="gcell m2" style="width:16.667%"><span class="gbar g3" title="P1 (1–3M) · 집중 개발"></span></div><div class="gcell m3" style="width:25%"><span class="gbar g3" title="P2 (3–6M) · 집중 개발"></span></div><div class="gcell m6" style="width:50%"><span class="gbar g3" title="P3 (6–12M) · 집중 개발"></span></div></div></div>
+<div class="gnt-scale"><div class="gnt-side"></div><div class="gnt-cells"><div style="width:8.333%">1M</div><div style="width:16.667%">3M</div><div style="width:25%">6M</div><div style="width:50%">12M</div></div></div>
+</div></div>
+<div class="gnt-foot"><span class="gsw s3"><i></i>집중 개발</span><span class="gsw s2"><i></i>부분 진행</span><span class="gsw s1"><i></i>유지·확장</span><span class="gnote">막대 길이 = 소요 기간 · 눈금 1칸 = 1개월</span></div></div>
+<h3 id="h3">3.3 Phase별 리소스 집중 이동</h3>
+<ul><li><strong>P0:</strong> WS1(온톨로지 표준화) + WS4(SAP 연동 범위 진단)에 집중.</li><li><strong>P1:</strong> WS2·WS3·WS5로 무게 이동 — 두 워크플로우를 "운영 가능" 수준까지.</li><li><strong>P2:</strong> WS6·WS7로 이동 — 온보딩·과금을 제품화해 <strong>반복 판매 가능</strong> 상태로.</li><li><strong>P3:</strong> WS1(산업 템플릿)·WS4(멀티 ERP)·WS7(성과 정산)로 이동 — <strong>한계원가 하락</strong>을 실현.</li></ul></script>
+<script type="text/html" data-page="rm-4"><h1 class="page-title">4. 의존성 (Dependencies)</h1>
+<h3 id="h1">4.1 크리티컬 패스</h3>
+<div class="flow"><div class="flow-node">표준 온톨로지 v0.1(P0)</div><div class="flow-arrow">↓</div><div class="flow-node">SAP 읽기 연동 표준화(P0–P1)</div><div class="flow-arrow">↓</div><div class="flow-node">워크플로우 실행(P1)</div><div class="flow-arrow">↓</div><div class="flow-node">KPI·미터링 이벤트 수집(P1)</div><div class="flow-arrow">↓</div><div class="flow-node">사용량·성과 과금(P2)</div><div class="flow-arrow">↓</div><div class="flow-node">성과 자동 정산(P3)</div></div>
+<p>온보딩 제품화(WS6)는 이 패스와 병렬이지만 <strong>P2 유료 확장의 병목</strong>이다. 온보딩이 사람 손에 남으면 마진이 SI로 회귀한다(PRD §3.4).</p>
+<h3 id="h2">4.2 의존성 표</h3>
+<div class="tablewrap"><table><thead><tr><th>선행</th><th>후행</th><th>성격</th></tr></thead><tbody><tr><td>표준 Finance Ontology</td><td>워크플로우·매핑·온보딩 전부</td><td>내부, 하드</td></tr><tr><td>SAP 읽기 연동</td><td>법인카드·세금계산서 실데이터 처리</td><td>내부, 하드</td></tr><tr><td>KPI·미터링 이벤트</td><td>사용량/성과 과금</td><td>내부, 하드</td></tr><tr><td>검토자 수정 피드백 루프</td><td>추천 정확도·자동 처리율 개선</td><td>내부, 소프트</td></tr><tr><td><strong>홈택스 데이터 접근</strong></td><td>세금계산서 3-Way Matching</td><td><strong>외부</strong></td></tr><tr><td><strong>카드사/SAP 데이터 접근 권한</strong></td><td>법인카드 검토</td><td><strong>외부</strong></td></tr><tr><td><strong>고객 규정 문서 확보</strong></td><td>RAG 판단 근거 품질</td><td><strong>외부</strong></td></tr></tbody></table></div>
+<blockquote>외부 의존성은 PoC 계약 시점에 "데이터 접근·규정 문서 제공"을 <strong>온보딩 선행 조건</strong>으로 명시해 지연 리스크를 고객과 공유한다.</blockquote></script>
+<script type="text/html" data-page="rm-5"><h1 class="page-title">5. 리스크 레지스터</h1>
+<div class="tablewrap"><table><thead><tr><th>구분</th><th>리스크</th><th>영향</th><th>가능성</th><th>대응</th><th>관련 Phase</th></tr></thead><tbody><tr><td>기술</td><td>고객사별 SAP 커스터마이징 편차</td><td>온보딩 지연·SI화</td><td>높음</td><td>어댑터 3종(ECC/S4/RFC) 표준화, 읽기 연동 우선, 매핑 설정으로 흡수</td><td>P0–P2</td></tr><tr><td>기술</td><td>AI 오판 → 회계 오류·감사 이슈</td><td>신뢰 붕괴</td><td>중간</td><td>보수적 신뢰도 임계값, 고위험 Human Review 강제, 전 판단 감사 로그·롤백</td><td>P1–</td></tr><tr><td>기술</td><td>고객 규정 문서 노후·모호 → RAG 품질 저하</td><td>근거 신뢰 저하</td><td>중간</td><td>문서 신뢰도·적용범위·누락 점검 기능, 온보딩 시 규정 정비 지원</td><td>P1–P2</td></tr><tr><td>사업</td><td>PoC → 유료 전환 실패</td><td>현금 회수 지연</td><td>중간</td><td>4–6주 단기 PoC, 사전 성공기준(게이트) 합의, 파일럿 유료화</td><td>P1–P2</td></tr><tr><td>사업</td><td>제품화보다 SI화(요청마다 커스텀)</td><td>마진 저하</td><td>높음</td><td>설정·정책·템플릿 우선 원칙, 커스텀 요청은 로드맵/유상 옵션으로 흡수</td><td>전 기간</td></tr><tr><td>사업</td><td>대기업 선진입 유혹(긴 세일즈에 리소스 소진)</td><td>초점 분산</td><td>중간</td><td>대기업은 Phase 2로 명시 고정, 중견+BPO 레퍼런스 우선</td><td>P1–P3</td></tr><tr><td>운영</td><td>셀프 온보딩 품질 미달</td><td>마진 병목</td><td>중간</td><td>표준 온톨로지 선탑재+추천 매핑, CSM-assisted 온보딩, 온보딩 소요일 KPI 관리</td><td>P2</td></tr><tr><td>보안/규제</td><td>민감 재무 데이터 처리 부담</td><td>계약 실패</td><td>중간</td><td>테넌시 분리, LLM 라우터(민감=사내), 온프레미스/프라이빗 옵션(구축형)</td><td>전 기간</td></tr></tbody></table></div></script>
+<script type="text/html" data-page="rm-6"><h1 class="page-title">6. 마일스톤 &amp; 졸업 게이트</h1>
+<div class="tablewrap"><table><thead><tr><th>Phase 졸업</th><th>정량 게이트(예시 목표)</th></tr></thead><tbody><tr><td>P0 → P1</td><td>표준 온톨로지 v0.1 확정, PoC 고객 1곳 데이터·규정 확보, SAP 읽기 연동 성공</td></tr><tr><td>P1 → P2</td><td>1개 고객 실운영에서 <strong>법인카드 자동 처리율 ≥40%</strong>, 세금계산서 자동 매칭 ≥30%, <strong>근거 노출률 ≥95%</strong>, 검토자 수정률 ≤10%</td></tr><tr><td>P2 → P3</td><td><strong>유료 고객 2–3곳 + BPO 1곳</strong>, 미터링 기반 과금 가동, NRR(확장 매출) 양(+) 신호, 온보딩 소요 ≤2주</td></tr><tr><td>P3</td><td>산업 템플릿 2종·멀티 ERP 1종 출시, 대기업 파일럿 1곳 착수, 성과 과금 자동 정산 운영</td></tr></tbody></table></div>
+<hr></script>
+<script type="text/html" data-page="pr-7"><h1 class="page-title">7. 가격 철학 &amp; 고객 경제학</h1>
+<blockquote><b>버티컬 전제 (v0.4)</b> — 본 파트는 가격 전략을 피부과·성형외과 클리닉 시나리오로 특화한다. 로드맵의 온톨로지 플랫폼·단계별 증명·마진 규율은 그대로 두고, 워크플로우·연동 대상만 이 버티컬로 매핑한다. 공략의 축: <b>1차 침투 대상은 개인 의원이고, 그 문을 여는 열쇠는 세무사·회계사 사무소다.</b></blockquote>
+<table><thead><tr><th>플랫폼 일반</th><th>피부과·성형외과 매핑</th></tr></thead><tbody>
+<tr><td>SAP/표준 ERP 연동</td><td>EMR·병원경영시스템(오케이차트·비트·이지스 등) + PG/VAN + 카드사 + 홈택스 + 광고 플랫폼</td></tr>
+<tr><td>법인카드 자동 검토</td><td>결제 대사(카드 매출 · 현금영수증 · PG 입금 · EMR 수납 4-way)</td></tr>
+<tr><td>세금계산서 3-Way Matching</td><td>정산 검증(광고대행·플랫폼 수수료 · 재료/의료기기 매입 세금계산서)</td></tr>
+<tr><td>BPO/SSC 멀티테넌트</td><td><b>세무사·회계사 사무소(Partner 채널)</b> + 네트워크 병원 다지점</td></tr>
+<tr><td>회계팀 검토자</td><td>원무·경영지원 담당 / 세무사 사무소 기장 담당</td></tr>
+</tbody></table>
+<h3 id="p71">7.1 왜 개인 의원부터 뚫는가</h3>
+<p>업계 통념은 반대로 간다. 개인 의원은 객단가가 낮고 원장을 만나기도 어려우니, 다들 네트워크나 중형 병원부터 노린다. 그런데 바로 그 통념 때문에 이 시장은 비어 있다.</p>
+<p>첫째, <b>표준화의 극단</b>이다. 원장 1명, 직원 3~6명. 매출은 카드·현금영수증·PG 세 갈래로 들어오고, 매입은 의약품·재료 도매상 몇 곳으로 고정된다. 피부과 의원 하나의 회계 구조를 온톨로지로 한 번 잡으면 옆 동네 의원에 거의 그대로 재사용된다 — "온보딩 한계원가 하락"이 가장 빨리, 가장 순수하게 실현되는 지점.</p>
+<p>둘째, <b>물량</b>. 전국 의원급 의료기관은 3만 곳이 넘고, 피부·미용 진료를 표방하는 의원만 수천 곳이다(가정, 검증 필요). 한 곳의 매출은 작아도 시장의 바닥이 넓다.</p>
+<p>셋째, <b>위는 좁고 아래는 넓다</b>. 네트워크·대형 브랜드는 수십 곳뿐이고 의사결정도 느리다. 개인 의원에서 표준 온톨로지와 성과 데이터를 쌓아 위로 올라가는 쪽이 빠르다. 비급여 중심의 현금흐름과 잦은 세무조사(매출 무결성·리스크 방어 통증)는 규모와 무관하게 공통이다.</p>
+<p>남는 문제는 CAC다. 개인 의원 수천 곳을 영업사원이 한 곳씩 방문할 수는 없다. 이 전략의 나머지 절반이 세무사·회계사인 이유다.</p>
+<h3 id="p72">7.2 세무사·회계사 — 경쟁자이면서 유통망</h3>
+<p>개인 의원의 회계는 사실 원장이 아니라 세무사 사무소가 한다. 의원 대부분이 월 20~50만 원(가정)의 기장료로 장부를 통째로 맡긴다.</p>
+<p>솔직하게 인정하고 시작하는 게 맞다. 우리 제품이 하는 일 — 증빙 수집·정리, 매입 세금계산서 대사, 결제 대사 — 의 상당 부분은 기장 대행의 하위 업무다. 세무사 눈에 이 제품은 자기 일을 침범하는 도구로 보일 수 있고, 그 인식이 이 시장의 가장 큰 진입 장벽이다.</p>
+<p>그런데 사무소의 원가 구조를 뜯어보면 그림이 달라진다. 사무소의 병목은 기장 담당 직원의 시간이다. 직원 1인이 감당할 수 있는 거래처 수는 한계가 있는데, 수임료는 10년째 제자리이고 인건비는 오른다. 사무소에게 필요한 건 기장을 대신해 주는 경쟁자가 아니라 <b>직원 1인당 관리 거래처를 늘려 주는 도구</b>다.</p>
+<p>그래서 이중 트랙으로 간다.</p>
+<ul>
+<li><b>기본 트랙 — Partner(사무소 채널).</b> 세무사·회계사 사무소에 멀티테넌트 콘솔을 판다. 사무소는 관리 의원들의 증빙·대사·기장 전처리를 자동화해 담당 1인당 관리 의원 수를 늘리고(가정: 25곳 → 40곳), 원장에게는 월 결산 리포트를 제공해 수임을 방어한다. 우리는 사무소 한 곳을 뚫을 때마다 의원 수십 곳을 얻는다 — BPO 논지의 버티컬 판이고, CAC 문제의 답이다.</li>
+<li><b>보조 트랙 — 직판.</b> 자체 경리·원무팀을 둔 중형 단일원과 네트워크. 주 니즈가 실시간 결제 대사·마케팅 정산 검증처럼 세무사가 다루지 않는 영역이라 채널과 충돌하지 않는다.</li>
+</ul>
+<p>경쟁 시나리오도 상정해 둔다. 더존·세무사랑 같은 세무회계 SW가 유사 기능을 붙이면? 이들은 전 업종 범용 도구라 특정 버티컬의 EMR·PG·광고 플랫폼 데이터까지 내려오기 어렵다 — 버티컬 깊이가 방어선이다. 세무사들이 채널 참여를 거부하면? 병의원 특화 사무소 2~3곳과 선봉 파일럿을 만들어 "담당 1인당 관리 의원 수" 성과를 공개하고, 원하는 사무소에는 화이트라벨을 연다.</p>
+<h3 id="p73">7.3 가격 원칙</h3>
+<ol>
+<li><b>가치 기반.</b> 고객이 얻는 정량 가치(절감 + 회수 + 리스크 방어)의 일부만 청구한다. 목표 15~30%, 이 버티컬 진입가는 하단(10~20%).</li>
+<li><b>3-Part Tariff.</b> 기본료 + 사용량 + 성과료.</li>
+<li><b>성과료 이원화.</b> 효율 성과(A)는 월 구독료의 30% 상한. 회수·절감 성과(B)는 고객이 확정한 실현 금액의 일부만, 상한 없이 — 이미 찾아낸 현금의 배분이라 고객은 항상 순증이다.</li>
+<li><b>티어 = 규모 밴드.</b> 리스트 가격이며, 실제 딜은 결제량·마케팅비·지점/관리 의원 수로 조정.</li>
+</ol>
+<blockquote>모든 금액은 국내 의료·B2B SaaS 관행 기반 가정치이며 PoC로 보정한다. PRD의 일반 시장(SAP 중견) 수치와는 의도적으로 다르다 — 고객 규모와 경제학이 다르기 때문이다.</blockquote></script>
+<script type="text/html" data-page="pr-8"><h1 class="page-title">8. 구축형 가격 구조 (대형 네트워크·브랜드)</h1>
+<table><thead><tr><th>항목</th><th>가격(가정)</th><th>설명</th></tr></thead><tbody>
+<tr><td>진단 / PoC</td><td>2,000만 ~ 5,000만 원</td><td>4–8주, 1–2지점 파일럿 기준</td></tr>
+<tr><td>초기 구축비</td><td>1억 ~ 3억 원</td><td>EMR·PG·홈택스·광고 플랫폼 연동, 다지점 온톨로지·권한 세팅</td></tr>
+<tr><td>연간 라이선스</td><td>6,000만 ~ 1.5억 원</td><td>전 워크플로우, 기본 사용량 포함</td></tr>
+<tr><td>유지보수</td><td>라이선스의 18~22%</td><td>운영 지원·업데이트·장애 대응</td></tr>
+<tr><td>워크플로우 추가</td><td>2,000만 ~ 5,000만 원/건</td><td>업무 복잡도·연동 범위 기준</td></tr>
+<tr><td>온프레미스·전용 LLM</td><td>별도 견적</td><td>환자정보(의료법)·매출 민감성 대응</td></tr>
+</tbody></table>
+<p><b>적용 대상:</b> 환자정보를 사내에 두려는 브랜드, 지점 10곳 이상의 통합·페이닥터 정산이 필요한 네트워크. 병원은 SAP 중견기업보다 연동 복잡도가 낮아 구축비도 낮게 잡았다. 반복 판매 제품이라기보다 고ACV 앵커 딜이며, Partner·SaaS에서 레퍼런스를 쌓은 뒤 진입한다.</p></script>
+<script type="text/html" data-page="pr-9"><h1 class="page-title">9. SaaS형 · 파트너 채널 가격 구조</h1>
+<table><thead><tr><th>플랜</th><th>대상</th><th>월 기본료(가정)</th><th>포함 범위</th><th>초과 과금</th></tr></thead><tbody>
+<tr><td><b>Partner</b></td><td>세무사·회계사 사무소</td><td>30만 원 + 관리 의원당 5~8만 원</td><td>사무소 멀티테넌트 콘솔, 증빙·대사·기장 전처리 자동화, 원장용 월 결산 리포트, 화이트라벨 옵션(+기본료 50%)</td><td>관리 의원 수 · 문서량</td></tr>
+<tr><td><b>Solo</b></td><td>단일 의원(직판)</td><td>29만 ~ 59만 원</td><td>결제 대사 1WF, 월 3천 건, 기본 리포트</td><td>건당 30~80원~</td></tr>
+<tr><td><b>Clinic</b></td><td>중형 단일원</td><td>99만 ~ 249만 원</td><td>결제 대사 + 마케팅 정산 검증 + 세무 리스크 리포트, 월 1.5만 건, EMR·PG·홈택스 연동</td><td>건당 + 애드온</td></tr>
+<tr><td><b>Network</b></td><td>다지점(3~10)</td><td>390만 ~ 690만 원 + 지점당 40~80만</td><td>전 워크플로우 + 다지점 통합·벤치마크·페이닥터 정산</td><td>지점 수 · 처리량</td></tr>
+<tr><td><b>Enterprise / 구축형</b></td><td>대형 브랜드(10지점+)</td><td>별도 견적(§8)</td><td>전용 배포·온프레미스·커스텀</td><td>—</td></tr>
+</tbody></table>
+<p>Partner가 첫 줄에 있는 이유는 이 플랜이 개인 의원 침투의 본선이기 때문이다(§7.2). Solo 직판은 세무사를 끼지 않는 원장이나 채널이 닿지 않는 지역을 위한 보조선이다.</p>
+<p><b>Partner 경제학(가정).</b> 관리 의원 30곳인 사무소 기준 우리 청구는 월 30만 + 30곳×6만 = 210만, 의원당 7만 꼴이다. 사무소가 받는 기장료(의원당 20~50만)의 15~25% 수준의 도구 원가다. 사무소는 기장 담당 1인당 관리 의원이 25→40곳으로 늘면 의원당 인건비 원가가 30% 이상 내려가고, 남는 여력으로 신규 수임을 받는다. 사무소가 남아야 채널이 돌아간다 — 이 비율이 이 가격표에서 가장 중요한 숫자이고, 선봉 파일럿에서 최우선 검증한다.</p>
+<h3 id="p91">9.1 초과 사용량 단가 (가정)</h3>
+<table><thead><tr><th>처리 유형</th><th>건당 단가</th></tr></thead><tbody>
+<tr><td>일반 결제 대사 건</td><td>30 ~ 80원</td></tr>
+<tr><td>이상탐지·판단 근거 생성 포함 건</td><td>80 ~ 200원</td></tr>
+<tr><td>마케팅 정산 라인 검증 건</td><td>100 ~ 300원</td></tr>
+<tr><td>홈택스 세무 리스크 점검 건</td><td>100 ~ 300원</td></tr>
+</tbody></table>
+<p><b>Network 플랜:</b> 1계약 다지점이라 온톨로지 재사용 효과가 가장 크다 = 마진이 가장 높은 직판 세그먼트. 지점당 과금으로 지점 확장을 매출로 전환하고, 10지점 초과분은 지점당 단가 20% 할인으로 대형 브랜드 이탈을 막는다.</p>
+<blockquote><b>직판 밴드 근거(진입 매력 우선 — 가치의 10~20%만 청구):</b> Solo는 0.5 FTE 절감(가치 연 2,000만~4,000만) 대비 청구 348만~708만/년(월 29~59만, 부담률 10~18%). Clinic은 1 FTE + 마케팅 회수(가치 연 1억~2억) 대비 청구 1,188만~2,988만/년(부담률 12~20%). 회수·절감 성과(B)가 실질 ARPU를 보완한다.</blockquote></script>
+<script type="text/html" data-page="pr-10"><h1 class="page-title">10. 성과 기반 과금 모델 상세 (단가 · 미터링 방식)</h1>
+<blockquote>과제 핵심 요구: "어떤 지표를 <b>어떻게 미터링</b>할지." 아래는 제품의 Audit &amp; Metering Layer(PRD §6.1)가 자동 생성하는 이벤트로 지표를 계산·과금하는 방식이며, 이 버티컬 워크플로우(결제 대사·마케팅 정산·세무 점검)에 맞춰 이벤트를 정의한다.</blockquote>
+<h3 id="p101">10.1 미터링 이벤트 (제품 로그에서 자동 수집)</h3>
+<table><thead><tr><th>이벤트</th><th>정의</th><th>수집 방식(소스)</th><th>과금·지표 활용</th></tr></thead><tbody>
+<tr><td><code>reconciled_payment</code></td><td>대사 처리된 결제 건(카드·현금영수증·PG·EMR 수납)</td><td>대사 엔진 실행 로그</td><td>사용량 과금 기준</td></tr>
+<tr><td><code>auto_matched_payment</code></td><td>검토 개입 없이 자동 대사 완료 건</td><td>신뢰도 임계값 자동 분기 로그</td><td><b>효율 성과(A) 과금</b></td></tr>
+<tr><td><code>reviewer_touched_payment</code></td><td>담당자가 확인한 건</td><td>Review UI 액션 로그</td><td>자동 대사율 분모 보정</td></tr>
+<tr><td><code>recovered_amount</code></td><td>대사로 확정한 과소입금·수수료 오류 등 회수 금액</td><td>차액 확정 라벨(고객 확정)</td><td><b>회수 성과(B) 과금</b></td></tr>
+<tr><td><code>marketing_saved_amount</code></td><td>마케팅 정산 과다청구·중복·미전환 등 확정 절감 금액</td><td>검토자 확정 라벨(고객 확정)</td><td><b>절감 성과(B) 과금</b></td></tr>
+<tr><td><code>tax_risk_flag</code></td><td>비급여 매출·세금 불일치 탐지 건</td><td>세무 점검 룰 실행 로그</td><td>리스크 리포트(정성)</td></tr>
+<tr><td><code>time_saved_minutes</code></td><td>(합의 baseline − 실제 처리시간)</td><td>baseline(온보딩 합의) − 처리 로그</td><td>절감 시간·ROI 리포트</td></tr>
+<tr><td><code>managed_clinic</code></td><td>Partner 사무소가 관리 중인 활성 의원 수</td><td>테넌트 상태 로그(월 스냅샷)</td><td><b>Partner 채널 과금 기준</b></td></tr>
+</tbody></table>
+<h3 id="p102">10.2 핵심 지표를 "어떻게" 미터링하는가</h3>
+<ul>
+<li><b>자동 대사율</b> = <code>auto_matched_payment ÷ reconciled_payment</code>. 분모에서 데이터 미비·시스템 반려 건은 제외.</li>
+<li><b>회수·절감액(B)</b> = 담당자가 확정한 금액만 집계. 고객이 대시보드에서 "확정" 라벨을 눌러야 과금 대상이 된다 — "찾지도 못한 돈에 과금" 불신을 차단.</li>
+<li><b>절감 시간</b> = Σ <code>time_saved_minutes</code>. baseline은 온보딩 시 고객과 합의(도입 전 실측 또는 업무별 표준 처리시간).</li>
+<li><b>미터링 신뢰성:</b> 모든 이벤트는 append-only 감사 로그로 기록되고, 월 마감 시 건별 명세(원천 데이터 링크 포함)를 제공한다. B(회수·절감)는 고객 확정 전제로만 청구하므로 산정 분쟁이 차단된다.</li>
+</ul>
+<h3 id="p103">10.3 성과 과금 단가 (가정)</h3>
+<table><thead><tr><th>버킷</th><th>지표</th><th>단가</th><th>상한/전제</th></tr></thead><tbody>
+<tr><td><b>A. 효율</b> · 자동 대사</td><td><code>auto_matched_payment</code></td><td>30 ~ 100원/건</td><td><b>구독료의 30% 상한</b></td></tr>
+<tr><td><b>A. 효율</b> · 시간 절감</td><td><code>time_saved_minutes</code></td><td>(합의 시간당 인건비 × 절감시간) × 10~15%</td><td>baseline 합의, 상한 내</td></tr>
+<tr><td><b>B. 회수</b> · 입금/수수료 오류</td><td><code>recovered_amount</code></td><td><b>회수액의 5~10%</b></td><td>고객 확정분만, 상한 없음</td></tr>
+<tr><td><b>B. 절감</b> · 마케팅 정산</td><td><code>marketing_saved_amount</code></td><td><b>확정 절감액의 10~15%</b></td><td>고객 확정분만, 상한 없음</td></tr>
+<tr><td>세무 리스크·마감 보너스</td><td><code>tax_risk_flag</code>·마감 목표</td><td>월 정액 보너스</td><td>목표 사전 합의</td></tr>
+</tbody></table>
+<p><b>공통 전제:</b> ① baseline·확정 기준 사전 합의 ② 미확정·오탐 건은 과금 제외 ③ A(효율)만 구독료 30% 상한, B(회수·절감)는 실현 현금의 배분이라 상한 없음 — 고객은 항상 순증(net positive).</p>
+<h3 id="p104">10.4 청구 구성 예시 (Illustrative — 가정)</h3>
+<p>중형 성형외과(연매출 60억), 결제 월 4,000건 · 마케팅비 월 1억, <b>Clinic 플랜(199만)</b> 가정:</p>
+<table><thead><tr><th>구성</th><th>계산</th><th>금액(월)</th></tr></thead><tbody>
+<tr><td>기본 구독료</td><td>Clinic (월 1.5만 건 포함 → 초과 없음)</td><td>199만 원</td></tr>
+<tr><td>A. 효율 성과</td><td>자동 대사 3,200건 × 60원 = 19.2만 (상한 60만 내)</td><td>19만 원</td></tr>
+<tr><td>B. 회수 성과</td><td>과소입금·수수료 오류 회수 400만 × 7%</td><td>28만 원</td></tr>
+<tr><td>B. 절감 성과</td><td>마케팅 과다청구 확정 절감 600만 × 12%</td><td>72만 원</td></tr>
+<tr><td><b>월 합계</b></td><td></td><td><b>≈ 318만 원</b></td></tr>
+<tr><td><i>참고 · 고객 순효익</i></td><td>이번 달 회수·절감 1,000만 − 성과료 100만 = <b>+900만</b>(구독료 별도)</td><td>—</td></tr>
+</tbody></table>
+<p><b>Partner 청구 예시(가정).</b> 관리 의원 30곳 사무소: 기본 30만 + <code>managed_clinic</code> 30곳 × 6만 = <b>월 210만</b>. 사무소 기장료 매출(600만~1,500만)의 14~35%를 도구 원가로 쓰는 셈인데, 담당 인력을 늘리지 않고 관리 의원을 40곳까지 받을 수 있다면 남는 계산이다. 의원에서 발생한 회수·절감 성과(B)는 사무소가 원장에게 공을 돌리게 하고, B 과금은 사무소와 배분한다(배분율은 파일럿에서 합의).</p></script>
+<script type="text/html" data-page="pr-11"><h1 class="page-title">11. 경쟁력 있는 가격 포인트 근거</h1>
+<h3 id="p111">11.1 ROI 근거 (다면적, 과대 주장 지양)</h3>
+<p>가격은 인건비 절감 하나가 아니라 ① 결제·정산 인건비 ② 회수(과소입금·수수료 오류) ③ 마케팅 과다청구 절감 ④ 비급여 세무 리스크 방어·마감 단축의 합에 앵커한다.</p>
+<ul>
+<li><b>직접 인건비:</b> 원무·정산 담당 ≈ 연 4,000만 원(가정). 대사 자동화로 0.5~1.5 FTE 절감 → 연 2,000만 ~ 6,000만 원.</li>
+<li><b>회수:</b> 카드-PG-현금영수증-EMR 4-way 대사로 과소입금·수수료 오차·현금영수증 미발행을 조기 발견. 회수는 곧 현금이라 ROI 증명이 즉각적이다.</li>
+<li><b>마케팅 절감:</b> 마케팅비가 매출의 20~40%. 정산 과다청구·중복·미전환을 1~2%만 잡아도 중형원 기준 연 수천만 원.</li>
+<li><b>세무·컴플라이언스:</b> 비급여 매출 무결성 점검으로 세무조사 추징 리스크 방어, 월 마감 단축.</li>
+<li><b>채널(Partner):</b> 사무소 관점의 앵커는 별도다 — 기장 담당 1인당 관리 의원 수(25→40곳)와 의원당 처리 원가. 우리 과금(의원당 5~8만)은 기장료의 15~25% 수준 도구 원가로 설계했다.</li>
+</ul>
+<p>→ 원칙: 고객 정량 가치의 15~30%가 상한이되, 이 버티컬 진입가는 하단(10~20%)으로 공격적으로 간다. 중형원 정량 가치가 연 1억~2억이면 기본 구독은 1,200만~3,000만/년(Clinic 밴드)에 불과하고, 회수·절감 성과(B)는 실현 현금의 일부라 별도 상방이다. 고객은 5배 이상 ROI, 공급사는 낮은 한계원가(4인 스쿼드·동질 버티컬, §3.8)로 낮은 가격에도 마진을 지킨다.</p>
+<h3 id="p112">11.2 경쟁 벤치마크 포지셔닝</h3>
+<table><thead><tr><th>경쟁군</th><th>가격 성격</th><th>한계</th><th>우리 포지션</th></tr></thead><tbody>
+<tr><td>위탁 세무대리(세무사·회계사 사무소)</td><td>월 기장료 20~50만</td><td>사후·수동, 실시간 대사·회수 없음</td><td><b>경쟁이 아니라 채널</b> — Partner 플랜으로 사무소의 기장 원가를 낮춰 포섭(§7.2). 채널을 거부하는 사무소와는 직판에서 부분 경쟁</td></tr>
+<tr><td>세무회계 SW (더존·세무사랑 등)</td><td>사무소용 라이선스</td><td>전 업종 범용 기장 도구, EMR·PG·광고 등 버티컬 데이터 미연동</td><td>버티컬 깊이(4-way 대사·마케팅 정산)로 차별화. 이들이 내려오기 전에 사무소 채널 선점</td></tr>
+<tr><td>병원 EMR/OMS (오케이차트·비트·이지스 등)</td><td>저가 월 구독</td><td>수납·차트 중심, 대사·마케팅·세무 판단 없음</td><td>그 위에 얹는 정산·검증 지능</td></tr>
+<tr><td>PG/VAN 정산 리포트</td><td>입금 명세 제공</td><td>대사·이상탐지 없음</td><td>4-way 대사·이상탐지</td></tr>
+<tr><td>마케팅 대행사 자체 리포트</td><td>성과 자기보고</td><td>이해상충, 미검증</td><td>독립 검증·과다청구 탐지</td></tr>
+<tr><td>경영 컨설팅·세무조사 대응</td><td>고가 단발</td><td>반복 안 됨, 상시성 없음</td><td>상시 리스크 모니터링·반복 가능</td></tr>
+</tbody></table>
+<p><b>가격 사다리:</b> 병원 SW·기장료 &lt; 본 제품 &lt; 경영 컨설팅. "EMR·기장보다 비싸지만 돈을 회수·방어하고, 컨설팅보다 싸면서 상시 반복 가능"이 핵심 메시지다. 개인 의원에게는 이 사다리를 직접 설명할 필요가 없다 — 세무사 사무소가 이미 신뢰 관계를 갖고 있고, 우리는 사무소의 언어(담당 1인당 관리 거래처 수)로 말하면 된다. 가격 저항은 PoC에서 자동 대사율·회수액·마케팅 절감을 미터링으로 증명해 낮춘다.</p></script>
+<script type="text/html" data-page="pr-12"><h1 class="page-title">12. 명시적 가정</h1>
+<ul>
+<li>모든 금액·단가·자동 대사율·회수/절감 규모는 국내 의료·B2B SaaS 관행 기반 <b>가정치</b>이며 PoC로 보정한다.</li>
+<li><b>세무사 채널 가정이 이 전략의 최대 가설이다.</b> 기장료 밴드(의원당 월 20~50만), 사무소당 병의원 거래처 수, 기장 담당 1인당 관리 의원 수(25→40곳)는 업계 통념 기반 가정으로, 병의원 특화 사무소 2~3곳 인터뷰·파일럿에서 최우선 검증한다. 검증 전까지 Partner 가격은 가설로 취급한다.</li>
+<li>개인 의원 모수(의원급 3만+, 피부·미용 표방 수천 곳)는 공개 통계 기반 추정이며 세부 검증이 필요하다.</li>
+<li>세그먼트별 연매출·마케팅비 비중(20~40%)·원무 인건비(연 4,000만)·§10.4 예시 수치는 예시 가정이다.</li>
+<li>회수·절감 성과(B)는 고객이 확정한 금액에만 과금하며, baseline·확정 기준을 도입 전 합의한다고 가정한다. Partner 경유 딜의 B 배분율은 파일럿에서 합의한다.</li>
+<li>EMR·병원경영시스템·PG/VAN·카드사·홈택스·광고 플랫폼의 데이터 접근이 온보딩 시점에 가능하다고 가정한다(외부 의존성). 환자정보는 의료법상 민감정보이므로 대형 브랜드는 구축형/온프레미스(§8)를 선택할 수 있다.</li>
+<li>로드맵 리소스(개발 2 + 기획 2 = 4인 스쿼드, §3)는 가정이며, 이 버티컬에서 워크플로우는 결제 대사·마케팅 정산·세무 점검으로 매핑된다.</li>
+<li>가격 티어는 리스트 가격이며, 실제 계약은 결제량·마케팅비·지점/관리 의원 수 기반 협상·볼륨 할인으로 조정된다.</li>
+</ul></script>
+
+<script type="text/html" data-page="ui-intro"><h1 class="page-title">화면 설계 기획서 — Finance Ontology Platform 통합 데모</h1>
+<table>
+  <tbody>
+    <tr><th>문서 버전</th><td>v1.0</td></tr>
+    <tr><th>작성일</th><td>2026-07-05</td></tr>
+    <tr><th>대상 과제</th><td>뤼튼테크놀로지스 AX Product Manager(Ontology) 과제 전형 — <strong>4-2 화면 설계</strong></td></tr>
+    <tr><th>현행 산출물</th><td><a href="app.html" target="_blank" rel="noopener">통합 인터랙티브 제품 데모</a> · <a href="#ui-admin">관리자 상세</a> · <a href="#ui-reviewer">검토자 상세</a> · <a href="#ui-onboarding">온보딩 상세</a></td></tr>
+    <tr><th>관련 문서</th><td><a href="#prd-intro">PRD v0.8</a> · <a href="#rm-intro">로드맵/가격 v0.4</a></td></tr>
+  </tbody>
+</table>
+<blockquote>본 문서는 v0.1의 개별 SAP Fiori 목업 기획을 대체한다. 현행 화면 설계 산출물은 <code>site/app.html</code> 단일 앱 안에서 <strong>관리자 콘솔 8탭 · 검토자 화면 2개 워크플로우 · 고객사 온보딩 7단계</strong>를 페르소나 스위처로 시연하는 통합 데모다. 기존 개별 파일 계획은 제거되었다.</blockquote>
+
+<h2>0. 산출물 범위와 접근 방식</h2>
+<h3>제출 산출물</h3>
+<table>
+  <thead><tr><th>산출물</th><th>경로</th><th>역할</th></tr></thead>
+  <tbody>
+    <tr><td>통합 인터랙티브 데모</td><td><code>site/app.html</code></td><td>과제 4-2의 실제 화면 시연물. 관리자·검토자·온보딩 화면을 한 앱에서 전환</td></tr>
+    <tr><td>문서 사이트</td><td><code>site/index.html</code></td><td>PRD/로드맵/가격/화면 설계를 제출용 웹 문서로 정리</td></tr>
+    <tr><td>화면 캡처</td><td><code>site/screenshots/*.png</code></td><td>문서 사이트의 화면별 설명 이미지</td></tr>
+  </tbody>
+</table>
+<h3>데모 진입점</h3>
+<div style="display:grid;gap:14px;margin:18px 0 22px">
+  <a href="app.html?screen=admin" target="_blank" rel="noopener" style="display:block;border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit">
+    <div style="font-size:12px;font-weight:700;color:var(--accent-strong);margin-bottom:4px">관리자 콘솔 ↗</div>
+    <div style="font-size:16.5px;font-weight:750;margin-bottom:6px">대시보드 · 온톨로지 스튜디오 · 워크플로우 빌더 · 규정/권한/연동/감사/미터링</div>
+    <div style="font-size:13.5px;color:var(--ink-soft)">운영 성과, 설정형 자동화, 내부통제, 연동 상태, 과금 이벤트를 한 콘솔에서 관리한다.</div>
+  </a>
+  <a href="app.html?screen=reviewer" target="_blank" rel="noopener" style="display:block;border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit">
+    <div style="font-size:12px;font-weight:700;color:var(--accent-strong);margin-bottom:4px">검토자 화면 ↗</div>
+    <div style="font-size:16.5px;font-weight:750;margin-bottom:6px">법인카드 검토 · 세금계산서 3-Way Matching</div>
+    <div style="font-size:13.5px;color:var(--ink-soft)">리스크순 큐, AI 판단 근거, 신뢰도 게이지, 참조 규정, 일괄 처리, 승인/반려 단축키를 시연한다.</div>
+  </a>
+  <a href="app.html?screen=onboarding" target="_blank" rel="noopener" style="display:block;border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit">
+    <div style="font-size:12px;font-weight:700;color:var(--accent-strong);margin-bottom:4px">고객사 온보딩 ↗</div>
+    <div style="font-size:16.5px;font-weight:750;margin-bottom:6px">셀프서비스 온보딩 위저드 7단계</div>
+    <div style="font-size:13.5px;color:var(--ink-soft)">SAP 연결, 계정과목 매핑, 조직·권한, 규정 문서, 워크플로우 정책, 샘플 테스트를 제품화된 플로우로 구성한다.</div>
+  </a>
+</div>
+<h3>URL 딥링크</h3>
+<table>
+  <thead><tr><th>목적</th><th>URL 예시</th></tr></thead>
+  <tbody>
+    <tr><td>관리자 대시보드</td><td><code>app.html?screen=admin&amp;tab=dashboard</code></td></tr>
+    <tr><td>온톨로지 스튜디오</td><td><code>app.html?screen=admin&amp;tab=ontology</code></td></tr>
+    <tr><td>워크플로우 빌더</td><td><code>app.html?screen=admin&amp;tab=workflow</code></td></tr>
+    <tr><td>권한 관리</td><td><code>app.html?screen=admin&amp;tab=roles</code></td></tr>
+    <tr><td>검토자 · 법인카드</td><td><code>app.html?screen=reviewer&amp;wf=card</code></td></tr>
+    <tr><td>검토자 · 세금계산서</td><td><code>app.html?screen=reviewer&amp;wf=invoice</code></td></tr>
+    <tr><td>온보딩 특정 단계</td><td><code>app.html?screen=onboarding&amp;step=3</code></td></tr>
+  </tbody>
+</table>
+
+<h2>1. 과제 요구사항 커버리지</h2>
+<table>
+  <thead><tr><th>과제 요구</th><th>현행 화면</th><th>구현 의도</th></tr></thead>
+  <tbody>
+    <tr><td>관리자 콘솔 — 온톨로지 편집</td><td>관리자 · 온톨로지 스튜디오</td><td>표준 Finance Ontology와 고객사 Overlay 매핑을 그래프로 표현</td></tr>
+    <tr><td>관리자 콘솔 — 워크플로우 편집</td><td>관리자 · 워크플로우 빌더</td><td>신뢰도 임계값, 자동/일괄/수동 분기, 조건 체크리스트를 설정</td></tr>
+    <tr><td>관리자 콘솔 — 권한 관리</td><td>관리자 · 권한 관리</td><td>조직·역할·데이터 범위·SoD 통제를 매트릭스로 표현</td></tr>
+    <tr><td>검토자 화면 — 대기 목록</td><td>검토자 좌측 큐</td><td>법인카드 37건, 세금계산서 24건을 리스크순으로 탐색</td></tr>
+    <tr><td>검토자 화면 — 판단 근거/신뢰도</td><td>검토자 우측 AI 패널</td><td>점수 구성요인, 참조 규정, 유사 사례, 임계값 대비 차이를 표시</td></tr>
+    <tr><td>검토자 화면 — 일괄 처리</td><td>검토자 일괄 처리 토글/바</td><td>동일 근거·동일 리스크 묶음만 빠르게 처리하는 흐름을 시연</td></tr>
+    <tr><td>고객사 온보딩 — SAP 연결</td><td>온보딩 Step 2</td><td>S/4HANA, ECC, 커스텀 RFC, 파일 업로드 연결 방식 선택</td></tr>
+    <tr><td>고객사 온보딩 — 계정 매핑</td><td>온보딩 Step 3</td><td>AI 추천 매핑, 신뢰도, 자동/검토/미매핑 상태를 표시</td></tr>
+    <tr><td>고객사 온보딩 — 규정 업로드</td><td>온보딩 Step 5</td><td>문서 업로드, 임베딩 상태, 검색 가능 상태를 표시</td></tr>
+    <tr><td>고객사 온보딩 — 권한/조직</td><td>온보딩 Step 4</td><td>SAP HR 기반 조직도와 역할·데이터 범위 자동 설정을 표시</td></tr>
+  </tbody>
+</table>
+
+<h2>2. 공통 UX 원칙</h2>
+<h3>한 제품처럼 보이게 하는 구조</h3>
+<ul>
+  <li>상단 바에는 테넌트(<code>㈜한빛리테일</code>), 사용자(<code>김승욱</code>), 검색, 알림, 사용자 메뉴를 고정 배치한다.</li>
+  <li>중앙 페르소나 스위처는 <code>관리자 콘솔 / 검토자 / 고객사 온보딩</code> 3개 화면을 전환한다.</li>
+  <li>화면 전환은 별도 페이지 이동이 아니라 동일 앱 내부 상태 변경으로 처리한다.</li>
+  <li>관리자 화면의 좌측 사이드바는 <code>운영 · Operations</code>와 <code>거버넌스 · Governance</code>로 구분한다.</li>
+</ul>
+<h3>제품 메시지</h3>
+<table>
+  <thead><tr><th>메시지</th><th>화면에서 증명하는 방식</th></tr></thead>
+  <tbody>
+    <tr><td>온톨로지는 고객사 차이를 코드가 아니라 설정 데이터로 흡수한다</td><td>온톨로지 스튜디오의 표준 객체, 고객사 Overlay, 매핑 진행률</td></tr>
+    <tr><td>자동화는 무조건 자동 승인하지 않고 신뢰도·규정·리스크로 분기한다</td><td>워크플로우 빌더의 90/95 임계값, 검토자 AI 근거 패널</td></tr>
+    <tr><td>회계 자동화는 감사와 권한 통제가 기본 기능이어야 한다</td><td>권한 매트릭스, SoD 경고, 감사 로그</td></tr>
+    <tr><td>온보딩이 제품화되어야 SaaS 마진이 가능하다</td><td>7단계 위저드, AI 추천 매핑, 연결 테스트, 샘플 테스트</td></tr>
+    <tr><td>과금은 처리량과 성과 이벤트에서 나온다</td><td>대시보드 KPI와 미터링 이벤트</td></tr>
+  </tbody>
+</table>
+<h3>데이터와 수치 기준</h3>
+<ul>
+  <li>테넌트: <code>㈜한빛리테일</code> / 유통·리테일·프랜차이즈 / Tenant <code>RTL-0042</code></li>
+  <li>MVP 워크플로우: <code>법인카드 자동 검토</code>, <code>세금계산서 3-Way Matching</code></li>
+  <li>신뢰도 임계값: 법인카드 90, 세금계산서 95</li>
+  <li>대시보드 기준 처리량: 월 8,412건, 자동 처리율 42.3%, 예외 탐지 128건, 절감 시간 320h</li>
+  <li>데이터 성격: 모든 회사명, 사용자명, 금액, 계정, 수치는 과제 제출용 가상 데이터</li>
+</ul>
+
+<h2>3. 전체 정보 구조</h2>
+<pre style="white-space:pre-wrap;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;line-height:1.55"><code>Finance Ontology Platform
+├── 관리자 콘솔
+│   ├── 대시보드
+│   ├── 온톨로지 스튜디오
+│   ├── 워크플로우 빌더
+│   ├── 규정 센터
+│   ├── 권한 관리
+│   ├── 연동 관리
+│   ├── 감사 로그
+│   └── 미터링
+├── 검토자
+│   ├── 법인카드 검토
+│   └── 세금계산서 3-Way Matching
+└── 고객사 온보딩
+    ├── Step 1 회사 정보
+    ├── Step 2 SAP 연결
+    ├── Step 3 계정과목 매핑
+    ├── Step 4 조직 · 권한
+    ├── Step 5 규정 문서
+    ├── Step 6 워크플로우 · 정책
+    └── Step 7 샘플 테스트</code></pre>
+
+<h2>4. 화면 구성 요약</h2>
+<table>
+  <thead><tr><th>화면</th><th>주요 기능</th><th>상세 페이지</th></tr></thead>
+  <tbody>
+    <tr><td>관리자 콘솔</td><td>운영 성과, 온톨로지 설정, 워크플로우 정책, 규정, 권한, 연동, 감사, 미터링 관리</td><td><a href="#ui-admin">관리자 콘솔 (8탭)</a></td></tr>
+    <tr><td>검토자 화면</td><td>리스크순 큐, 원천 데이터 상세, AI 판단 근거, 참조 규정, 신뢰도, 일괄 처리, 승인/반려</td><td><a href="#ui-reviewer">검토자 화면</a></td></tr>
+    <tr><td>고객사 온보딩</td><td>회사 정보, SAP 연결, 계정과목 매핑, 조직·권한, 규정 문서, 워크플로우 정책, 샘플 테스트</td><td><a href="#ui-onboarding">고객사 온보딩 (7단계)</a></td></tr>
+  </tbody>
+</table>
+
+<h2>5. 상태와 인터랙션 명세</h2>
+<table>
+  <thead><tr><th>영역</th><th>상태</th><th>트리거</th><th>결과</th></tr></thead>
+  <tbody>
+    <tr><td>앱 전환</td><td><code>admin</code>, <code>reviewer</code>, <code>onboarding</code></td><td>상단 페르소나 스위처 클릭</td><td>화면 루트 전환</td></tr>
+    <tr><td>관리자 탭</td><td><code>dashboard</code>, <code>ontology</code>, <code>workflow</code>, <code>policy</code>, <code>roles</code>, <code>integration</code>, <code>audit</code>, <code>metering</code></td><td>좌측 내비 클릭 또는 <code>tab</code> 쿼리</td><td>해당 관리자 탭 표시</td></tr>
+    <tr><td>워크플로우 빌더</td><td><code>card</code>, <code>invoice</code></td><td>워크플로우 탭 클릭</td><td>단계, 조건, 임계값, 분기율 갱신</td></tr>
+    <tr><td>임계값</td><td>법인카드 90, 세금계산서 95</td><td>슬라이더 이동</td><td>자동/일괄/수동 예상 비율 재계산</td></tr>
+    <tr><td>검토자 워크플로우</td><td><code>card</code>, <code>invoice</code></td><td>상단 탭 클릭 또는 <code>wf</code> 쿼리</td><td>큐와 상세 패널 변경</td></tr>
+    <tr><td>검토자 선택 건</td><td>큐 item id</td><td>좌측 큐 클릭</td><td>중앙 상세와 AI 근거 갱신</td></tr>
+    <tr><td>검토자 액션</td><td>승인/반려/보류/수정 승인</td><td>버튼 또는 단축키</td><td>토스트 표시, 다음 건 이동</td></tr>
+    <tr><td>일괄 처리</td><td>on/off, 선택 id 배열</td><td>토글, 체크박스, 묶음 선택</td><td>하단 일괄 처리 바 표시/숨김</td></tr>
+    <tr><td>온보딩 단계</td><td>1~7</td><td>스텝 클릭, 이전/다음, <code>step</code> 쿼리</td><td>단계 콘텐츠와 진행률 갱신</td></tr>
+    <tr><td>SAP 연결 테스트</td><td>idle/testing/success</td><td>연결 테스트 클릭</td><td>테스트 중 라벨, 성공 배지</td></tr>
+    <tr><td>샘플 테스트</td><td>idle/running/done</td><td>테스트 실행 클릭</td><td>테스트 중 라벨, 결과 표시</td></tr>
+  </tbody>
+</table>
+
+<h2>6. 기능 요구사항과 화면 매핑</h2>
+<table>
+  <thead><tr><th>PRD 요구</th><th>화면</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><td>FR-001 고객사 계정과목·규정·권한을 온톨로지로 모델링</td><td>온톨로지 스튜디오, 온보딩 Step 3~5</td><td>계정 매핑, 조직·권한, 규정 문서 연결</td></tr>
+    <tr><td>FR-002 법인카드 자동 검토</td><td>워크플로우 빌더, 검토자 법인카드</td><td>자동/일괄/수동 분기와 검토 처리</td></tr>
+    <tr><td>FR-003 세금계산서 3-Way Matching</td><td>워크플로우 빌더, 검토자 세금계산서</td><td>세금계산서·홈택스·SAP 대조</td></tr>
+    <tr><td>FR-004 워크플로우별 신뢰도 임계값 설정</td><td>워크플로우 빌더, 온보딩 Step 6</td><td>90/95 임계값과 슬라이더</td></tr>
+    <tr><td>FR-005 AI 판단 근거 표시</td><td>검토자 우측 패널</td><td>점수 구성요인, 규정, 유사 사례</td></tr>
+    <tr><td>FR-006 검토자 승인·수정·반려 이력</td><td>감사 로그</td><td>액션별 로그와 CSV 내보내기</td></tr>
+    <tr><td>FR-007 과금 가능한 미터링 이벤트</td><td>미터링</td><td>processed, auto_approved, sap_posted 등</td></tr>
+    <tr><td>FR-008 권한과 데이터 범위 설정</td><td>권한 관리, 온보딩 Step 4</td><td>역할별 권한 매트릭스와 SoD</td></tr>
+    <tr><td>FR-009 워크플로우 추가·수정</td><td>워크플로우 빌더</td><td>설정형 파이프라인과 정책 조건</td></tr>
+  </tbody>
+</table>
+
+<h2>7. 예외/리스크 처리 방향</h2>
+<table>
+  <thead><tr><th>리스크</th><th>화면 대응</th></tr></thead>
+  <tbody>
+    <tr><td>SAP 연결 실패</td><td>연동 관리 Retry Queue, 온보딩 연결 테스트 결과, 재처리 버튼</td></tr>
+    <tr><td>규정 문서 노후·임베딩 실패</td><td>규정 센터 상태, 온보딩 문서 상태, 검색 가능/임베딩 중 구분</td></tr>
+    <tr><td>AI 자동 승인 불신</td><td>검토자 근거 패널, 임계값 표시, 초기 일괄 후보 중심 정책</td></tr>
+    <tr><td>권한 충돌</td><td>권한 관리 SoD 배너, 역할별 권한 매트릭스</td></tr>
+    <tr><td>과금 산정 분쟁</td><td>미터링 이벤트와 감사 로그, 이벤트별 근거 보존</td></tr>
+    <tr><td>SI화 회귀</td><td>온보딩 추천 매핑, 표준 온톨로지, 워크플로우 빌더, 설정형 정책</td></tr>
+  </tbody>
+</table>
+
+<h2>8. 제출용 화면 캡처 목록</h2>
+<table>
+  <thead><tr><th>파일</th><th>화면</th></tr></thead>
+  <tbody>
+    <tr><td><code>site/screenshots/admin-01-dashboard.png</code></td><td>관리자 대시보드</td></tr>
+    <tr><td><code>site/screenshots/admin-02-ontology.png</code></td><td>온톨로지 스튜디오</td></tr>
+    <tr><td><code>site/screenshots/admin-03-workflow.png</code></td><td>워크플로우 빌더</td></tr>
+    <tr><td><code>site/screenshots/admin-04-roles.png</code></td><td>권한 관리</td></tr>
+    <tr><td><code>site/screenshots/admin-05-integration.png</code></td><td>연동 관리</td></tr>
+    <tr><td><code>site/screenshots/admin-06-policy.png</code></td><td>규정 센터</td></tr>
+    <tr><td><code>site/screenshots/admin-07-audit.png</code></td><td>감사 로그</td></tr>
+    <tr><td><code>site/screenshots/admin-08-metering.png</code></td><td>미터링</td></tr>
+    <tr><td><code>site/screenshots/reviewer-01-card.png</code></td><td>검토자 · 법인카드</td></tr>
+    <tr><td><code>site/screenshots/reviewer-02-invoice.png</code></td><td>검토자 · 세금계산서 3-Way</td></tr>
+    <tr><td><code>site/screenshots/onboarding-step1.png</code> ~ <code>onboarding-step7.png</code></td><td>고객사 온보딩 7단계</td></tr>
+  </tbody>
+</table>
+
+<h2>9. 향후 실제 제품화 시 보강 항목</h2>
+<ul>
+  <li>온톨로지 편집의 버전 관리: 초안, 승인 요청, 운영 배포, 롤백 상태 필요</li>
+  <li>정책 변경 영향도 분석: 임계값 또는 규정 변경 시 영향받는 대기 건, 자동 후보율, 감사 리스크 표시</li>
+  <li>일괄 처리 안전장치: 동일 규정·동일 계정·동일 리스크 검증 실패 시 일괄 승인 비활성화</li>
+  <li>온보딩 검증 리포트: SAP 권한, 필수 API, 규정 문서 품질, 미매핑 항목, 샘플 테스트 결과를 PDF/CSV로 내보내기</li>
+  <li>권한 승인 플로우: SoD 경고 해소 요청, 승인자 지정, 변경 이력 감사 로그</li>
+  <li>미터링 명세: 고객에게 제공할 월별 과금 상세, 제외 건, 수동 수정 건, 성과 과금 상한 표시</li>
+</ul>
+
+<h2>10. 개정 이력</h2>
+<table>
+  <thead><tr><th>버전</th><th>일자</th><th>내용</th></tr></thead>
+  <tbody>
+    <tr><td>v0.1</td><td>2026-07-05</td><td>개별 SAP Fiori 스타일 목업 3종 제작 전 화면 설계</td></tr>
+    <tr><td>v1.0</td><td>2026-07-05</td><td>통합 인터랙티브 데모 기준으로 관리자 8탭, 검토자 2개 워크플로우, 온보딩 7단계와 기능 동작 상세를 반영</td></tr>
+  </tbody>
+</table>
+<p style="font-size:13px;color:var(--muted)">모든 화면의 데이터와 수치는 과제 제출용 가상 데이터입니다.</p>
+</script>
+
+<script type="text/html" data-page="ui-admin"><h1 class="page-title">관리자 콘솔</h1>
+<p>관리자 콘솔은 운영 4탭(대시보드·온톨로지 스튜디오·워크플로우 빌더·규정 센터)과 거버넌스 4탭(권한 관리·연동 관리·감사 로그·미터링) 총 8탭으로 구성한다. 좌측 내비게이션은 운영·OPERATIONS와 거버넌스·GOVERNANCE 그룹으로 나뉜다.</p>
+
+<h2>대시보드</h2>
+<img src="screenshots/admin-01-dashboard.png" alt="관리자 콘솔 대시보드 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 테넌트의 자동 처리 성과와 연동·신뢰도 상태를 한 화면에서 확인한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>상단 KPI 카드 4개 — 자동 처리율 42.3%(▲6.1%p 전월 대비), 예외 탐지 128건(유효 예외 109건·정확도 85%), 절감 시간 320h(약 1.8 FTE 상당), 총 처리 건수 8,412건(▲12.4% 전월 대비)</li>
+<li>일별 처리량 & 자동 처리율 추이 차트 — 최근 14일, 막대=처리 건수(수동 검토·자동 처리), 라인=자동 처리율</li>
+<li>워크플로우 카드 2개 — 법인카드 자동 검토 44.1%(대기 37·일괄 후보 61·월 5,120), 세금계산서 3-Way 31.6%(대기 24·예외 19·월 3,292)</li>
+<li>SAP 연동 상태 — S/4HANA·OData 연결됨, 전자세금계산서 API 연결됨, 신한·삼성·현대카드 재처리 대기 3건·지연</li>
+<li>신뢰도 분포 — 90–100 자동 후보 58%, 70–89 일괄 검토 28%, 0–69 수동 검토 14% / 최근 감사 이벤트 목록</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §13 성공 지표(North Star=자동 처리 건수), §6.1 Audit &amp; Metering</p>
+
+<h2>온톨로지 스튜디오</h2>
+<img src="screenshots/admin-02-ontology.png" alt="온톨로지 스튜디오 그래프 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 표준 온톨로지와 고객사 계정 체계를 그래프 위에서 매핑·관리한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>객체 타입 목록 — 계정과목 240, 전표 8.4k, 증빙 7.9k, 거래처 512, 세무항목 36, 비용센터 48, 조직·역할 27, 워크플로우 2, 규정 14</li>
+<li>표준 온톨로지 / 고객사 Overlay 전환 탭과 매핑 완료·미매핑·표준 범례가 있는 그래프 캔버스(중심 객체=전표 HUB)</li>
+<li>선택 객체 상세(계정과목) — 객체 수 240, 관계 수 6, 표준↔고객사 매핑 218/240, 미매핑 22건은 온보딩에서 검토 필요</li>
+<li>속성 5종(계정코드 string·계정명 string·계정유형 enum·부가세 구분 enum·활성 여부 bool)과 관계 3종, 사용 중인 워크플로우(법인카드 검토·세금계산서 3-Way)</li>
+<li>전체 매핑 진행률 89%(표준→고객사)와 객체 추가·매핑 편집 버튼</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 강점 1·2(설정형 확장·차이 흡수), §6.2</p>
+
+<h2>워크플로우 빌더</h2>
+<img src="screenshots/admin-03-workflow.png" alt="워크플로우 빌더 파이프라인 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 처리 파이프라인과 신뢰도 임계값 기반 분기를 설정형으로 구성한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>처리 파이프라인 5단계 — 1 수집 → 2 정규화 → 3 증빙 매칭 → 4 규정 검토 → 5 AI 판단</li>
+<li>임계값 90점 기준 분기 3갈래 — 자동 승인(신뢰도 ≥ 90) 62% → SAP 전표 생성, 일괄 승인 후보 23%, 수동 검토 15%</li>
+<li>분기 설정 패널 — 자동 처리 신뢰도 임계값 90, 슬라이더 구간(수동 &lt;70·일괄 70–89·자동 ≥90), 예상 결과 62/23/15%</li>
+<li>자동 승인 조건 · ALL REQUIRED 6종 — 증빙 존재, 금액 정책 한도 내, 거래처·업종 허용, 과거 사례·계정과목 일치, AI 신뢰도 임계값 이상, 최근 30일 내 반려 이력 없음</li>
+<li>워크플로우 전환 탭(법인카드 검토·세금계산서 3-Way, v2.4), 활성 토글, 변경 저장 버튼</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §8.7/§9.7 신뢰도 임계값 90/95, §3.3 설정형 워크플로우</p>
+
+<h2>규정 센터</h2>
+<img src="screenshots/admin-06-policy.png" alt="규정 센터 문서 목록 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 사내 규정·세법 문서를 업로드하고 RAG 검색·워크플로우 근거로 연결한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>문서 테이블 컬럼 — 문서명·유형·버전·적용 워크플로우·임베딩 상태·수정일</li>
+<li>등록 문서 6건 — 법인카드 사용·비용처리 규정(비용정책 v3.2), 접대비(기업업무추진비) 처리 지침(세무 v2.1), 부가가치세 매입세액 공제 기준(세무 v1.4), 거래처 등록·세금계산서 검수 규정(구매·세무 v2.0), 여비교통비 지급 규정(비용정책 v1.7), 전자세금계산서 처리 절차(세무 v1.1)</li>
+<li>임베딩 상태 — 검색 가능 4건, 임베딩 중 2건(여비교통비 지급 규정·전자세금계산서 처리 절차)</li>
+<li>적용 워크플로우 연결 — 법인카드 검토, 세금계산서 3-Way, 법인카드·세금계산서</li>
+<li>문서 업로드 버튼</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §6.1 Knowledge Layer, §16 규정 문서 품질 리스크</p>
+
+<h2>권한 관리</h2>
+<img src="screenshots/admin-04-roles.png" alt="권한 관리 역할별 매트릭스 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 조직·역할·데이터 범위·승인 권한을 매트릭스로 통합 관리하고 직무분리를 점검한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>직무분리(SoD) 통제 배너 — 위반 0건·경고 1건, 회계팀장이 자동승인 설정과 전표 승인 권한 동시 보유에 대한 분리 검토 권장, 경고 검토 버튼</li>
+<li>조직도 · ORG TREE — ㈜한빛리테일 > 재무회계본부(회계팀 12·세무팀 5·자금팀 4), 경영관리본부, IT본부, 감사실</li>
+<li>역할별 권한 매트릭스 · 5개 역할 — CFO, 회계팀장(SoD 경고), 회계담당자, IT·SAP 관리자, 내부감사</li>
+<li>권한 컬럼 — 데이터 범위·조회·승인·수정·자동승인 설정·온톨로지-WF·권한 관리(예: IT·SAP 관리자는 전체(마스킹)·온톨로지-WF·권한 관리 허용)</li>
+<li>셀 범례 — 전체 허용·조건부 허용·권한 없음, 역할 추가 버튼</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 강점 4(SoD·내부통제), §5.5 감사인 페르소나</p>
+
+<h2>연동 관리</h2>
+<img src="screenshots/admin-05-integration.png" alt="연동 관리 상태 및 재처리 큐 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — SAP·홈택스·카드사·문서 저장소 연동 상태와 동기화·재처리를 관리한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>연동 카드 3개 — S/4HANA(OData v4·연결됨, 동기화 2분 전·처리량 3,410건·오류 0건), 전자세금계산서(국세청 API·연결됨, 11분 전·1,208건·오류 0건), 신한·삼성·현대(카드사 API·지연, 47분 전·2,946건·오류 3건, 재연결 버튼)</li>
+<li>재처리 큐 · Retry Queue 3건 대기 — 현대카드 매입내역 892건·타임아웃, SAP 전표 posting 5건·잠금 충돌, 홈택스 재수취 3건·인증 만료, 각 항목 재처리 버튼</li>
+<li>동기화 로그 · Sync Log — SAP 구매오더 3,410건 완료, 홈택스 1,208건 수취, 현대카드 동기화 실패—타임아웃, SAP 전표 42건 posting 완료, 문서 저장소 임베딩 2건 처리 중</li>
+<li>전체 동기화 버튼, 카드별 상세·로그 버튼</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §16 SAP 리스크 대응, NFR-004 재처리 큐</p>
+
+<h2>감사 로그</h2>
+<img src="screenshots/admin-07-audit.png" alt="감사 로그 이력 테이블 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 자동 승인·검토·수정·권한 변경 이력을 누가·언제·어떤 근거로 처리했는지 추적한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>필터 — 전체/AI/사용자/시스템, 액션 유형 드롭다운, 날짜(2026.06.14)</li>
+<li>로그 테이블 컬럼 — 시각·행위자·액션·대상·근거·신뢰도·결과</li>
+<li>행위자 구분 — AI Engine, 사용자(이수진·박서준·김검토), SAP Connector(시스템)</li>
+<li>대표 이력 — AI 자동 승인 법인카드 42건 일괄(신뢰도 94·완료), AI 예외 탐지 세금계산서 단가 불일치(신뢰도 61·검토 전달), 김검토 반려 증빙 누락(신뢰도 48·반려), 이수진 임계값 90→92 변경</li>
+<li>CSV 내보내기 버튼</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · NFR-001, §5.5 컴플라이언스</p>
+
+<h2>미터링</h2>
+<img src="screenshots/admin-08-metering.png" alt="미터링 과금 이벤트 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 처리 건수·자동 처리·절감 시간을 과금 이벤트로 기록하고 예상 과금을 산출한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>과금 이벤트 카드 5개 — processed_item 8,412, auto_approved 3,561, exception_detected 128, sap_posted 3,402, time_saved_min 19,200</li>
+<li>일별 과금 이벤트 추이 — processed·auto_approved·exception 누적 막대 차트</li>
+<li>이번 달 예상 과금 — 기본료(Pro·2 WF, 월 3만건) ₩15,000,000, 처리량 8,412/30,000 포함, 성과 과금(자동완료 3,561 × ₩150) ₩534,150, SAP posting 3,402건 포함</li>
+<li>예상 합계 ₩15,534,150, 성과 과금은 월 구독료의 20~30%를 상한으로 산정</li>
+<li>Pro 플랜 표기 · 2026년 6월 기준</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §15.3 미터링 이벤트, 로드맵 §10</p>
+
+<p style="font-size:13px;color:var(--muted)">본 화면의 데이터·수치는 과제 제출용 가상 데이터입니다.</p></script>
+<script type="text/html" data-page="ui-reviewer"><h1 class="page-title">검토자 화면</h1>
+<p>리스크순으로 정렬된 검토 큐, 문서 상세, AI 판단 근거 패널을 한 화면에 배치해 실무 검토자가 위험 건부터 순서대로 처리하도록 구성한다. 신뢰도 게이지·점수 구성 요인·참조 규정으로 판단 근거를 제시하고, 단축키와 일괄 처리로 승인·반려를 신속하게 수행한다.</p>
+
+<h2>법인카드 검토</h2>
+<img src="screenshots/reviewer-01-card.png" alt="법인카드 검토 워크리스트 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 자동 처리 임계값에 미달한 법인카드 거래를 리스크순으로 검토해 승인·반려·보류한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>상단 탭으로 법인카드 검토 37건·세금계산서 3-Way 24건을 전환하고, 리스크 전체·부서·금액 필터와 마감 임박 8건, 일괄 처리 토글을 배치</li>
+<li>좌측 검토 대기 큐(6건)는 리스크순 정렬로, 각 건에 사용처·사용자·일시, 금액, 심야 사용·증빙 누락·고액 등 리스크 태그와 신뢰도 점수(48~88)를 표시</li>
+<li>중앙 상세는 거래 정보(사용 일시 2026-06-13 23:47, 숙박·음식 MCC 5812, 신한 ****1234), AI 추천 계정과목 813 기업업무추진비와 대체 후보, 증빙 누락 상태를 구성</li>
+<li>우측 AI 판단 근거 패널은 신뢰도 게이지 48(자동 임계값 90·42점 미달), 점수 구성 요인(규정 부합 38·증빙 일치 5·과거 사례 유사도 62·데이터 정합성 88), 판단 근거 문장, 참조 규정(접대비 처리 지침 제6조 2항), 유사 처리 사례를 표시</li>
+<li>하단에 단축키 A 승인·R 반려 안내와 보류·반려·수정 승인·승인 버튼을 배치</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §8.6/§9.6 검토자 UX, 일괄 처리 규칙</p>
+
+<h2>세금계산서 3-Way Matching</h2>
+<img src="screenshots/reviewer-02-invoice.png" alt="세금계산서 3-Way Matching 검토 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 세금계산서·홈택스·SAP 입고 3개 원천을 대조해 불일치 항목을 확인하고 검수 완료 여부를 판정한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>좌측 검토 대기 큐(5건)는 문서번호·수취일, 금액, 수량 불일치·입고 미검수·중복 의심·PO 미매칭 등 태그와 신뢰도(42~96)를 표시하고 리스크순 정렬</li>
+<li>중앙에 항목·세금계산서·홈택스·SAP 구매·입고 4열 비교 테이블을 배치하고, 공급가액·세액·합계·수량 불일치 행을 빨간색으로 하이라이트(수량 1,200 대 SAP 1,140)</li>
+<li>테이블 하단 경고 배너로 세금계산서 수량(1,200)과 SAP 입고 수량(1,140)의 60개 차이 및 분할 납품·미검수 가능성을 안내</li>
+<li>우측 AI 판단 근거 패널은 신뢰도 게이지 61(자동 임계값 95·34점 미달), 점수 구성 요인(사업자·거래처 일치 100·금액 일치 60·수량·입고 일치 45·단가 정합성 95), 참조 규정(거래처·세금계산서 검수 규정 제5조 3항), 유사 처리 사례를 구성</li>
+<li>하단에 단축키 A 승인·R 반려 안내와 보류·반려·수정 승인·승인 버튼을 배치</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §8.6/§9.6 검토자 UX, 일괄 처리 규칙</p>
+
+<p style="font-size:13px;color:var(--muted)">본 화면의 데이터·수치는 과제 제출용 가상 데이터입니다.</p></script>
+<script type="text/html" data-page="ui-onboarding"><h1 class="page-title">고객사 온보딩</h1>
+<p>SAP 연결부터 계정과목 매핑·조직·규정·정책 설정, 샘플 테스트·운영 시작까지 7단계로 구성한 셀프서비스 위저드다. 좌측 진행 트래커와 단계별 완료 상태로 "온보딩 소요일 = 마진"을 화면으로 구현하며, 각 단계는 SAP 읽기 연동·AI 추천을 활용해 설정 시간을 단축한다.</p>
+
+<h2>Step 1 · 회사 정보</h2>
+<img src="screenshots/onboarding-step1.png" alt="온보딩 1단계 회사 정보 입력 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 제품 사용에 필요한 회사 기본 정보를 확인한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>좌측 진행 트래커에 1/7 단계·14%를 표시하고, 7개 단계 목록(회사 정보·SAP 연결·계정과목 매핑·조직·권한·규정 문서·워크플로우·정책·샘플 테스트)을 배치</li>
+<li>회사명(㈜한빛리테일)·사업자등록번호(208-81-62719)·업종(유통·리테일·프랜차이즈) 입력 필드로 구성</li>
+<li>회계 담당자(김재무 팀장·finance@hanbit.co.kr)·월 회계 처리량 추정(약 8,000건/월)·결산 주기(월 마감·매월 5영업일)을 입력</li>
+<li>좌측 하단에 CSM 지원 안내를 상시 노출하고, 우측 하단 '다음' 버튼으로 다음 단계 이동</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 온보딩 제품화=마진, §11.2 신규 개발 범위</p>
+
+<h2>Step 2 · SAP 연결</h2>
+<img src="screenshots/onboarding-step2.png" alt="온보딩 2단계 SAP 연결 방식 선택 및 연결 정보 입력 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — SAP 연결 방식을 선택하고 연결을 테스트하며, 초기에는 읽기 연동을 우선한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>진행 표시는 2/7 단계·29%로 갱신되고, 1단계(회사 정보)는 '완료' 상태로 전환</li>
+<li>연결 방식 4종을 카드로 선택: SAP S/4HANA(OData v4·권장, 선택됨), SAP ECC(BAPI·RFC), 커스텀 RFC, 파일 업로드(CSV·Excel 배치)</li>
+<li>연결 정보 입력: Host(s4h-prd.hanbit.co.kr)·Client·System(100·PRD)·Service User(SVC_FINAI_RO)·인증(OAuth 2.0)</li>
+<li>연결 정보 우측 상단에 '읽기 연동 우선·write-back 비활성' 표기, '연결 테스트' 버튼 제공</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 온보딩 제품화=마진, §11.2 신규 개발 범위</p>
+
+<h2>Step 3 · 계정과목 매핑</h2>
+<img src="screenshots/onboarding-step3.png" alt="온보딩 3단계 계정과목 AI 추천 매핑 테이블 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 고객 계정과목을 표준 Finance Ontology에 매핑하고, AI가 추천 매핑을 생성한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>진행 표시는 3/7 단계·43%, 헤더에 'AI 추천 매핑 자동 생성' 배지와 218/240 매핑·'추천 일괄 승인' 버튼을 배치</li>
+<li>테이블은 고객 계정과목·표준 온톨로지 객체·신뢰도·상태 4열로 구성</li>
+<li>매핑 행 예시: 81300 접대비 → 813 기업업무추진비(98%·자동), 81100 복리후생 → 811 복리후생비(96%·자동), 83000 지급수수료 → 830 지급수수료(94%·자동)</li>
+<li>신뢰도에 따라 상태를 분기: 89% 도서구입은 '검토', 54% 잡비는 '매핑 필요·미매핑'으로 표시</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 온보딩 제품화=마진, §11.2 신규 개발 범위</p>
+
+<h2>Step 4 · 조직·권한</h2>
+<img src="screenshots/onboarding-step4.png" alt="온보딩 4단계 조직도 가져오기 및 역할·데이터 범위 설정 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — SAP HR에서 조직도를 가져오고 역할·데이터 범위를 설정한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>진행 표시는 4/7 단계·57%, 1~3단계는 '완료' 상태</li>
+<li>조직도 가져오기 카드에 '조직 27개 노드·재무회계본부/경영관리본부/IT본부/감사실 가져옴'과 'SAP HR 연동 완료' 배지를 표시</li>
+<li>역할 매핑·데이터 범위: CFO·회계팀장·회계담당자에 '데이터 범위 자동 설정' 적용</li>
+<li>IT·SAP 관리자·내부감사에 '직무분리(SoD) 규칙 적용' 표시</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 온보딩 제품화=마진, §11.2 신규 개발 범위</p>
+
+<h2>Step 5 · 규정 문서</h2>
+<img src="screenshots/onboarding-step5.png" alt="온보딩 5단계 규정 문서 업로드 및 임베딩 상태 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 사내 회계 규정 문서를 업로드하고 임베딩·검색 가능 상태를 확인한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>진행 표시는 5/7 단계·71%, 드래그앤드롭 업로드 영역에 PDF·DOCX·HWP·최대 50MB 제한을 안내</li>
+<li>업로드된 문서 목록 우측 상단에 '4개 검색 가능·2개 임베딩 중' 집계를 표시</li>
+<li>법인카드 사용·비용처리 규정 v3.2, 접대비 처리 지침 v2.1은 '검색 가능' 상태</li>
+<li>여비교통비 지급 규정 v1.7은 '임베딩 중 68%'로 진행률을 표시</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 온보딩 제품화=마진, §11.2 신규 개발 범위</p>
+
+<h2>Step 6 · 워크플로우·정책</h2>
+<img src="screenshots/onboarding-step6.png" alt="온보딩 6단계 워크플로우 선택 및 자동 승인 정책 설정 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 자동화할 워크플로우와 신뢰도 임계값·자동 승인 정책을 설정한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>진행 표시는 6/7 단계·86%, 자동화 워크플로우 2종을 카드로 선택</li>
+<li>법인카드 자동 검토는 임계값 90·초기 일괄 승인 후보로 시작, 세금계산서 3-Way Matching은 임계값 95·금액 리스크로 높게 설정</li>
+<li>자동 승인 정책은 운영 초기에 자동 승인 대신 일괄 승인 후보로 제공하고 검토자 확인 후 임계값을 조정(§8.7 보수적 자동 처리 기준)</li>
+<li>안내 배너로 '초기 4~6주 PoC 동안 자동 승인 비활성화 및 성과 측정'을 명시</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 온보딩 제품화=마진, §11.2 신규 개발 범위</p>
+
+<h2>Step 7 · 샘플 테스트</h2>
+<img src="screenshots/onboarding-step7.png" alt="온보딩 7단계 샘플 데이터 테스트 및 운영 시작 화면" style="max-width:100%;border:1px solid var(--line);border-radius:10px;margin:6px 0 14px">
+<p><strong>화면 목적</strong> — 샘플 데이터로 예상 자동 처리율을 측정하고 운영을 시작한다.</p>
+<p><strong>핵심 구성</strong></p>
+<ul>
+<li>진행 표시는 7/7 단계·100%로 전체 단계 완료 상태</li>
+<li>샘플 데이터 테스트 카드에서 최근 법인카드 100건·세금계산서 60건으로 예상 자동 처리율을 측정</li>
+<li>'테스트 실행' 버튼으로 샘플 측정을 수행</li>
+<li>우측 하단 '운영 시작' 버튼으로 온보딩 완료 후 운영 전환</li>
+</ul>
+<p style="font-size:12.5px;color:var(--muted)"><strong>PRD 근거</strong> · §3.4 온보딩 제품화=마진, §11.2 신규 개발 범위</p>
+
+<p style="font-size:13px;color:var(--muted)">본 화면의 데이터·수치는 과제 제출용 가상 데이터입니다.</p></script>
+
+
+<script>
+(function(){
+  var NAV=JSON.parse(document.getElementById('nav-data').textContent);
+  var DEFAULT='prd-1';
+  var index={};
+  NAV.books.forEach(function(b){b.groups.forEach(function(g){g.pages.forEach(function(p){index[p.id]={book:b,group:g.label,title:p.title};});});});
+  function bookOf(id){return index[id]?index[id].book:NAV.books[0];}
+  function flatBook(b){var a=[];b.groups.forEach(function(g){g.pages.forEach(function(p){a.push(p.id);});});return a;}
+
+  var sb=document.getElementById('nav-tree'), switcher=document.getElementById('book-switch');
+  NAV.books.forEach(function(b,bi){
+    var pill=document.createElement('button');
+    pill.className='book-pill'+(bi===0?' active':''); pill.textContent=b.label; pill.dataset.book=b.id;
+    pill.onclick=function(){ location.hash=flatBook(b)[0]; };
+    switcher.appendChild(pill);
+    var wrap=document.createElement('div'); wrap.className='book-nav'+(bi===0?'':' hidden'); wrap.dataset.book=b.id;
+    b.groups.forEach(function(g){
+      var grp=document.createElement('div'); grp.className='nav-group';
+      var h=document.createElement('button'); h.className='nav-group-h';
+      h.innerHTML='<span>'+g.label+'</span><i class="chev"></i>';
+      h.onclick=function(){ grp.classList.toggle('collapsed'); };
+      grp.appendChild(h);
+      g.pages.forEach(function(p){
+        var a=document.createElement('a'); a.className='nav-item'; a.href='#'+p.id; a.textContent=p.title; a.dataset.id=p.id;
+        grp.appendChild(a);
+      });
+      wrap.appendChild(grp);
+    });
+    sb.appendChild(wrap);
+  });
+
+  function selectBook(id){
+    document.querySelectorAll('.book-pill').forEach(function(x){x.classList.toggle('active',x.dataset.book===id);});
+    document.querySelectorAll('.book-nav').forEach(function(x){x.classList.toggle('hidden',x.dataset.book!==id);});
+  }
+
+  var content=document.getElementById('content'), crumb=document.getElementById('crumb'),
+      outline=document.getElementById('outline'), pager=document.getElementById('pager'),
+      main=document.querySelector('.main');
+
+  function buildOutline(){
+    var hs=content.querySelectorAll('h2,h3');
+    outline.innerHTML='';
+    var cw=document.querySelector('.content-wrap');
+    if(hs.length<1){ outline.classList.add('hidden'); if(cw) cw.classList.add('no-outline'); return; }
+    outline.classList.remove('hidden'); if(cw) cw.classList.remove('no-outline');
+    var t=document.createElement('div'); t.className='outline-t'; t.textContent='이 페이지'; outline.appendChild(t);
+    hs.forEach(function(h){
+      var a=document.createElement('a'); a.className='ol-'+h.tagName.toLowerCase();
+      a.textContent=h.textContent; a.href='javascript:void 0';
+      a.onclick=function(){ h.scrollIntoView({behavior:'smooth',block:'start'}); };
+      outline.appendChild(a);
+    });
+  }
+
+  function showPage(id){
+    var tpl=document.querySelector('script[data-page="'+id+'"]');
+    if(!tpl){ id=DEFAULT; tpl=document.querySelector('script[data-page="'+id+'"]'); }
+    content.innerHTML=tpl.innerHTML;
+    var meta=index[id]||{}, b=bookOf(id);
+    selectBook(b.id);
+    document.querySelectorAll('.nav-item').forEach(function(a){a.classList.toggle('active',a.dataset.id===id);});
+    var act=document.querySelector('.nav-item.active');
+    if(act){ var g=act.closest('.nav-group'); if(g) g.classList.remove('collapsed'); act.scrollIntoView({block:'nearest'}); }
+    crumb.innerHTML='<span>'+b.label+'</span><i>›</i><span>'+(meta.group||'')+'</span><i>›</i><strong>'+(meta.title||'')+'</strong>';
+    buildOutline();
+    var flat=flatBook(b), i=flat.indexOf(id), prev=i>0?flat[i-1]:null, next=i<flat.length-1?flat[i+1]:null;
+    pager.innerHTML='';
+    if(prev) pager.innerHTML+='<a class="pg prev" href="#'+prev+'"><span>← 이전</span>'+index[prev].title+'</a>';
+    if(next) pager.innerHTML+='<a class="pg next" href="#'+next+'"><span>다음 →</span>'+index[next].title+'</a>';
+    if(main) main.scrollTop=0;
+    document.querySelector('.app').classList.remove('nav-open');
+  }
+
+  function route(){ showPage(location.hash.slice(1)||DEFAULT); }
+  window.addEventListener('hashchange', route);
+
+  var search=document.getElementById('search');
+  search.addEventListener('input', function(){
+    var q=this.value.trim().toLowerCase();
+    document.querySelectorAll('.book-nav:not(.hidden) .nav-group').forEach(function(g){
+      var any=false;
+      g.querySelectorAll('.nav-item').forEach(function(a){
+        var m=a.textContent.toLowerCase().indexOf(q)>=0; a.style.display=m?'':'none'; if(m) any=true;
+      });
+      g.style.display=any?'':'none';
+    });
+  });
+
+  var loginEl=document.getElementById('login'), appEl=document.getElementById('app');
+  function enter(){ sessionStorage.setItem('foa_in','1'); loginEl.classList.add('gone'); appEl.classList.remove('hidden'); route(); }
+  document.querySelectorAll('.pcol.nav a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); location.hash=a.getAttribute('href').slice(1); enter(); });
+  });
+  document.getElementById('logout').addEventListener('click', function(){
+    sessionStorage.removeItem('foa_in'); appEl.classList.add('hidden'); loginEl.classList.remove('gone'); });
+  document.getElementById('burger').addEventListener('click', function(){ document.querySelector('.app').classList.toggle('nav-open'); });
+  if(sessionStorage.getItem('foa_in')){ loginEl.classList.add('gone'); appEl.classList.remove('hidden'); route(); }
+})();
+</script>
+</body>
+</html>
