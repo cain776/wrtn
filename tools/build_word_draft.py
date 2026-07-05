@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+import json
 from datetime import date
 from pathlib import Path
 
@@ -111,6 +112,18 @@ def add_hyperlink(paragraph, text: str, url: str):
     new_run.append(text_el)
     hyperlink.append(new_run)
     paragraph._p.append(hyperlink)
+
+
+def normalize_href(href: str) -> str:
+    if href.startswith("#"):
+        return ""
+    if href.startswith(("http://", "https://", "file://", "mailto:")):
+        return href
+    if href.startswith("app.html"):
+        return (ROOT / "site" / "app.html").resolve().as_uri() + href.removeprefix("app.html")
+    if href.startswith("index.html"):
+        return (ROOT / "site" / "index.html").resolve().as_uri() + href.removeprefix("index.html")
+    return href
 
 
 def shade_cell(cell, fill: str):
@@ -237,7 +250,11 @@ def add_rich_text(paragraph, node: Tag):
                     run.font.size = Pt(9.5)
             elif child.name == "a" and child.get("href"):
                 txt = clean_text(child.get_text(" ", strip=True)) or child.get("href")
-                add_hyperlink(paragraph, txt, child.get("href"))
+                href = normalize_href(child.get("href"))
+                if href:
+                    add_hyperlink(paragraph, txt, href)
+                else:
+                    add_run_text(paragraph, txt)
             else:
                 txt = clean_text(child.get_text(" ", strip=True))
                 if txt:
@@ -335,6 +352,9 @@ def process_node(doc, node: Tag, heading_offset=1):
     if node.name == "blockquote":
         add_callout(doc, node.get_text(" ", strip=True))
         return
+    if node.name == "pre":
+        add_callout(doc, node.get_text("\n", strip=True))
+        return
     if node.name in ("ul", "ol"):
         style = "List Bullet" if node.name == "ul" else "List Number"
         for li in node.find_all("li", recursive=False):
@@ -397,6 +417,20 @@ def page_html_map():
     return {script["data-page"]: script.decode_contents() for script in soup.select("script[data-page]")}
 
 
+def nav_page_titles():
+    soup = BeautifulSoup(INDEX.read_text(encoding="utf-8"), "html.parser")
+    node = soup.select_one("#nav-data")
+    if not node:
+        return {}
+    data = json.loads(node.get_text())
+    out = {}
+    for book in data.get("books", []):
+        for group in book.get("groups", []):
+            for page in group.get("pages", []):
+                out[page["id"]] = page["title"]
+    return out
+
+
 def add_cover(doc: Document):
     p = doc.add_paragraph()
     set_para_spacing(p, 0, 4, 1.0)
@@ -413,9 +447,9 @@ def add_cover(doc: Document):
 
     rows = [
         ("대상", "뤼튼테크놀로지스 AX Product Manager (Ontology) 과제 전형"),
-        ("문서 성격", "Word 변환 점검용 초안"),
+        ("문서 성격", "제출용 Word 초안"),
         ("작성일", date.today().isoformat()),
-        ("화면 설계", "인터랙티브 데모 링크로 별도 제공"),
+        ("화면 설계", "통합 인터랙티브 데모 v1.0 및 화면 설계 기획서 반영"),
     ]
     table = doc.add_table(rows=len(rows), cols=2)
     set_table_geometry(table, [1600, 7760])
@@ -430,50 +464,60 @@ def add_cover(doc: Document):
     doc.add_paragraph()
     add_callout(
         doc,
-        "본 초안은 웹 문서의 Word 이전 가능성을 확인하기 위한 1차 변환본입니다. 메뉴명과 세부 문구는 추후 제출 톤에 맞춰 조정할 수 있습니다.",
+        "본 초안은 PRD, 화면 설계, 제품 로드맵, 가격 전략을 하나의 Word 제출본으로 묶은 문서입니다. 화면 설계 산출물은 통합 데모와 상세 기획서 내용을 함께 반영했습니다.",
     )
 
 
-def add_screen_design_link_section(doc: Document):
-    doc.add_paragraph("2. 화면 설계", style="Heading 1")
+def add_document_index(doc: Document, titles: dict[str, str]):
+    doc.add_paragraph("문서 인덱스", style="Heading 1")
     p = doc.add_paragraph()
-    set_para_spacing(p, 0, 6, 1.10)
-    add_run_text(p, "화면 설계는 Word 본문에 긴 캡처를 삽입하지 않고, 별도 인터랙티브 데모 링크로 제공합니다. ")
-    add_run_text(p, "관리자 콘솔, 검토자 화면, 고객사 온보딩은 하나의 통합 데모에서 상단 스위처로 이동할 수 있습니다.", bold=True)
+    set_para_spacing(p, 0, 8, 1.10)
+    add_run_text(p, "아래 인덱스는 본 Word 초안에 포함된 전체 파트와 하위 섹션을 기준으로 정리한 정적 목차입니다. ")
+    add_run_text(p, "각 파트의 번호는 본문 Heading 구조와 동일하게 맞췄습니다.", bold=True)
 
-    app_uri = (ROOT / "site" / "app.html").resolve().as_uri()
-    links = [
-        ("통합 데모", f"{app_uri}?screen=admin"),
-        ("관리자 콘솔 - 온톨로지", f"{app_uri}?screen=admin&tab=ontology"),
-        ("관리자 콘솔 - 워크플로우", f"{app_uri}?screen=admin&tab=workflow"),
-        ("관리자 콘솔 - 권한 관리", f"{app_uri}?screen=admin&tab=roles"),
-        ("검토자 - 세금계산서 3-Way", f"{app_uri}?screen=reviewer&wf=invoice"),
-        ("고객사 온보딩 - SAP 연결", f"{app_uri}?screen=onboarding&step=2"),
+    groups = [
+        ("1. 제품 기획서 (PRD)", [f"prd-{i}" for i in range(1, 20)]),
+        ("2. 화면 설계", ["ui-intro", "ui-admin", "ui-reviewer", "ui-onboarding"]),
+        ("3. 제품 로드맵", [f"rm-{i}" for i in range(1, 7)]),
+        ("4. 가격 전략", [f"pr-{i}" for i in range(7, 13)]),
     ]
-    for label, url in links:
-        p = doc.add_paragraph(style="List Bullet")
-        set_para_spacing(p, 0, 4, 1.167)
-        add_hyperlink(p, label, url)
-
-    table = doc.add_table(rows=1, cols=2)
-    set_table_geometry(table, [3100, 6260])
+    table = doc.add_table(rows=1, cols=3)
     table.style = "Table Grid"
-    headers = ["과제 4-2 요구", "구현 위치"]
+    set_table_geometry(table, [2200, 3560, 3600])
+    headers = ["파트", "섹션", "주요 내용"]
     for i, h in enumerate(headers):
         shade_cell(table.cell(0, i), LIGHT_FILL)
         add_run_text(table.cell(0, i).paragraphs[0], h, bold=True)
-    rows = [
-        ("온톨로지 편집 / 워크플로우 편집 / 권한 관리", "관리자 콘솔 - 온톨로지 스튜디오, 워크플로우 빌더, 권한 관리 탭"),
-        ("검토 대기 목록, 우선순위, 필터", "검토자 화면 - 리스크순 큐, 워크플로우/리스크/부서/금액 필터"),
-        ("AI 판단 근거, 참조 규정, 신뢰도", "검토자 우측 패널 - 판단 근거, 규정 원문, 신뢰도 게이지와 구성 요인"),
-        ("일괄 처리 UX", "검토자 화면 - 일괄 처리 모드, 스마트 묶음 선택, 일괄 승인/보류"),
-        ("SAP 연결, 회계과목 매핑, 규정 업로드, 권한·조직 설정", "고객사 온보딩 - 7단계 셀프서비스 위저드"),
-    ]
-    for left, right in rows:
+    summaries = {
+        "1. 제품 기획서 (PRD)": "제품 비전, 문제 정의, MVP 워크플로우, 기능 요구사항, 성공 지표, 리스크",
+        "2. 화면 설계": "통합 데모 v1.0, 관리자 8탭, 검토자 2개 워크플로우, 온보딩 7단계",
+        "3. 제품 로드맵": "Phase별 배포 계획, 4인 스쿼드 타임라인, 의존성, 리스크, 졸업 게이트",
+        "4. 가격 전략": "피부과·성형외과 버티컬 가격, 파트너 채널, 성과 과금, 경쟁 포지셔닝",
+    }
+    for part, page_ids in groups:
         cells = table.add_row().cells
-        add_run_text(cells[0].paragraphs[0], left)
-        add_run_text(cells[1].paragraphs[0], right)
+        add_run_text(cells[0].paragraphs[0], part, bold=True)
+        add_run_text(cells[1].paragraphs[0], " / ".join(titles.get(pid, pid) for pid in page_ids))
+        add_run_text(cells[2].paragraphs[0], summaries[part])
     doc.add_paragraph()
+
+
+def add_screen_design_section(doc: Document, html_map):
+    doc.add_paragraph("2. 화면 설계", style="Heading 1")
+    app_uri = (ROOT / "site" / "app.html").resolve().as_uri()
+    p = doc.add_paragraph()
+    set_para_spacing(p, 0, 6, 1.10)
+    add_run_text(p, "화면 설계는 통합 인터랙티브 데모와 웹 문서의 화면 설계 기획서 내용을 함께 반영했습니다. ")
+    add_hyperlink(p, "통합 데모 열기", f"{app_uri}?screen=admin")
+    doc.add_paragraph()
+
+    for page_id in ["ui-intro", "ui-admin", "ui-reviewer", "ui-onboarding"]:
+        html = html_map.get(page_id)
+        if not html:
+            continue
+        soup = BeautifulSoup(html, "html.parser")
+        for child in soup.contents:
+            process_node(doc, child, heading_offset=1)
 
 
 def add_pages(doc, pages, heading: str, html_map, heading_offset=1):
@@ -489,22 +533,25 @@ def add_pages(doc, pages, heading: str, html_map, heading_offset=1):
 
 def main():
     html_map = page_html_map()
+    titles = nav_page_titles()
     doc = Document()
     style_document(doc)
     add_cover(doc)
     doc.add_page_break()
+    add_document_index(doc, titles)
+    doc.add_page_break()
 
-    prd_pages = [f"prd-{i}" for i in range(1, 17)]
+    prd_pages = [f"prd-{i}" for i in range(1, 20)]
     add_pages(doc, prd_pages, "1. 제품 기획서 (PRD)", html_map)
 
     doc.add_page_break()
-    add_screen_design_link_section(doc)
+    add_screen_design_section(doc, html_map)
 
     doc.add_page_break()
     roadmap_pages = [f"rm-{i}" for i in range(1, 7)]
     add_pages(doc, roadmap_pages, "3. 제품 로드맵", html_map)
 
-    pricing_pages = [f"pr-{i}" for i in range(7, 12)]
+    pricing_pages = [f"pr-{i}" for i in range(7, 13)]
     add_pages(doc, pricing_pages, "4. 가격 전략", html_map)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
