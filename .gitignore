@@ -1,6 +1,7 @@
 .venv-docx/
 __pycache__/
 *.py[cod]
+~$*.docx
 
 .DS_Store
 Thumbs.db

@@ -225,27 +225,44 @@ def clean_text(text: str) -> str:
     return text.strip()
 
 
+def clean_inline_text(text: str) -> str:
+    text = text.replace("\xa0", " ")
+    text = re.sub(r"\s+", " ", text)
+    return text
+
+
+def add_inline_run(paragraph, text: str, bold=False, italic=False):
+    txt = clean_inline_text(text)
+    if not txt:
+        return None
+    if not paragraph.text:
+        txt = txt.lstrip()
+    elif paragraph.text[-1].isspace() and txt.startswith(" "):
+        txt = txt.lstrip()
+    if not txt:
+        return None
+    return add_run_text(paragraph, txt, bold=bold, italic=italic)
+
+
 def add_rich_text(paragraph, node: Tag):
     for child in node.children:
         if isinstance(child, NavigableString):
-            txt = clean_text(str(child))
-            if txt:
-                add_run_text(paragraph, txt)
+            add_inline_run(paragraph, str(child))
         elif isinstance(child, Tag):
             if child.name == "br":
                 paragraph.add_run().add_break()
             elif child.name in ("strong", "b"):
                 txt = clean_text(child.get_text(" ", strip=True))
                 if txt:
-                    add_run_text(paragraph, txt, bold=True)
+                    add_inline_run(paragraph, txt, bold=True)
             elif child.name in ("em", "i"):
                 txt = clean_text(child.get_text(" ", strip=True))
                 if txt:
-                    add_run_text(paragraph, txt, italic=True)
+                    add_inline_run(paragraph, txt, italic=True)
             elif child.name == "code":
                 txt = clean_text(child.get_text(" ", strip=True))
                 if txt:
-                    run = add_run_text(paragraph, txt)
+                    run = add_inline_run(paragraph, txt)
                     run.font.name = "Consolas"
                     run.font.size = Pt(9.5)
             elif child.name == "a" and child.get("href"):
@@ -254,11 +271,11 @@ def add_rich_text(paragraph, node: Tag):
                 if href:
                     add_hyperlink(paragraph, txt, href)
                 else:
-                    add_run_text(paragraph, txt)
+                    add_inline_run(paragraph, txt)
             else:
                 txt = clean_text(child.get_text(" ", strip=True))
                 if txt:
-                    add_run_text(paragraph, txt)
+                    add_inline_run(paragraph, txt)
 
 
 def add_paragraph_from_node(doc, node: Tag, style=None):
