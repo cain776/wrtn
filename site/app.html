@@ -391,7 +391,7 @@
           <sc-if value="{{ navIs.ontology }}">
           <div style="height:100%;display:flex;flex-direction:column;min-height:0;background:#EDEFF3">
             <div style="flex:none;display:flex;align-items:center;gap:14px;height:56px;padding:0 30px;background:#fff;border-bottom:1px solid #E4E7ED">
-              <div style="display:flex;flex-direction:column;line-height:1.15"><span style="font-size:15px;font-weight:700">온톨로지 스튜디오</span><span style="font-size:10.5px;color:#9AA2B1">Ontology Studio · Finance Ontology v0.9</span></div>
+              <div style="display:flex;flex-direction:column;line-height:1.15"><span style="font-size:15px;font-weight:700">온톨로지 스튜디오</span><span style="font-size:10.5px;color:#9AA2B1">Ontology Studio · {{ ontViewSubtitle }}</span></div>
               <div style="display:flex;gap:3px;padding:3px;background:#F0F2F6;border:1px solid #E4E7ED;border-radius:9px;margin-left:6px">
                 <button data-ev-click="{{ setOntView.standard }}" style="height:28px;padding:0 12px;border:none;border-radius:6px;background:{{ ontViewUi.standardBg }};box-shadow:{{ ontViewUi.standardShadow }};font-size:12px;font-weight:600;color:{{ ontViewUi.standardFg }};cursor:pointer" data-hv="2">표준 온톨로지</button>
                 <button data-ev-click="{{ setOntView.overlay }}" style="height:28px;padding:0 12px;border:none;border-radius:6px;background:{{ ontViewUi.overlayBg }};box-shadow:{{ ontViewUi.overlayShadow }};font-size:12px;font-weight:600;color:{{ ontViewUi.overlayFg }};cursor:pointer" data-hv="2">고객사 Overlay</button>
@@ -410,57 +410,57 @@
               <div style="flex:none;width:236px;background:#fff;border-right:1px solid #E4E7ED;display:flex;flex-direction:column;min-height:0">
                 <div style="padding:14px 16px 8px;font-size:10px;font-weight:700;letter-spacing:.08em;color:#A2AAB8;text-transform:uppercase">객체 타입 · Object Types</div>
                 <div style="flex:1;overflow-y:auto;padding:0 10px 12px">
-                  <button data-ev-click="{{ selectOnt.acct }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#2B50D8;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">계정과목</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">240</span></button>
-                  <button data-ev-click="{{ selectOnt.je }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#171B22;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">전표</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">8.4k</span></button>
-                  <button data-ev-click="{{ selectOnt.ev }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#0EA5A5;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">증빙</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">7.9k</span></button>
-                  <button data-ev-click="{{ selectOnt.vendor }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#6B4DF5;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">거래처</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">512</span></button>
-                  <button data-ev-click="{{ selectOnt.tax }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#0E9F6E;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">세무항목</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">36</span></button>
-                  <button data-ev-click="{{ selectOnt.cc }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#E0961E;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">비용센터</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">48</span></button>
-                  <button data-ev-click="{{ selectOnt.org }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#64748B;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">조직 · 역할</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">27</span></button>
-                  <button data-ev-click="{{ selectOnt.wf }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#DB4A6B;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">워크플로우</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">2</span></button>
-                  <button data-ev-click="{{ selectOnt.policy }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:transparent;border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:#94A3B8;flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:#2B3240">규정</span><span class="mono" style="font-size:10.5px;color:#9AA2B1">14</span></button>
+                  <sc-for list="{{ ontPalette }}" as="p" hint-placeholder-count="9">
+                    <button data-ev-click="{{ p.pick }}" style="display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;margin-bottom:1px;border:none;background:{{ p.bg }};border-radius:7px;cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:{{ p.dot }};flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:600;color:{{ p.fg }}">{{ p.name }}</span><sc-if value="{{ p.isNew }}"><span style="font-size:9px;font-weight:700;color:#6B4DF5;background:#EFEBFE;padding:1px 6px;border-radius:5px;flex:none">신규</span></sc-if><span class="mono" style="font-size:10.5px;color:#9AA2B1">{{ p.count }}</span></button>
+                  </sc-for>
                 </div>
                 <div style="flex:none;margin:0 12px 12px;padding:11px 12px;background:#F6F7FA;border:1px solid #E9ECF1;border-radius:9px">
                   <div style="font-size:11px;font-weight:600;color:#3D4658;margin-bottom:7px">전체 매핑 진행률</div>
-                  <div style="display:flex;align-items:baseline;gap:5px;margin-bottom:7px"><span class="mono" style="font-size:19px;font-weight:600;color:#2B50D8">89</span><span class="mono" style="font-size:12px;color:#9AA2B1">%</span><span style="font-size:10.5px;color:#9AA2B1;margin-left:2px">표준 → 고객사</span></div>
-                  <div style="height:6px;background:#E4E7ED;border-radius:4px;overflow:hidden"><div style="width:89%;height:100%;background:linear-gradient(90deg,#2B50D8,#6B4DF5);border-radius:4px"></div></div>
+                  <div style="display:flex;align-items:baseline;gap:5px;margin-bottom:7px"><span class="mono" style="font-size:19px;font-weight:600;color:#2B50D8">{{ ontTotalPct }}</span><span class="mono" style="font-size:12px;color:#9AA2B1">%</span><span style="font-size:10.5px;color:#9AA2B1;margin-left:2px">표준 → 고객사</span></div>
+                  <div style="height:6px;background:#E4E7ED;border-radius:4px;overflow:hidden"><div style="width:{{ ontTotalPct }}%;height:100%;background:linear-gradient(90deg,#2B50D8,#6B4DF5);border-radius:4px;transition:width .3s"></div></div>
                 </div>
               </div>
 
               <!-- graph canvas -->
               <div style="flex:1;min-width:0;position:relative;display:flex;overflow:auto;background-color:#F4F6F9;background-image:radial-gradient(#D6DBE4 1.1px,transparent 1.1px);background-size:22px 22px">
-                <div style="position:relative;width:900px;height:560px;margin:auto;flex:none">
+                <div style="position:relative;width:900px;height:560px;margin:auto;flex:none;transform:scale({{ ontZoomScale }});transform-origin:center center;transition:transform .18s ease">
                   <svg viewBox="0 0 900 560" style="position:absolute;inset:0;width:900px;height:560px;overflow:visible;pointer-events:none">
                     <sc-for list="{{ ontEdges }}" as="e" hint-placeholder-count="8"><line x1="{{ e.x1 }}" y1="{{ e.y1 }}" x2="{{ e.x2 }}" y2="{{ e.y2 }}" stroke="{{ e.stroke }}" stroke-width="{{ e.width }}" fill="none" style="transition:stroke .18s,stroke-width .18s"></line></sc-for>
                     <sc-for list="{{ ontEdges }}" as="e" hint-placeholder-count="8"><text x="{{ e.lx }}" y="{{ e.ly }}" fill="{{ e.labelColor }}" font-size="9.5" font-family="Geist Mono, monospace" font-weight="500" style="transition:fill .18s">{{ e.label }}</text></sc-for>
+                    <sc-for list="{{ ontCustomEdges }}" as="ce" hint-placeholder-count="1"><line x1="{{ ce.x1 }}" y1="{{ ce.y1 }}" x2="{{ ce.x2 }}" y2="{{ ce.y2 }}" stroke="{{ ce.stroke }}" stroke-width="{{ ce.width }}" stroke-dasharray="5 4" fill="none" style="transition:stroke .18s,stroke-width .18s"></line></sc-for>
+                    <sc-for list="{{ ontCustomEdges }}" as="ce" hint-placeholder-count="1"><text x="{{ ce.lx }}" y="{{ ce.ly }}" fill="{{ ce.labelColor }}" font-size="9.5" font-family="Geist Mono, monospace" font-weight="500" style="transition:fill .18s">{{ ce.label }}</text></sc-for>
                   </svg>
 
-                  <button data-ev-click="{{ selectOnt.cc }}" style="position:absolute;opacity:{{ ontOp.cc }};transition:opacity .2s;left:370px;top:40px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.cc }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#E0961E"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">비용센터</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Cost Center</span><span style="font-size:9px;font-weight:700;color:#C77A0A;background:#FBF0DB;padding:1px 6px;border-radius:5px">미매핑 6</span></div></button>
+                  <button data-ev-click="{{ selectOnt.cc }}" style="position:absolute;opacity:{{ ontOp.cc }};transition:opacity .2s;left:370px;top:40px;width:152px;text-align:left;background:#fff;border:1px solid {{ ontNode.cc.border }};border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.cc }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#E0961E"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">비용센터</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.cc.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.cc.bFg }};background:{{ ontNode.cc.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.cc.badge }}</span></div></button>
 
-                  <button data-ev-click="{{ selectOnt.acct }}" style="position:absolute;opacity:{{ ontOp.acct }};transition:opacity .2s;left:90px;top:150px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.acct }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#2B50D8"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">계정과목</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Account</span><span style="font-size:9px;font-weight:700;color:#0E9F6E;background:#E6F5EE;padding:1px 6px;border-radius:5px">매핑 91%</span></div></button>
+                  <button data-ev-click="{{ selectOnt.acct }}" style="position:absolute;opacity:{{ ontOp.acct }};transition:opacity .2s;left:90px;top:150px;width:152px;text-align:left;background:#fff;border:1px solid {{ ontNode.acct.border }};border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.acct }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#2B50D8"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">계정과목</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.acct.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.acct.bFg }};background:{{ ontNode.acct.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.acct.badge }}</span></div></button>
 
-                  <button data-ev-click="{{ selectOnt.vendor }}" style="position:absolute;opacity:{{ ontOp.vendor }};transition:opacity .2s;left:650px;top:120px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.vendor }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#6B4DF5"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">거래처</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Vendor</span><span style="font-size:9px;font-weight:700;color:#0E9F6E;background:#E6F5EE;padding:1px 6px;border-radius:5px">매핑 88%</span></div></button>
+                  <button data-ev-click="{{ selectOnt.vendor }}" style="position:absolute;opacity:{{ ontOp.vendor }};transition:opacity .2s;left:650px;top:120px;width:152px;text-align:left;background:#fff;border:1px solid {{ ontNode.vendor.border }};border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.vendor }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#6B4DF5"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">거래처</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.vendor.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.vendor.bFg }};background:{{ ontNode.vendor.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.vendor.badge }}</span></div></button>
 
-                  <div style="position:absolute;opacity:{{ ontOp.je }};transition:opacity .2s;left:360px;top:240px;width:170px;text-align:left;background:#171B22;border:1px solid #171B22;border-radius:12px;padding:11px 14px;box-shadow:0 6px 18px rgba(20,24,31,.22);cursor:pointer" data-ev-click="{{ selectOnt.je }}"><sc-if value="{{ ontSel.je }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:14px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><span style="display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:rgba(255,255,255,.14);color:#fff"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 2.5h7l3 3v8H3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span><span style="font-size:14px;font-weight:700;color:#fff">전표</span><span style="font-size:8.5px;font-weight:700;color:#A9B3FF;background:rgba(107,77,245,.28);padding:1px 6px;border-radius:5px;margin-left:auto">HUB</span></div><div style="font-size:10px;color:#AEB6C7">Journal Entry · 중심 객체</div></div>
+                  <div style="position:absolute;opacity:{{ ontOp.je }};transition:opacity .2s;left:360px;top:240px;width:170px;text-align:left;background:#171B22;border:1px solid #171B22;border-radius:12px;padding:11px 14px;box-shadow:0 6px 18px rgba(20,24,31,.22);cursor:pointer" data-ev-click="{{ selectOnt.je }}"><sc-if value="{{ ontSel.je }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:14px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><span style="display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:rgba(255,255,255,.14);color:#fff"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 2.5h7l3 3v8H3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg></span><span style="font-size:14px;font-weight:700;color:#fff">전표</span><span style="font-size:8.5px;font-weight:700;color:#A9B3FF;background:rgba(107,77,245,.28);padding:1px 6px;border-radius:5px;margin-left:auto">HUB</span></div><div style="font-size:10px;color:#AEB6C7">{{ ontNode.je.sub }}</div></div>
 
-                  <button data-ev-click="{{ selectOnt.tax }}" style="position:absolute;opacity:{{ ontOp.tax }};transition:opacity .2s;left:700px;top:300px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.tax }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#0E9F6E"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">세무항목</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Tax Item</span><span style="font-size:9px;font-weight:700;color:#0E9F6E;background:#E6F5EE;padding:1px 6px;border-radius:5px">매핑됨</span></div></button>
+                  <button data-ev-click="{{ selectOnt.tax }}" style="position:absolute;opacity:{{ ontOp.tax }};transition:opacity .2s;left:700px;top:300px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.tax }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#0E9F6E"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">세무항목</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.tax.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.tax.bFg }};background:{{ ontNode.tax.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.tax.badge }}</span></div></button>
 
-                  <button data-ev-click="{{ selectOnt.ev }}" style="position:absolute;opacity:{{ ontOp.ev }};transition:opacity .2s;left:120px;top:360px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.ev }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#0EA5A5"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">증빙</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Evidence</span><span style="font-size:9px;font-weight:700;color:#2B50D8;background:#EAF0FF;padding:1px 6px;border-radius:5px">표준</span></div></button>
+                  <button data-ev-click="{{ selectOnt.ev }}" style="position:absolute;opacity:{{ ontOp.ev }};transition:opacity .2s;left:120px;top:360px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.ev }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#0EA5A5"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">증빙</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.ev.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.ev.bFg }};background:{{ ontNode.ev.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.ev.badge }}</span></div></button>
 
-                  <button data-ev-click="{{ selectOnt.wf }}" style="position:absolute;opacity:{{ ontOp.wf }};transition:opacity .2s;left:375px;top:455px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.wf }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#DB4A6B"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">워크플로우</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Workflow</span><span style="font-size:9px;font-weight:700;color:#0E9F6E;background:#E6F5EE;padding:1px 6px;border-radius:5px">2 활성</span></div></button>
+                  <button data-ev-click="{{ selectOnt.wf }}" style="position:absolute;opacity:{{ ontOp.wf }};transition:opacity .2s;left:375px;top:455px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.wf }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#DB4A6B"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">워크플로우</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.wf.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.wf.bFg }};background:{{ ontNode.wf.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.wf.badge }}</span></div></button>
 
-                  <button data-ev-click="{{ selectOnt.policy }}" style="position:absolute;opacity:{{ ontOp.policy }};transition:opacity .2s;left:110px;top:470px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.policy }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#94A3B8"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">규정</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Policy</span><span style="font-size:9px;font-weight:700;color:#6B7385;background:#EEF0F4;padding:1px 6px;border-radius:5px">14 문서</span></div></button>
+                  <button data-ev-click="{{ selectOnt.policy }}" style="position:absolute;opacity:{{ ontOp.policy }};transition:opacity .2s;left:110px;top:470px;width:152px;text-align:left;background:#fff;border:1px solid {{ ontNode.policy.border }};border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.policy }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#94A3B8"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">규정</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.policy.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.policy.bFg }};background:{{ ontNode.policy.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.policy.badge }}</span></div></button>
 
-                  <button data-ev-click="{{ selectOnt.org }}" style="position:absolute;opacity:{{ ontOp.org }};transition:opacity .2s;left:690px;top:455px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.org }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#64748B"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">조직 · 역할</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">Org &amp; Role</span><span style="font-size:9px;font-weight:700;color:#0E9F6E;background:#E6F5EE;padding:1px 6px;border-radius:5px">매핑됨</span></div></button>
+                  <button data-ev-click="{{ selectOnt.org }}" style="position:absolute;opacity:{{ ontOp.org }};transition:opacity .2s;left:690px;top:455px;width:152px;text-align:left;background:#fff;border:1px solid #DFE3EA;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ ontSel.org }}"><span style="position:absolute;inset:-3px;border:2px solid #2B50D8;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:#64748B"></span><span style="font-size:12.5px;font-weight:700;color:#23272F">조직 · 역할</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1">{{ ontNode.org.sub }}</span><span style="font-size:9px;font-weight:700;color:{{ ontNode.org.bFg }};background:{{ ontNode.org.bBg }};padding:1px 6px;border-radius:5px">{{ ontNode.org.badge }}</span></div></button>
 
-                  <div style="position:absolute;left:22px;bottom:18px;display:flex;gap:6px">
-                    <div style="display:flex;background:#fff;border:1px solid #E4E7ED;border-radius:8px;box-shadow:0 1px 3px rgba(20,24,31,.08);overflow:hidden">
-                      <button style="width:32px;height:32px;border:none;background:#fff;cursor:pointer;color:#545C6B;font-size:16px" data-hv="1">−</button>
-                      <span class="mono" style="display:grid;place-items:center;width:44px;font-size:11px;color:#6B7385;border-left:1px solid #EEF0F4;border-right:1px solid #EEF0F4">100%</span>
-                      <button style="width:32px;height:32px;border:none;background:#fff;cursor:pointer;color:#545C6B;font-size:16px" data-hv="1">+</button>
-                    </div>
-                    <button style="display:flex;align-items:center;gap:6px;height:32px;padding:0 11px;background:#fff;border:1px solid #E4E7ED;border-radius:8px;box-shadow:0 1px 3px rgba(20,24,31,.08);cursor:pointer;font-size:11.5px;font-weight:600;color:#545C6B" data-hv="1"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>맞춤</button>
+                  <sc-for list="{{ ontCustomNodes }}" as="cnode" hint-placeholder-count="1">
+                    <button data-ev-click="{{ cnode.pick }}" style="position:absolute;opacity:{{ cnode.op }};transition:opacity .2s;left:{{ cnode.left }};top:{{ cnode.top }};width:152px;text-align:left;background:#FBFAFF;border:1.5px dashed #B9A7F9;border-radius:11px;padding:9px 12px;cursor:pointer;box-shadow:0 2px 6px rgba(20,24,31,.07)" data-hv="4"><sc-if value="{{ cnode.sel }}"><span style="position:absolute;inset:-3px;border:2px solid #6B4DF5;border-radius:13px;pointer-events:none"></span></sc-if><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="width:9px;height:9px;border-radius:3px;background:{{ cnode.dot }}"></span><span style="font-size:12.5px;font-weight:700;color:#23272F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ cnode.name }}</span></div><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:10px;color:#9AA2B1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ cnode.typeName }}</span><span style="font-size:9px;font-weight:700;color:#6B4DF5;background:#EFEBFE;padding:1px 6px;border-radius:5px;flex:none">신규</span></div></button>
+                  </sc-for>
+
+                </div>
+                <div style="position:absolute;left:22px;bottom:18px;display:flex;gap:6px;z-index:5">
+                  <div style="display:flex;background:#fff;border:1px solid #E4E7ED;border-radius:8px;box-shadow:0 1px 3px rgba(20,24,31,.08);overflow:hidden">
+                    <button data-ev-click="{{ ontZoomOut }}" style="width:32px;height:32px;border:none;background:#fff;cursor:pointer;color:#545C6B;font-size:16px" data-hv="1">−</button>
+                    <span class="mono" style="display:grid;place-items:center;width:44px;font-size:11px;color:#6B7385;border-left:1px solid #EEF0F4;border-right:1px solid #EEF0F4">{{ ontZoom }}%</span>
+                    <button data-ev-click="{{ ontZoomIn }}" style="width:32px;height:32px;border:none;background:#fff;cursor:pointer;color:#545C6B;font-size:16px" data-hv="1">+</button>
                   </div>
+                  <button data-ev-click="{{ ontZoomFit }}" style="display:flex;align-items:center;gap:6px;height:32px;padding:0 11px;background:#fff;border:1px solid #E4E7ED;border-radius:8px;box-shadow:0 1px 3px rgba(20,24,31,.08);cursor:pointer;font-size:11.5px;font-weight:600;color:#545C6B" data-hv="1"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>맞춤</button>
                 </div>
               </div>
 
@@ -494,7 +494,7 @@
                     <div style="font-size:11px;font-weight:700;letter-spacing:.04em;color:#A2AAB8;text-transform:uppercase;margin-bottom:9px">관계 · Relationships</div>
                     <div style="display:flex;flex-direction:column;gap:6px">
                       <sc-for list="{{ ont.rels }}" as="r" hint-placeholder-count="3">
-                        <div style="display:flex;align-items:center;gap:8px;padding:7px 11px;background:#F6F7FA;border:1px solid #EEF0F4;border-radius:8px"><span style="font-size:10px;font-weight:700;color:#6B4DF5;background:#EFEBFE;padding:2px 7px;border-radius:5px">{{ r.kind }}</span><span style="font-size:12px;color:#3D4658">{{ r.label }}</span><svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="margin-left:auto;color:#C2C9D6"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                        <div data-ev-click="{{ r.go }}" style="display:flex;align-items:center;gap:8px;padding:7px 11px;background:#F6F7FA;border:1px solid #EEF0F4;border-radius:8px;cursor:pointer" data-hv="1"><span style="font-size:10px;font-weight:700;color:#6B4DF5;background:#EFEBFE;padding:2px 7px;border-radius:5px">{{ r.kind }}</span><span style="font-size:12px;color:#3D4658">{{ r.label }}</span><svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="margin-left:auto;color:#C2C9D6"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
                       </sc-for>
                     </div>
                   </div>
@@ -505,6 +505,9 @@
                       <sc-for list="{{ ont.workflows }}" as="w" hint-placeholder-count="2">
                         <span style="display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#3D4658;background:#fff;border:1px solid #E4E7ED;padding:5px 10px;border-radius:7px"><span style="width:6px;height:6px;border-radius:50%;background:#0E9F6E"></span>{{ w }}</span>
                       </sc-for>
+                      <sc-if value="{{ ont.noWf }}">
+                        <span style="font-size:11.5px;color:#9AA2B1;padding:5px 2px">아직 연결된 워크플로우가 없습니다 · 워크플로우 빌더에서 이 객체를 참조하면 자동 연결됩니다</span>
+                      </sc-if>
                     </div>
                   </div>
                 </div>
@@ -1347,6 +1350,99 @@
     </div>
   </sc-if>
 
+  <sc-if value="{{ ontModalIs.add }}">
+    <div data-ev-click="{{ closeOntModal }}" style="position:fixed;inset:0;z-index:95;background:rgba(20,24,31,.28);backdrop-filter:blur(2px)"></div>
+    <div style="position:fixed;top:96px;left:50%;transform:translateX(-50%);z-index:100;width:min(520px,calc(100vw - 32px));background:#fff;border:1px solid #DDE2EA;border-radius:14px;box-shadow:0 24px 70px rgba(20,24,31,.26);overflow:hidden;animation:fo-fade .16s ease">
+      <div style="padding:18px 20px 14px;border-bottom:1px solid #EEF0F4">
+        <div style="font-size:15px;font-weight:700;color:#171B22">새 객체 타입 추가</div>
+        <div style="margin-top:3px;font-size:11.5px;color:#8B93A3">신규 객체는 고객사 Overlay에 먼저 생성되고, 표준 승격 검토를 거칩니다</div>
+      </div>
+      <div style="padding:16px 20px 4px">
+        <div style="font-size:11px;font-weight:700;color:#6B7385;margin-bottom:6px">객체 이름</div>
+        <input data-ont-name="1" value="{{ ontNewName }}" data-ev-input="{{ updateOntNewName }}" placeholder="예: 프로젝트, 자산, 계약" style="width:100%;height:38px;padding:0 12px;border:1px solid #DDE2EA;border-radius:9px;outline:none;font-size:13px;font-weight:500;color:#171B22;box-sizing:border-box">
+        <div style="font-size:11px;font-weight:700;color:#6B7385;margin:14px 0 6px">객체 유형</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <sc-for list="{{ ontTypeOpts }}" as="t" hint-placeholder-count="4">
+            <button data-ev-click="{{ t.pick }}" style="display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid {{ t.border }};border-radius:9px;background:{{ t.bg }};cursor:pointer;text-align:left" data-hv="1"><span style="width:8px;height:8px;border-radius:3px;background:{{ t.dot }};flex:none"></span><span style="flex:1;font-size:12.5px;font-weight:700;color:#2B3240">{{ t.name }}</span><span style="font-size:10px;color:#9AA2B1;flex:none">{{ t.ko }}</span></button>
+          </sc-for>
+        </div>
+        <div style="margin-top:14px;padding:10px 12px;background:#F5F8FF;border:1px solid #DBE4FA;border-radius:9px;font-size:11.5px;color:#3D5AA9;line-height:1.5">생성 즉시 관계 그래프에 배치되며, 전표(Hub) 객체와의 기본 연결이 제안됩니다.</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;padding:14px 20px 16px">
+        <button data-ev-click="{{ closeOntModal }}" style="height:36px;padding:0 14px;border:1px solid #E4E7ED;border-radius:8px;background:#FBFBFC;cursor:pointer;font-size:12.5px;font-weight:600;color:#3D4658" data-hv="1">취소</button>
+        <button data-ev-click="{{ createOntObject }}" style="height:36px;padding:0 16px;border:none;border-radius:8px;background:#2B50D8;color:#fff;cursor:pointer;font-size:12.5px;font-weight:600" data-hv="3">객체 생성</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ ontModalIs.mapping }}">
+    <div data-ev-click="{{ closeOntModal }}" style="position:fixed;inset:0;z-index:95;background:rgba(20,24,31,.28);backdrop-filter:blur(2px)"></div>
+    <div style="position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:100;width:min(720px,calc(100vw - 32px));background:#fff;border:1px solid #DDE2EA;border-radius:14px;box-shadow:0 24px 70px rgba(20,24,31,.26);overflow:hidden;animation:fo-fade .16s ease">
+      <div style="padding:18px 20px 14px;border-bottom:1px solid #EEF0F4">
+        <div style="font-size:15px;font-weight:700;color:#171B22">{{ ontMapTitle }}</div>
+        <div style="margin-top:3px;font-size:11.5px;color:#8B93A3">㈜한빛리테일 Overlay 기준 · AI 추천 신뢰도를 확인하고 적용하세요</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid #EEF0F4;background:#F9FAFB">
+        <span class="mono" style="font-size:11.5px;font-weight:600;color:#2B50D8;flex:none">{{ ontMapSummary }}</span>
+        <div style="flex:1;height:6px;background:#E4E7ED;border-radius:4px;overflow:hidden"><div style="width:{{ ontMapPct }}%;height:100%;background:linear-gradient(90deg,#2B50D8,#6B4DF5);border-radius:4px;transition:width .3s"></div></div>
+      </div>
+      <div style="max-height:52vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 20px;border-bottom:1px solid #EEF0F4;background:#FBFBFC">
+          <span style="width:200px;font-size:10px;font-weight:700;letter-spacing:.05em;color:#A2AAB8;text-transform:uppercase">고객사 코드</span>
+          <span style="width:13px"></span>
+          <span style="flex:1;font-size:10px;font-weight:700;letter-spacing:.05em;color:#A2AAB8;text-transform:uppercase">표준 온톨로지</span>
+          <span style="width:44px;font-size:10px;font-weight:700;letter-spacing:.05em;color:#A2AAB8;text-transform:uppercase;text-align:right">신뢰도</span>
+          <span style="width:64px;font-size:10px;font-weight:700;letter-spacing:.05em;color:#A2AAB8;text-transform:uppercase;text-align:right">상태</span>
+        </div>
+        <sc-for list="{{ ontMapRows }}" as="mr" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 20px;border-bottom:1px solid #F2F4F7">
+            <div style="width:200px;min-width:0"><div class="mono" style="font-size:10.5px;color:#8B93A3">{{ mr.cc }}</div><div style="font-size:12.5px;font-weight:600;color:#23272F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ mr.cn }}</div></div>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="color:#C2C9D6;flex:none"><path d="M3 8h9m0 0l-3.5-3.5M12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <div style="flex:1;min-width:0"><div class="mono" style="font-size:10.5px;color:{{ mr.scColor }}">{{ mr.sc }}</div><div style="font-size:12.5px;font-weight:600;color:{{ mr.snColor }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ mr.sn }}</div></div>
+            <span class="mono" style="width:44px;font-size:11px;font-weight:600;color:{{ mr.confColor }};text-align:right;flex:none">{{ mr.confText }}</span>
+            <span style="width:64px;display:flex;justify-content:flex-end;flex:none">
+              <sc-if value="{{ mr.done }}"><span style="font-size:10px;font-weight:700;color:#0A7D57;background:#E6F5EE;padding:3px 8px;border-radius:6px">매핑됨</span></sc-if>
+              <sc-if value="{{ mr.canApply }}"><button data-ev-click="{{ mr.apply }}" style="height:26px;padding:0 10px;border:1px solid #C7D4F5;border-radius:6px;background:#F5F8FF;cursor:pointer;font-size:10.5px;font-weight:700;color:#2B50D8" data-hv="6">적용</button></sc-if>
+            </span>
+          </div>
+        </sc-for>
+        <sc-if value="{{ ontMapEmpty }}">
+          <div style="padding:26px 20px 28px;text-align:center;color:#8B93A3;font-size:12px">아직 연결된 고객사 데이터가 없습니다 · 온보딩에서 데이터 수집 후 매핑할 수 있습니다</div>
+        </sc-if>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 20px;border-top:1px solid #EEF0F4;background:#FBFBFC">
+        <span style="flex:1;font-size:11px;color:#8B93A3">{{ ontMapFootNote }}</span>
+        <sc-if value="{{ ontMapCanApplyAll }}"><button data-ev-click="{{ applyAllOntMap }}" style="height:34px;padding:0 13px;border:1px solid #C7D4F5;border-radius:8px;background:#F5F8FF;cursor:pointer;font-size:12px;font-weight:700;color:#2B50D8" data-hv="1">AI 추천 모두 적용</button></sc-if>
+        <button data-ev-click="{{ closeOntModal }}" style="height:34px;padding:0 16px;border:none;border-radius:8px;background:#2B50D8;color:#fff;cursor:pointer;font-size:12px;font-weight:700" data-hv="3">닫기</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ ontModalIs.relations }}">
+    <div data-ev-click="{{ closeOntModal }}" style="position:fixed;inset:0;z-index:95;background:rgba(20,24,31,.28);backdrop-filter:blur(2px)"></div>
+    <div style="position:fixed;top:96px;left:50%;transform:translateX(-50%);z-index:100;width:min(600px,calc(100vw - 32px));background:#fff;border:1px solid #DDE2EA;border-radius:14px;box-shadow:0 24px 70px rgba(20,24,31,.26);overflow:hidden;animation:fo-fade .16s ease">
+      <div style="padding:18px 20px 14px;border-bottom:1px solid #EEF0F4">
+        <div style="font-size:15px;font-weight:700;color:#171B22">{{ ontRelTitle }}</div>
+        <div style="margin-top:3px;font-size:11.5px;color:#8B93A3">관계를 클릭하면 상대 객체로 이동합니다</div>
+      </div>
+      <div style="max-height:56vh;overflow-y:auto;padding:8px">
+        <sc-for list="{{ ontRelRows }}" as="rr" hint-placeholder-count="4">
+          <button data-ev-click="{{ rr.go }}" style="display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:none;border-radius:10px;background:transparent;cursor:pointer;text-align:left" data-hv="1">
+            <span style="font-size:10px;font-weight:700;color:#6B4DF5;background:#EFEBFE;padding:2px 7px;border-radius:5px;flex:none">{{ rr.kind }}</span>
+            <span style="font-size:12.5px;font-weight:700;color:#23272F;flex:none">{{ rr.from }}</span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="color:#C2C9D6;flex:none"><path d="M3 8h9m0 0l-3.5-3.5M12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <span style="font-size:12.5px;font-weight:700;color:#2B50D8;flex:none">{{ rr.to }}</span>
+            <span style="flex:1;font-size:11.5px;color:#6B7385;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ rr.label }}</span>
+            <span class="mono" style="font-size:10px;color:#9AA2B1;background:#F0F2F6;padding:2px 6px;border-radius:5px;flex:none">{{ rr.card }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:flex-end;padding:12px 20px;border-top:1px solid #EEF0F4;background:#FBFBFC">
+        <button data-ev-click="{{ closeOntModal }}" style="height:34px;padding:0 16px;border:none;border-radius:8px;background:#2B50D8;color:#fff;cursor:pointer;font-size:12px;font-weight:700" data-hv="3">닫기</button>
+      </div>
+    </div>
+  </sc-if>
+
   <sc-if value="{{ hasToast }}">
     <div style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:120;display:flex;align-items:center;gap:11px;padding:11px 18px 11px 14px;background:#171B22;color:#fff;border-radius:11px;box-shadow:0 12px 36px rgba(20,24,31,.34);animation:fo-fade .22s ease">
       <span style="display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:rgba(14,159,110,.24);color:#4ADE8A"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8l3.5 3.5L14 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
@@ -1514,6 +1610,12 @@ class Component extends DCLogic {
     sampleTest: 'idle',
     ontSel: 'acct',
     ontView: 'standard',
+    ontZoom: 100,
+    ontModal: null,
+    ontNewName: '',
+    ontNewType: 'core',
+    ontCustom: [],
+    ontMapDone: {},
     dashboardRange: '30',
     auditFilter: 'all',
     searchOpen: false,
@@ -1531,6 +1633,21 @@ class Component extends DCLogic {
       { kind:'ok', text:'SAP 전표 42건 posting 완료', time:'08:41' },
       { kind:'warn', text:'문서 저장소 임베딩 2건 처리 중', time:'08:20' },
     ],
+    selectedOrg: 'company',
+    roleModal: null,
+    roleSeq: 0,
+    roles: [
+      { id:'cfo', name:'CFO', sub:'최고재무책임자', tag:'C', tagBg:'#EFEBFE', tagFg:'#6B4DF5', orgs:['hq'], scope:'all',
+        perms:{ view:{s:'full'}, approve:{s:'cond',label:'고액',tone:'amber'}, edit:{s:'none'}, auto:{s:'full'}, onto:{s:'none'}, manage:{s:'none'} } },
+      { id:'controller', name:'회계팀장', sub:'Controller', tag:'회', tagBg:'#EAF0FF', tagFg:'#2B50D8', orgs:['hq','acct'], scope:'div',
+        perms:{ view:{s:'full'}, approve:{s:'full'}, edit:{s:'full'}, auto:{s:'full'}, onto:{s:'cond',label:'정책'}, manage:{s:'none'} } },
+      { id:'reviewer', name:'회계담당자', sub:'Reviewer', tag:'검', tagBg:'#E6F5EE', tagFg:'#0E9F6E', orgs:['hq','acct'], scope:'dept',
+        perms:{ view:{s:'full'}, approve:{s:'cond',label:'위임'}, edit:{s:'full'}, auto:{s:'none'}, onto:{s:'none'}, manage:{s:'none'} } },
+      { id:'itadmin', name:'IT · SAP 관리자', sub:'Administrator', tag:'IT', tagBg:'#E7F4F4', tagFg:'#0EA5A5', orgs:['it'], scope:'mask',
+        perms:{ view:{s:'cond',label:'마스킹'}, approve:{s:'none'}, edit:{s:'none'}, auto:{s:'none'}, onto:{s:'full'}, manage:{s:'full'} } },
+      { id:'auditor', name:'내부감사', sub:'Auditor', tag:'감', tagBg:'#F0F2F6', tagFg:'#64748B', orgs:['audit'], scope:'read',
+        perms:{ view:{s:'full'}, approve:{s:'none'}, edit:{s:'none'}, auto:{s:'none'}, onto:{s:'cond',label:'읽기'}, manage:{s:'none'} } },
+    ],
     toast: null,
     userMenu: false,
     notifOpen: false,
@@ -1541,6 +1658,125 @@ class Component extends DCLogic {
 
   set(k, v) { this.setState({ [k]: v }); }
 
+  selectOrg = (k) => this.setState({ selectedOrg: k });
+  openRoleModal = (id) => this.setState({ roleModal: id });
+  closeRoleModal = () => this.setState({ roleModal: null });
+  saveRoleModal = () => { this.setState({ roleModal: null }); this.toast('역할 권한 변경사항을 저장했습니다'); };
+  setRoleScope = (id, scope) => this.setState(st => ({ roles: st.roles.map(r => r.id===id ? Object.assign({}, r, { scope }) : r) }));
+  setRolePerm = (id, key, val) => {
+    const COND = { view:'마스킹', approve:'위임', edit:'조건', auto:'정책', onto:'정책', manage:'위임' };
+    this.setState(st => ({ roles: st.roles.map(r => {
+      if (r.id !== id) return r;
+      const perms = Object.assign({}, r.perms);
+      if (val === 'full') perms[key] = { s:'full' };
+      else if (val === 'none') perms[key] = { s:'none' };
+      else { const prev = r.perms[key] || {}; perms[key] = { s:'cond', label: prev.label || COND[key], tone: prev.tone }; }
+      return Object.assign({}, r, { perms });
+    }) }));
+  };
+  addRoleNew = () => {
+    const st = this.state;
+    const seq = (st.roleSeq || 0) + 1;
+    const org = st.selectedOrg && st.selectedOrg !== 'company' ? st.selectedOrg : 'hq';
+    const id = 'role' + seq;
+    const nr = { id, name:'신규 역할 ' + seq, sub:'Custom Role', tag:'N', tagBg:'#EAF0FF', tagFg:'#2B50D8', orgs:[org], scope:'dept',
+      perms:{ view:{s:'full'}, approve:{s:'none'}, edit:{s:'none'}, auto:{s:'none'}, onto:{s:'none'}, manage:{s:'none'} } };
+    this.setState({ roles: st.roles.concat([nr]), roleSeq: seq, roleModal: id });
+    this.toast('새 역할을 추가했습니다 — 권한을 설정하세요');
+  };
+  reviewSodAlert = () => {
+    const st = this.state;
+    const conflict = (st.roles || []).find(r => r.perms.auto && r.perms.auto.s === 'full' && r.perms.approve && r.perms.approve.s === 'full');
+    if (!conflict) { this.toast('직무분리(SoD) 경고 항목이 없습니다'); return; }
+    const org = (conflict.orgs && conflict.orgs[0]) || 'company';
+    this.setState({ selectedOrg: org, roleModal: conflict.id });
+    this.toast(conflict.name + ' 역할의 권한 편집을 엽니다');
+  };
+  rolesData() {
+    const s = this.state;
+    const ORG = {
+      hq:{ label:'재무회계본부', dot:'#2B50D8', lvl:1 },
+      acct:{ label:'회계팀', dot:'#9AA2B1', lvl:2, cnt:12 },
+      tax:{ label:'세무팀', dot:'#9AA2B1', lvl:2, cnt:5 },
+      fund:{ label:'자금팀', dot:'#9AA2B1', lvl:2, cnt:4 },
+      mgmt:{ label:'경영관리본부', dot:'#6B4DF5', lvl:1 },
+      it:{ label:'IT본부', dot:'#0EA5A5', lvl:1 },
+      audit:{ label:'감사실', dot:'#64748B', lvl:1 },
+    };
+    const orgOrder = ['hq','acct','tax','fund','mgmt','it','audit'];
+    const sel = s.selectedOrg || 'company';
+    const SCOPE = { all:'전체', div:'본부', dept:'부서', team:'팀', mask:'전체(마스킹)', read:'전체(읽기)' };
+    const scopeKeys = ['all','div','dept','team','mask','read'];
+    const PMETA = [
+      { key:'view', label:'조회', desc:'데이터 조회 및 열람' },
+      { key:'approve', label:'승인', desc:'전표·비용 승인 처리' },
+      { key:'edit', label:'수정', desc:'전표·매핑 수정' },
+      { key:'auto', label:'자동승인 설정', desc:'자동 승인 정책·임계값 설정' },
+      { key:'onto', label:'온톨로지·워크플로우', desc:'온톨로지 객체·워크플로우 편집' },
+      { key:'manage', label:'권한 관리', desc:'역할·권한 부여 및 회수' },
+    ];
+    const roles = s.roles || [];
+    const conflictOf = (r) => !!(r.perms.auto && r.perms.auto.s === 'full' && r.perms.approve && r.perms.approve.s === 'full');
+    const warnRoles = roles.filter(conflictOf);
+    const warn = warnRoles.length;
+    const sod = warn > 0
+      ? { bg:'#FDF8EE', border:'#EEE1C4', iconBg:'#FBF0DB', iconFg:'#C77A0A', vio:0, vioColor:'#0E9F6E', warn, warnColor:'#C77A0A', hasIssue:true, btn:'경고 검토',
+          msg: warnRoles.map(r=>r.name).join(', ') + '이(가) 자동승인 설정과 전표 승인 권한을 동시 보유 — 내부통제상 분리 검토를 권장합니다.' }
+      : { bg:'#F1FAF5', border:'#CDEBDB', iconBg:'#E6F5EE', iconFg:'#0E9F6E', vio:0, vioColor:'#0E9F6E', warn:0, warnColor:'#0E9F6E', hasIssue:false, btn:'',
+          msg:'직무분리(SoD) 통제가 정상입니다 — 자동승인과 승인 권한이 중복된 역할이 없습니다.' };
+    const cellUi = (r, pkey) => {
+      const p = r.perms[pkey] || { s:'none' };
+      if (p.s === 'full') return { text:'✓', fs:'13px', fg:'#0E9F6E', bg:'transparent', pd:'0' };
+      if (p.s === 'cond') { const amber = p.tone === 'amber'; return { text: p.label || '조건', fs:'10px', fg: amber?'#C77A0A':'#6B7385', bg: amber?'#FBF0DB':'#EEF0F4', pd:'1px 6px' }; }
+      return { text:'—', fs:'12.5px', fg:'#CDD4DF', bg:'transparent', pd:'0' };
+    };
+    const visible = roles.filter(r => sel === 'company' || (r.orgs || []).includes(sel));
+    const roleRows = visible.map(r => {
+      const conflict = conflictOf(r);
+      return {
+        rowBg: conflict ? '#FDFAF4' : '#fff',
+        tag:r.tag, tagBg:r.tagBg, tagFg:r.tagFg, name:r.name, sub:r.sub,
+        hasBadge: conflict, badge:'SoD 경고', badgeFg:'#C77A0A', badgeBg:'#FBF0DB',
+        scopeLabel: SCOPE[r.scope] || r.scope,
+        open: () => this.openRoleModal(r.id),
+        cells: PMETA.map(pm => Object.assign({ onClick: () => this.openRoleModal(r.id) }, cellUi(r, pm.key))),
+      };
+    });
+    const mrole = roles.find(r => r.id === s.roleModal);
+    let rm = { tag:'', tagBg:'#EEF0F4', tagFg:'#6B7385', name:'', sub:'', strip:false, scopes:[], perms:[] };
+    if (mrole) {
+      const conflict = conflictOf(mrole);
+      rm = {
+        tag:mrole.tag, tagBg:mrole.tagBg, tagFg:mrole.tagFg, name:mrole.name, sub:mrole.sub,
+        strip: conflict, stripBg:'#FDF8EE', stripBorder:'#EEE1C4', stripFg:'#C77A0A',
+        stripText:'자동승인 설정과 전표 승인 권한을 동시 보유 중입니다 — 직무분리(SoD) 경고 대상입니다.',
+        scopes: scopeKeys.map(k => { const on = mrole.scope === k; return { label:SCOPE[k], onClick:() => this.setRoleScope(mrole.id, k), bg:on?'#EAF0FF':'#fff', border:on?'#2B50D8':'#E4E7ED', fg:on?'#2B50D8':'#3D4658' }; }),
+        perms: PMETA.map(pm => {
+          const cur = (mrole.perms[pm.key] || { s:'none' }).s;
+          const seg = (val) => { const on = cur === val; const fgOn = val==='full'?'#0A7D57':(val==='cond'?'#9A5D06':'#B01F2A'); return { onClick:() => this.setRolePerm(mrole.id, pm.key, val), bg:on?'#fff':'transparent', shadow:on?'0 1px 2px rgba(20,24,31,.12)':'none', fw:on?'700':'500', fg:on?fgOn:'#8B93A3' }; };
+          return { label:pm.label, desc:pm.desc, rowBg: (pm.key==='auto' && conflict) ? '#FDF8EE' : 'transparent', full:seg('full'), cond:seg('cond'), none:seg('none') };
+        }),
+      };
+    }
+    const orgCompany = { onClick:() => this.selectOrg('company'), bg: sel==='company'?'#EAF0FF':'transparent' };
+    const orgNodes = orgOrder.map(k => { const o = ORG[k]; const on = sel === k; const lvl2 = o.lvl === 2; return {
+      onClick:() => this.selectOrg(k),
+      pad: lvl2 ? '5px 8px 5px 40px' : '6px 8px 6px 24px',
+      bg: on ? '#EAF0FF' : 'transparent', dot:o.dot, dotW: lvl2?'4px':'5px',
+      fs: lvl2?'11.5px':'12px', fw: lvl2?'500':'600', fg: on ? '#2B50D8' : (lvl2?'#6B7385':'#3D4658'),
+      label:o.label, cnt: o.cnt ? String(o.cnt) : '',
+    }; });
+    return {
+      sod, roleRows, roleCount: visible.length, roleEmpty: visible.length === 0,
+      orgCompany, orgNodes,
+      roleModalOpen: !!mrole, rm,
+      addRole: this.addRoleNew,
+      reviewSodAlert: this.reviewSodAlert,
+      roleModalClose: this.closeRoleModal,
+      roleModalSave: this.saveRoleModal,
+    };
+  }
+
   toast(msg, kind) {
     this.setState({ toast: { msg, kind: kind || 'ok', t: Date.now() } });
     clearTimeout(this._tt);
@@ -1550,6 +1786,16 @@ class Component extends DCLogic {
     clearTimeout(this._sf);
     this._sf = setTimeout(() => {
       const el = rootEl.querySelector('[data-search-input]');
+      if (!el) return;
+      el.focus();
+      const n = el.value.length;
+      if (el.setSelectionRange) el.setSelectionRange(n, n);
+    }, 0);
+  }
+  _focusOntName() {
+    clearTimeout(this._of);
+    this._of = setTimeout(() => {
+      const el = rootEl.querySelector('[data-ont-name]');
       if (!el) return;
       el.focus();
       const n = el.value.length;
@@ -1833,48 +2079,132 @@ class Component extends DCLogic {
     const ONT = {
       acct: { name:'계정과목', en:'Account', type:'Core Object', count:'240', relCount:'6', mapped:'218', total:'240', mapPct:91, mapNote:'표준 계정과목 240개 중 218개가 고객사 계정코드에 매핑됨. 미매핑 22건은 온보딩에서 검토 필요.',
         props:[{name:'계정코드',type:'string'},{name:'계정명',type:'string'},{name:'계정유형',type:'enum'},{name:'부가세 구분',type:'enum'},{name:'활성 여부',type:'bool'}],
-        rels:[{kind:'계상',label:'전표 라인에 계상된다'},{kind:'연결',label:'세무항목과 연결된다'},{kind:'참조',label:'워크플로우에서 참조된다'}],
+        rels:[{kind:'계상',label:'전표 라인에 계상된다',to:'je',card:'1:N'},{kind:'연결',label:'세무항목과 연결된다',to:'tax',card:'N:1'},{kind:'참조',label:'워크플로우에서 참조된다',to:'wf',card:'N:N'}],
         workflows:['법인카드 검토','세금계산서 3-Way'] },
       je: { name:'전표', en:'Journal Entry', type:'Hub Object', count:'8,412', relCount:'9', mapped:'6', total:'6', mapPct:100, mapNote:'고객사 전표 유형 6종에 매핑 · 자동 생성 대상 객체.',
         props:[{name:'전표번호',type:'string'},{name:'전표일자',type:'date'},{name:'전표유형',type:'enum'},{name:'차/대변',type:'enum'},{name:'금액',type:'decimal'},{name:'승인자',type:'ref'}],
-        rels:[{kind:'계상',label:'계정과목에 계상된다'},{kind:'첨부',label:'증빙이 첨부된다'},{kind:'귀속',label:'거래처에 귀속된다'},{kind:'배부',label:'비용센터에 배부된다'}],
+        rels:[{kind:'계상',label:'계정과목에 계상된다',to:'acct',card:'N:1'},{kind:'첨부',label:'증빙이 첨부된다',to:'ev',card:'1:N'},{kind:'귀속',label:'거래처에 귀속된다',to:'vendor',card:'N:1'},{kind:'배부',label:'비용센터에 배부된다',to:'cc',card:'N:1'}],
         workflows:['법인카드 검토','세금계산서 3-Way'] },
       ev: { name:'증빙', en:'Evidence', type:'Core Object', count:'7,932', relCount:'3', mapped:'4', total:'4', mapPct:100, mapNote:'표준 증빙 스키마 제공 · 고객 커스텀 필드 없음.',
         props:[{name:'증빙유형',type:'enum'},{name:'파일',type:'blob'},{name:'OCR 상태',type:'enum'},{name:'발행일',type:'date'},{name:'금액',type:'decimal'}],
-        rels:[{kind:'첨부',label:'전표에 첨부된다'},{kind:'대조',label:'거래 내역과 대조된다'}],
+        rels:[{kind:'첨부',label:'전표에 첨부된다',to:'je',card:'N:1'},{kind:'대조',label:'거래 내역과 대조된다',to:'je',card:'N:1'}],
         workflows:['법인카드 검토','세금계산서 3-Way'] },
       vendor: { name:'거래처', en:'Vendor', type:'Core Object', count:'512', relCount:'4', mapped:'451', total:'512', mapPct:88, mapNote:'거래처 마스터 512건 중 451건 매핑 · 61건은 신규/휴면 거래처.',
         props:[{name:'사업자번호',type:'string'},{name:'거래처명',type:'string'},{name:'대표자',type:'string'},{name:'업종(MCC)',type:'enum'},{name:'세계산서 유형',type:'enum'}],
-        rels:[{kind:'발행',label:'세금계산서를 발행한다'},{kind:'귀속',label:'전표에 귀속된다'},{kind:'과세',label:'세무항목에 과세된다'}],
+        rels:[{kind:'발행',label:'세금계산서를 발행한다',to:'ev',card:'1:N'},{kind:'귀속',label:'전표에 귀속된다',to:'je',card:'1:N'},{kind:'과세',label:'세무항목에 과세된다',to:'tax',card:'N:N'}],
         workflows:['세금계산서 3-Way'] },
       tax: { name:'세무항목', en:'Tax Item', type:'Core Object', count:'36', relCount:'2', mapped:'36', total:'36', mapPct:100, mapNote:'표준 세목 36종 매핑 완료 · 부가세 공제 규칙 포함.',
         props:[{name:'세목코드',type:'string'},{name:'세목명',type:'string'},{name:'세율',type:'decimal'},{name:'공제 여부',type:'bool'},{name:'신고구분',type:'enum'}],
-        rels:[{kind:'연결',label:'계정과목과 연결된다'},{kind:'과세',label:'거래처에 과세된다'}],
+        rels:[{kind:'연결',label:'계정과목과 연결된다',to:'acct',card:'1:N'},{kind:'과세',label:'거래처에 과세된다',to:'vendor',card:'N:N'}],
         workflows:['법인카드 검토','세금계산서 3-Way'] },
       cc: { name:'비용센터', en:'Cost Center', type:'Core Object', count:'48', relCount:'2', mapped:'42', total:'48', mapPct:88, mapNote:'미매핑 6건 — 2026년 신설 지점 반영 필요.',
         props:[{name:'코스트센터코드',type:'string'},{name:'명칭',type:'string'},{name:'상위조직',type:'ref'},{name:'예산',type:'decimal'},{name:'책임자',type:'ref'}],
-        rels:[{kind:'배부',label:'전표가 배부된다'},{kind:'소속',label:'조직에 소속된다'}],
+        rels:[{kind:'배부',label:'전표가 배부된다',to:'je',card:'1:N'},{kind:'소속',label:'조직에 소속된다',to:'org',card:'N:1'}],
         workflows:['법인카드 검토'] },
       org: { name:'조직 · 역할', en:'Org & Role', type:'Governance Object', count:'27', relCount:'3', mapped:'27', total:'27', mapPct:100, mapNote:'조직도 27노드 매핑 완료 · 5개 역할에 데이터 범위 연결.',
         props:[{name:'조직코드',type:'string'},{name:'조직명',type:'string'},{name:'역할',type:'enum'},{name:'데이터 범위',type:'enum'},{name:'승인 한도',type:'decimal'}],
-        rels:[{kind:'소유',label:'비용센터를 소유한다'},{kind:'승인권',label:'워크플로우 승인권을 가진다'},{kind:'부여',label:'권한을 부여받는다'}],
+        rels:[{kind:'소유',label:'비용센터를 소유한다',to:'cc',card:'1:N'},{kind:'승인권',label:'워크플로우 승인권을 가진다',to:'wf',card:'N:N'},{kind:'부여',label:'권한을 부여받는다',to:'org',card:'N:N'}],
         workflows:['법인카드 검토','세금계산서 3-Way'] },
       wf: { name:'워크플로우', en:'Workflow', type:'Process Object', count:'2', relCount:'5', mapped:'2', total:'2', mapPct:100, mapNote:'활성 워크플로우 2종 · 법인카드 검토, 세금계산서 3-Way Matching.',
         props:[{name:'워크플로우명',type:'string'},{name:'버전',type:'string'},{name:'상태',type:'enum'},{name:'신뢰도 임계값',type:'int'},{name:'단계 수',type:'int'}],
-        rels:[{kind:'참조',label:'규정을 참조한다'},{kind:'생성',label:'전표를 생성한다'},{kind:'호출',label:'AI 판단을 호출한다'}],
+        rels:[{kind:'참조',label:'규정을 참조한다',to:'policy',card:'N:N'},{kind:'생성',label:'전표를 생성한다',to:'je',card:'1:N'},{kind:'호출',label:'AI 판단을 호출한다',to:null,card:'1:N'}],
         workflows:['법인카드 검토','세금계산서 3-Way'] },
       policy: { name:'규정', en:'Policy', type:'Knowledge Object', count:'14', relCount:'3', mapped:'12', total:'14', mapPct:86, mapNote:'규정 문서 14개 중 12개 임베딩 완료 · 2개 처리 중.',
         props:[{name:'문서명',type:'string'},{name:'버전',type:'string'},{name:'유형',type:'enum'},{name:'적용범위',type:'enum'},{name:'임베딩',type:'enum'}],
-        rels:[{kind:'참조',label:'워크플로우에서 참조된다'},{kind:'규칙',label:'계정과목 규칙을 정의한다'},{kind:'정책',label:'거래처 정책을 정의한다'}],
+        rels:[{kind:'참조',label:'워크플로우에서 참조된다',to:'wf',card:'N:N'},{kind:'규칙',label:'계정과목 규칙을 정의한다',to:'acct',card:'1:N'},{kind:'정책',label:'거래처 정책을 정의한다',to:'vendor',card:'1:N'}],
         workflows:['법인카드 검토','세금계산서 3-Way'] },
     };
-    const ont = ONT[s.ontSel] || ONT.acct;
+    const TYPE_META = {
+      core: { name:'Core', ko:'코어 객체', dot:'#2B50D8' },
+      process: { name:'Process', ko:'프로세스 객체', dot:'#DB4A6B' },
+      knowledge: { name:'Knowledge', ko:'지식 객체', dot:'#94A3B8' },
+      governance: { name:'Governance', ko:'거버넌스 객체', dot:'#64748B' },
+    };
+    const MAPROWS = {
+      acct:[
+        {id:'81300',cc:'81300',cn:'접대비',sc:'813',sn:'기업업무추진비',conf:98,m:true},
+        {id:'81100',cc:'81100',cn:'복리후생',sc:'811',sn:'복리후생비',conf:96,m:true},
+        {id:'83000',cc:'83000',cn:'지급수수료',sc:'830',sn:'지급수수료',conf:94,m:true},
+        {id:'82910',cc:'82910',cn:'복리후생-간식대',sc:'811',sn:'복리후생비 · AI 추천',conf:78,m:false},
+        {id:'90100',cc:'90100',cn:'잡비',sc:'848',sn:'잡손실 · AI 추천',conf:54,m:false},
+      ],
+      je:[
+        {id:'SA',cc:'SA',cn:'일반 전표',sc:'JE-STD',sn:'표준 전표',conf:100,m:true},
+        {id:'KR',cc:'KR',cn:'매입 전표',sc:'JE-AP',sn:'매입 전표',conf:100,m:true},
+        {id:'DR',cc:'DR',cn:'매출 전표',sc:'JE-AR',sn:'매출 전표',conf:100,m:true},
+      ],
+      ev:[
+        {id:'RCPT',cc:'RCPT',cn:'카드 영수증',sc:'EV-RCPT',sn:'영수증',conf:100,m:true},
+        {id:'TXI',cc:'TXI',cn:'전자세금계산서',sc:'EV-TAXINV',sn:'세금계산서',conf:100,m:true},
+        {id:'CTR',cc:'CTR',cn:'계약서',sc:'EV-CONTRACT',sn:'계약 문서',conf:100,m:true},
+      ],
+      vendor:[
+        {id:'V-0021',cc:'V-0021',cn:'㈜커피니어스',sc:'V-STD-112',sn:'식음료 공급사',conf:97,m:true},
+        {id:'V-0388',cc:'V-0388',cn:'한국철도공사',sc:'V-STD-009',sn:'운수 · 교통',conf:99,m:true},
+        {id:'V-1177',cc:'V-1177',cn:'스마일오피스',sc:'V-STD-034',sn:'사무용품 · AI 추천',conf:83,m:false},
+        {id:'V-2081',cc:'V-2081',cn:'㈜부산신선물류',sc:'V-STD-077',sn:'물류 · 운송 · AI 추천',conf:71,m:false},
+      ],
+      tax:[
+        {id:'V10',cc:'V10',cn:'부가세 매입 10%',sc:'TAX-V10',sn:'매입세액 10%',conf:100,m:true},
+        {id:'V00',cc:'V00',cn:'면세 매입',sc:'TAX-V00',sn:'면세',conf:100,m:true},
+        {id:'NDV',cc:'NDV',cn:'불공제 매입',sc:'TAX-NDV',sn:'매입세액 불공제',conf:100,m:true},
+      ],
+      cc:[
+        {id:'CC-1001',cc:'CC-1001',cn:'본사 경영지원',sc:'STD-CC-01',sn:'본사 공통',conf:99,m:true},
+        {id:'CC-1002',cc:'CC-1002',cn:'영업 1본부',sc:'STD-CC-02',sn:'영업 조직',conf:98,m:true},
+        {id:'CC-2607',cc:'CC-2607',cn:'판교 신설지점',sc:'STD-CC-04',sn:'지점 · AI 추천',conf:76,m:false},
+        {id:'CC-2608',cc:'CC-2608',cn:'부산 제2물류센터',sc:'STD-CC-05',sn:'물류센터 · AI 추천',conf:74,m:false},
+      ],
+      org:[
+        {id:'ORG-10',cc:'ORG-10',cn:'경영지원본부',sc:'STD-ORG-A',sn:'본부',conf:100,m:true},
+        {id:'ORG-20',cc:'ORG-20',cn:'영업본부',sc:'STD-ORG-A',sn:'본부',conf:100,m:true},
+        {id:'ORG-21',cc:'ORG-21',cn:'재무팀',sc:'STD-ORG-B',sn:'팀',conf:100,m:true},
+      ],
+      wf:[
+        {id:'WF-CARD',cc:'WF-CARD',cn:'법인카드 검토 v2.4',sc:'STD-WF-CARD',sn:'경비 검토 표준',conf:100,m:true},
+        {id:'WF-3WAY',cc:'WF-3WAY',cn:'세금계산서 3-Way v1.8',sc:'STD-WF-3WAY',sn:'매입 검증 표준',conf:100,m:true},
+      ],
+      policy:[
+        {id:'POL-003',cc:'POL-003',cn:'법인카드 사용 규정 v3.2',sc:'STD-EXP',sn:'비용정책 그룹',conf:96,m:true},
+        {id:'POL-007',cc:'POL-007',cn:'부가세 공제 기준 v1.4',sc:'STD-TAX',sn:'세무정책 그룹',conf:95,m:true},
+        {id:'POL-013',cc:'POL-013',cn:'여비교통비 지급 규정 v1.7',sc:'STD-EXP',sn:'비용정책 그룹 · AI 추천',conf:81,m:false},
+        {id:'POL-014',cc:'POL-014',cn:'전자세금계산서 절차 v1.1',sc:'STD-TAX',sn:'세무정책 그룹 · AI 추천',conf:85,m:false},
+      ],
+    };
     const ontKeys = ['acct','je','ev','vendor','tax','cc','org','wf','policy'];
+    const ontCustomList = s.ontCustom || [];
+    const mapDone = s.ontMapDone || {};
+    const appliedOf = (k) => (mapDone[k] || []).length;
+    const custDef = ontCustomList.find(c => c.key === s.ontSel);
+    const isCustomSel = !ONT[s.ontSel] && !!custDef;
+    const nameOf = (k) => ONT[k] ? ONT[k].name : ((ontCustomList.find(c => c.key === k) || {}).name || k);
+    const baseOnt = custDef ? {
+      name: custDef.name, en:'Custom Object', type: TYPE_META[custDef.type].name + ' Object', count:'0', relCount:'1',
+      mapped:'0', total:'0', mapPct:0,
+      mapNote:'신규 객체 · 고객사 Overlay에만 존재합니다. 온보딩에서 데이터 수집 후 매핑하고, 표준 승격을 신청할 수 있습니다.',
+      props:[{name:'객체 ID',type:'string'},{name:'명칭',type:'string'},{name:'설명',type:'text'},{name:'생성자',type:'ref'},{name:'활성 여부',type:'bool'}],
+      rels:[{kind:'연결',label:'전표와 연결 (제안)',to:'je',card:'N:1'}],
+      workflows:[],
+    } : (ONT[s.ontSel] || ONT.acct);
+    const selApplied = appliedOf(s.ontSel);
+    const selTotal = parseInt(baseOnt.total, 10) || 0;
+    let selMapped = parseInt(String(baseOnt.mapped).replace(/,/g, ''), 10) || 0;
+    if (selTotal) selMapped = Math.min(selTotal, selMapped + selApplied);
+    const selPct = selTotal ? Math.round(selMapped / selTotal * 100) : baseOnt.mapPct;
+    const selUnmapped = selTotal ? selTotal - selMapped : 0;
+    const ont = Object.assign({}, baseOnt, {
+      mapped: selTotal ? String(selMapped) : baseOnt.mapped,
+      mapPct: selPct,
+      mapNote: selApplied ? baseOnt.mapNote + ' 오늘 ' + selApplied + '건 매핑 적용됨.' : baseOnt.mapNote,
+      rels: baseOnt.rels.map(r => Object.assign({}, r, { go: r.to ? () => set('ontSel', r.to) : undefined })),
+      noWf: baseOnt.workflows.length === 0,
+    });
     const ontSel = {}; const selectOnt = {};
     ontKeys.forEach(k => { ontSel[k] = s.ontSel === k; selectOnt[k] = () => set('ontSel', k); });
     const ADJ = { je:['acct','ev','vendor','cc','wf','org'], acct:['je'], ev:['je'], vendor:['je','tax'], cc:['je'], tax:['vendor'], wf:['je','policy'], policy:['wf'], org:['je'] };
     const _os = s.ontSel;
-    const _conn = (id) => id===_os || (ADJ[_os]||[]).includes(id);
+    const _adj = ADJ[_os] || (isCustomSel ? ['je'] : []);
+    const _conn = (id) => id===_os || _adj.includes(id);
     const EDGEDEF = [
       {a:'je',b:'acct',x1:445,y1:277,x2:166,y2:180,lx:286,ly:222,label:'계상'},
       {a:'je',b:'ev',x1:445,y1:277,x2:196,y2:389,lx:300,ly:345,label:'첨부'},
@@ -1887,6 +2217,66 @@ class Component extends DCLogic {
     ];
     const ontEdges = EDGEDEF.map(e => { const act = e.a===_os||e.b===_os; return { x1:e.x1,y1:e.y1,x2:e.x2,y2:e.y2,lx:e.lx,ly:e.ly,label:e.label, stroke: act?'#2B50D8':'#CDD4DF', width: act?2.4:1.5, labelColor: act?'#2B50D8':'#A4AEBE' }; });
     const ontOp = {}; ontKeys.forEach(k => { ontOp[k] = _conn(k) ? 1 : 0.38; });
+
+    const ovl = s.ontView === 'overlay';
+    const TONE = { g:['#0E9F6E','#E6F5EE'], a:['#C77A0A','#FBF0DB'], b:['#2B50D8','#EAF0FF'], n:['#6B7385','#EEF0F4'] };
+    const nodeMeta = (sub, badgeText, tone, warn) => ({ sub, badge: badgeText, bFg: TONE[tone][0], bBg: TONE[tone][1], border: warn ? '#EFCB92' : '#DFE3EA' });
+    const acctLeft = Math.max(0, 22 - appliedOf('acct'));
+    const vendorLeft = Math.max(0, 61 - appliedOf('vendor'));
+    const ccLeft = Math.max(0, 6 - appliedOf('cc'));
+    const polLeft = Math.max(0, 2 - appliedOf('policy'));
+    const acctPct = Math.round(Math.min(240, 218 + appliedOf('acct')) / 240 * 100);
+    const vendorPct = Math.round(Math.min(512, 451 + appliedOf('vendor')) / 512 * 100);
+    const ontNode = {
+      acct: ovl ? nodeMeta('한빛 계정 240종', acctLeft ? '미매핑 ' + acctLeft : '매핑 완료', acctLeft ? 'a' : 'g', !!acctLeft) : nodeMeta('Account', '매핑 ' + acctPct + '%', 'g', false),
+      vendor: ovl ? nodeMeta('한빛 거래처 512', vendorLeft ? '미매핑 ' + vendorLeft : '매핑 완료', vendorLeft ? 'a' : 'g', !!vendorLeft) : nodeMeta('Vendor', '매핑 ' + vendorPct + '%', 'g', false),
+      cc: ovl ? nodeMeta('한빛 CC 48', ccLeft ? '미매핑 ' + ccLeft : '매핑 완료', ccLeft ? 'a' : 'g', !!ccLeft) : nodeMeta('Cost Center', ccLeft ? '미매핑 ' + ccLeft : '매핑 완료', ccLeft ? 'a' : 'g', false),
+      tax: ovl ? nodeMeta('한빛 세목 36', '완전 매핑', 'g', false) : nodeMeta('Tax Item', '매핑됨', 'g', false),
+      ev: ovl ? nodeMeta('커스텀 필드 없음', '표준 사용', 'b', false) : nodeMeta('Evidence', '표준', 'b', false),
+      wf: ovl ? nodeMeta('활성 2 · 커스텀 0', '표준 사용', 'b', false) : nodeMeta('Workflow', '2 활성', 'g', false),
+      policy: ovl ? nodeMeta('사규 문서 14', polLeft ? '임베딩 ' + polLeft + ' 대기' : '임베딩 완료', polLeft ? 'a' : 'g', !!polLeft) : nodeMeta('Policy', '14 문서', 'n', false),
+      org: ovl ? nodeMeta('HR 조직 27노드', '완전 매핑', 'g', false) : nodeMeta('Org & Role', '매핑됨', 'g', false),
+      je: { sub: ovl ? 'S/4HANA 전표유형 6종 매핑' : 'Journal Entry · 중심 객체' },
+    };
+    const ONT_SLOTS = [{left:640,top:18},{left:84,top:26},{left:296,top:342}];
+    const slotOf = (i) => { const b = ONT_SLOTS[Math.min(i, ONT_SLOTS.length - 1)]; const off = Math.max(0, i - (ONT_SLOTS.length - 1)) * 26; return { left: b.left + off, top: b.top + off }; };
+    const ontCustomNodes = ontCustomList.map((c, i) => { const p = slotOf(i); return {
+      name: c.name, typeName: TYPE_META[c.type].name + ' Object', dot: TYPE_META[c.type].dot,
+      left: p.left + 'px', top: p.top + 'px',
+      sel: _os === c.key, op: (_os === c.key || _os === 'je') ? 1 : 0.38,
+      pick: () => set('ontSel', c.key),
+    }; });
+    const ontCustomEdges = ontCustomList.map((c, i) => { const p = slotOf(i); const cx = p.left + 76, cy = p.top + 31; const act = _os === c.key; return {
+      x1: cx, y1: cy, x2: 445, y2: 277, lx: Math.round((cx + 445) / 2), ly: Math.round((cy + 277) / 2) - 6,
+      label: '연결 제안', stroke: act ? '#6B4DF5' : '#CDD4DF', width: act ? 2.4 : 1.5, labelColor: act ? '#6B4DF5' : '#A4AEBE',
+    }; });
+    const ONT_PAL = [
+      { k:'acct', dot:'#2B50D8', name:'계정과목', count:'240' },
+      { k:'je', dot:'#171B22', name:'전표', count:'8.4k' },
+      { k:'ev', dot:'#0EA5A5', name:'증빙', count:'7.9k' },
+      { k:'vendor', dot:'#6B4DF5', name:'거래처', count:'512' },
+      { k:'tax', dot:'#0E9F6E', name:'세무항목', count:'36' },
+      { k:'cc', dot:'#E0961E', name:'비용센터', count:'48' },
+      { k:'org', dot:'#64748B', name:'조직 · 역할', count:'27' },
+      { k:'wf', dot:'#DB4A6B', name:'워크플로우', count:'2' },
+      { k:'policy', dot:'#94A3B8', name:'규정', count:'14' },
+    ];
+    const ontPalette = ONT_PAL
+      .concat(ontCustomList.map(c => ({ k:c.key, dot:TYPE_META[c.type].dot, name:c.name, count:'0', isNew:true })))
+      .map(p => ({ name:p.name, count:p.count, dot:p.dot, isNew:!!p.isNew, bg: _os===p.k ? '#F0F4FF' : 'transparent', fg: _os===p.k ? '#2B50D8' : '#2B3240', pick: () => set('ontSel', p.k) }));
+    let _tm = 0, _tt = 0;
+    ontKeys.forEach(k => { const t = parseInt(ONT[k].total, 10); const m = Math.min(t, parseInt(ONT[k].mapped, 10) + appliedOf(k)); _tm += m; _tt += t; });
+    const ontTotalPct = Math.floor(_tm / _tt * 100);
+    const mapRowsBase = MAPROWS[_os] || [];
+    const doneList = mapDone[_os] || [];
+    const ontMapRows = mapRowsBase.map(r => { const done = r.m || doneList.includes(r.id); return {
+      cc: r.cc, cn: r.cn, sc: r.sc, sn: r.sn,
+      scColor: done ? '#6B4DF5' : '#B4BCC9', snColor: done ? '#23272F' : '#6B7385',
+      confText: r.conf + '%', confColor: r.conf >= 90 ? '#0A7D57' : (r.conf >= 70 ? '#9A5D06' : '#B01F2A'),
+      canApply: !done, done,
+      apply: () => { this.setState({ ontMapDone: Object.assign({}, mapDone, { [_os]: doneList.concat(r.id) }) }); this.toast(`${r.cn} → ${r.sn.replace(' · AI 추천','')} 매핑을 적용했습니다`); },
+    }; });
+    const ontMapPending = mapRowsBase.filter(r => !r.m && !doneList.includes(r.id)).map(r => r.id);
 
     const wfCard = s.wfSel !== 'invoice';
     const th = wfCard ? s.wfThreshold : s.wfThresholdInv;
@@ -2078,9 +2468,39 @@ class Component extends DCLogic {
         standardBg: ontStd.bg, standardFg: ontStd.fg, standardShadow: ontStd.shadow,
         overlayBg: ontOvr.bg, overlayFg: ontOvr.fg, overlayShadow: ontOvr.shadow,
       },
-      addOntologyObject: () => this.toast(`${ont.name} 객체 템플릿을 추가했습니다`),
-      editOntologyMapping: () => this.toast(`${ont.name} 매핑 편집 모드를 열었습니다`),
-      viewOntologyRelations: () => this.toast(`${ont.name} 관계를 그래프에서 강조했습니다`),
+      addOntologyObject: () => { this.setState({ ontModal: 'add', ontNewName: '', ontNewType: 'core' }); this._focusOntName(); },
+      editOntologyMapping: () => set('ontModal', 'mapping'),
+      viewOntologyRelations: () => set('ontModal', 'relations'),
+      ontViewSubtitle: ovl ? 'Finance Ontology v0.9 · ㈜한빛리테일 Overlay' : 'Finance Ontology v0.9 · 표준',
+      ontNode, ontPalette, ontTotalPct, ontCustomNodes, ontCustomEdges,
+      ontZoom: s.ontZoom, ontZoomScale: s.ontZoom / 100,
+      ontZoomIn: () => set('ontZoom', Math.min(130, s.ontZoom + 10)),
+      ontZoomOut: () => set('ontZoom', Math.max(60, s.ontZoom - 10)),
+      ontZoomFit: () => { set('ontZoom', 100); this.toast('캔버스를 100% 기준으로 정렬했습니다'); },
+      ontModalIs: { add: s.ontModal === 'add', mapping: s.ontModal === 'mapping', relations: s.ontModal === 'relations' },
+      closeOntModal: () => set('ontModal', null),
+      ontNewName: s.ontNewName,
+      updateOntNewName: (e) => { this.setState({ ontNewName: e && e.target ? e.target.value : '' }); this._focusOntName(); },
+      ontTypeOpts: Object.keys(TYPE_META).map(k => { const selT = s.ontNewType === k; return { name: TYPE_META[k].name, ko: TYPE_META[k].ko, dot: TYPE_META[k].dot, border: selT ? '#2B50D8' : '#E4E7ED', bg: selT ? '#F0F4FF' : '#FFFFFF', pick: () => set('ontNewType', k) }; }),
+      createOntObject: () => {
+        const nm = (s.ontNewName || '').trim();
+        if (!nm) { this.toast('객체 이름을 입력해주세요'); this._focusOntName(); return; }
+        const key = 'cust' + (ontCustomList.length + 1);
+        this.setState({ ontCustom: ontCustomList.concat({ key, name: nm, type: s.ontNewType }), ontSel: key, ontModal: null, ontView: 'overlay', ontNewName: '' });
+        this.toast(`'${nm}' 객체가 고객사 Overlay에 생성되었습니다 · 표준 승격 검토 대기`);
+      },
+      ontMapTitle: `${ont.name} · 표준 ↔ 고객사 매핑`,
+      ontMapSummary: selTotal ? `매핑 ${selMapped} / ${selTotal} · 미매핑 ${selUnmapped}건` : '연결된 고객사 데이터 없음',
+      ontMapPct: selPct,
+      ontMapRows,
+      ontMapEmpty: mapRowsBase.length === 0,
+      ontMapCanApplyAll: ontMapPending.length > 0,
+      applyAllOntMap: () => { this.setState({ ontMapDone: Object.assign({}, mapDone, { [_os]: doneList.concat(ontMapPending) }) }); this.toast(`AI 추천 매핑 ${ontMapPending.length}건을 일괄 적용했습니다`); },
+      ontMapFootNote: mapRowsBase.length === 0
+        ? '온보딩에서 고객사 데이터 수집 후 매핑을 진행할 수 있습니다'
+        : (selUnmapped > 0 ? `잔여 미매핑 ${selUnmapped}건은 온보딩 · 계정과목 매핑 단계에서 일괄 처리할 수 있습니다` : '모든 항목이 표준 온톨로지에 연결되어 있습니다'),
+      ontRelTitle: `${ont.name} · 관계 그래프`,
+      ontRelRows: baseOnt.rels.map(r => ({ kind: r.kind, from: baseOnt.name, to: r.to ? nameOf(r.to) : 'AI 엔진', label: r.label, card: r.card || '1:N', go: r.to ? () => this.setState({ ontSel: r.to, ontModal: null }) : undefined })),
       wfIsCard: wfCard,
       wfIsInvoice: !wfCard,
       setWf: { card: () => set('wfSel', 'card'), invoice: () => set('wfSel', 'invoice') },
