@@ -729,33 +729,39 @@
               <button data-ev-click="{{ runFullSync }}" style="display:flex;align-items:center;gap:6px;height:36px;padding:0 14px;border:1px solid #E4E7ED;border-radius:8px;background:#fff;cursor:pointer;font-size:12.5px;font-weight:600;color:#3D4658" data-hv="1"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13 8a5 5 0 1 1-1.5-3.5M13 2v3h-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>{{ syncButtonLabel }}</button>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
-              <div style="background:#fff;border:1px solid #E4E7ED;border-radius:12px;padding:16px 17px;box-shadow:0 1px 2px rgba(20,24,31,.04)">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="display:flex;align-items:center;gap:10px"><span style="display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#F0F2F6;font-size:9px;font-weight:800;color:#3D4658">SAP</span><div style="line-height:1.2"><div style="font-size:13px;font-weight:700">S/4HANA</div><div class="mono" style="font-size:10px;color:#9AA2B1">OData v4</div></div></div><span style="display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;color:#0E9F6E;background:#E6F5EE;padding:3px 8px;border-radius:6px"><span style="width:5px;height:5px;border-radius:50%;background:#0E9F6E"></span>연결됨</span></div>
-                <div style="display:flex;flex-direction:column;gap:6px;font-size:11.5px;margin-bottom:12px"><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">마지막 동기화</span><span class="mono" style="color:#3D4658">2분 전</span></div><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">처리량 (24h)</span><span class="mono" style="color:#3D4658">3,410건</span></div><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">오류</span><span class="mono" style="color:#0E9F6E">0건</span></div></div>
-                <div style="display:flex;gap:7px"><button data-ev-click="{{ showIntegrationDetail }}" style="flex:1;height:32px;border:1px solid #E4E7ED;border-radius:7px;background:#fff;cursor:pointer;font-size:11.5px;font-weight:600;color:#3D4658" data-hv="1">상세</button><button data-ev-click="{{ showIntegrationLog }}" style="flex:1;height:32px;border:1px solid #E4E7ED;border-radius:7px;background:#fff;cursor:pointer;font-size:11.5px;font-weight:600;color:#3D4658" data-hv="1">로그</button></div>
-              </div>
-              <div style="background:#fff;border:1px solid #E4E7ED;border-radius:12px;padding:16px 17px;box-shadow:0 1px 2px rgba(20,24,31,.04)">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="display:flex;align-items:center;gap:10px"><span style="display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#F0F2F6;font-size:9px;font-weight:800;color:#3D4658">홈택스</span><div style="line-height:1.2"><div style="font-size:13px;font-weight:700">전자세금계산서</div><div class="mono" style="font-size:10px;color:#9AA2B1">국세청 API</div></div></div><span style="display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;color:#0E9F6E;background:#E6F5EE;padding:3px 8px;border-radius:6px"><span style="width:5px;height:5px;border-radius:50%;background:#0E9F6E"></span>연결됨</span></div>
-                <div style="display:flex;flex-direction:column;gap:6px;font-size:11.5px;margin-bottom:12px"><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">마지막 동기화</span><span class="mono" style="color:#3D4658">11분 전</span></div><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">처리량 (24h)</span><span class="mono" style="color:#3D4658">1,208건</span></div><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">오류</span><span class="mono" style="color:#0E9F6E">0건</span></div></div>
-                <div style="display:flex;gap:7px"><button data-ev-click="{{ showIntegrationDetail }}" style="flex:1;height:32px;border:1px solid #E4E7ED;border-radius:7px;background:#fff;cursor:pointer;font-size:11.5px;font-weight:600;color:#3D4658" data-hv="1">상세</button><button data-ev-click="{{ showIntegrationLog }}" style="flex:1;height:32px;border:1px solid #E4E7ED;border-radius:7px;background:#fff;cursor:pointer;font-size:11.5px;font-weight:600;color:#3D4658" data-hv="1">로그</button></div>
-              </div>
-              <div style="background:#fff;border:1px solid #E4E7ED;border-radius:12px;padding:16px 17px;box-shadow:0 1px 2px rgba(20,24,31,.04)">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="display:flex;align-items:center;gap:10px"><span style="display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#FBF0DB;font-size:9px;font-weight:800;color:#C77A0A">카드</span><div style="line-height:1.2"><div style="font-size:13px;font-weight:700">신한·삼성·현대</div><div class="mono" style="font-size:10px;color:#9AA2B1">카드사 API</div></div></div><span style="display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;color:#C77A0A;background:#FBF0DB;padding:3px 8px;border-radius:6px"><span style="width:5px;height:5px;border-radius:50%;background:#C77A0A"></span>지연</span></div>
-                <div style="display:flex;flex-direction:column;gap:6px;font-size:11.5px;margin-bottom:12px"><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">마지막 동기화</span><span class="mono" style="color:#C77A0A">47분 전</span></div><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">처리량 (24h)</span><span class="mono" style="color:#3D4658">2,946건</span></div><div style="display:flex;justify-content:space-between"><span style="color:#8B93A3">오류</span><span class="mono" style="color:#DA2C38">3건</span></div></div>
-                <div style="display:flex;gap:7px"><button data-ev-click="{{ reprocessAll }}" style="flex:1;height:32px;border:none;border-radius:7px;background:#2B50D8;color:#fff;cursor:pointer;font-size:11.5px;font-weight:600" data-hv="3">재연결</button><button data-ev-click="{{ showIntegrationLog }}" style="flex:1;height:32px;border:1px solid #E4E7ED;border-radius:7px;background:#fff;cursor:pointer;font-size:11.5px;font-weight:600;color:#3D4658" data-hv="1">로그</button></div>
-              </div>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px">
+              <sc-for list="{{ integrationCards }}" as="c" hint-placeholder-count="4">
+                <div style="background:#fff;border:1px solid #E4E7ED;border-radius:12px;padding:16px 17px;box-shadow:0 1px 2px rgba(20,24,31,.04);min-width:0">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px"><div style="display:flex;align-items:center;gap:10px;min-width:0"><span style="display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:{{ c.iconBg }};font-size:9px;font-weight:800;color:{{ c.iconFg }};flex:none">{{ c.icon }}</span><div style="line-height:1.2;min-width:0"><div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</div><div class="mono" style="font-size:10px;color:#9AA2B1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.sub }}</div></div></div><span style="display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;color:{{ c.fg }};background:{{ c.bg }};padding:3px 8px;border-radius:6px;white-space:nowrap"><span style="width:5px;height:5px;border-radius:50%;background:{{ c.dot }}"></span>{{ c.label }}</span></div>
+                  <div style="display:flex;flex-direction:column;gap:6px;font-size:11.5px;margin-bottom:12px"><div style="display:flex;justify-content:space-between;gap:8px"><span style="color:#8B93A3">마지막 동기화</span><span class="mono" style="color:#3D4658;text-align:right">{{ c.last }}</span></div><div style="display:flex;justify-content:space-between;gap:8px"><span style="color:#8B93A3">처리량 (24h)</span><span class="mono" style="color:#3D4658;text-align:right">{{ c.count }}</span></div><div style="display:flex;justify-content:space-between;gap:8px"><span style="color:#8B93A3">오류</span><span class="mono" style="color:{{ c.errorColor }};text-align:right">{{ c.errors }}</span></div></div>
+                  <div style="display:flex;gap:7px"><button data-ev-click="{{ c.primaryAction }}" style="flex:1;height:32px;border:{{ c.primaryBorder }};border-radius:7px;background:{{ c.primaryBg }};cursor:pointer;font-size:11.5px;font-weight:600;color:{{ c.primaryFg }};min-width:0" data-hv="1">{{ c.primaryLabel }}</button><button data-ev-click="{{ c.secondaryAction }}" style="flex:1;height:32px;border:{{ c.secondaryBorder }};border-radius:7px;background:{{ c.secondaryBg }};cursor:pointer;font-size:11.5px;font-weight:600;color:{{ c.secondaryFg }};min-width:0" data-hv="1">{{ c.secondaryLabel }}</button></div>
+                </div>
+              </sc-for>
             </div>
+
+            <sc-if value="{{ integrationPanelOpen }}">
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;margin-bottom:16px;background:#fff;border:1px solid #DDE5F6;border-radius:12px;box-shadow:0 8px 22px rgba(43,80,216,.08);overflow:hidden">
+                <div style="padding:15px 18px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px"><h3 style="margin:0;font-size:14px;font-weight:800;color:#23272F">{{ integrationPanelTitle }}</h3><button data-ev-click="{{ closeIntegrationPanel }}" style="display:grid;place-items:center;width:28px;height:28px;border:1px solid #E4E7ED;border-radius:7px;background:#FBFBFC;cursor:pointer;color:#8B93A3" data-hv="1"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg></button></div>
+                  <p style="margin:0;font-size:12.5px;line-height:1.5;color:#6B7385">{{ integrationPanelBody }}</p>
+                </div>
+                <div style="padding:10px 12px;background:#F7F9FF;border-left:1px solid #E2E8F8">
+                  <sc-for list="{{ integrationPanelRows }}" as="row" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:flex-start;gap:10px;padding:7px 2px;border-bottom:1px solid rgba(210,220,242,.72)"><span class="mono" style="width:72px;font-size:10.5px;font-weight:700;color:#71809C;flex:none">{{ row.0 }}</span><span style="font-size:11.5px;color:#3D4658;line-height:1.4">{{ row.1 }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
               <div style="background:#fff;border:1px solid #E4E7ED;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(20,24,31,.04)">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #EEF0F4"><span style="font-size:14px;font-weight:700">재처리 큐 · Retry Queue</span><span style="font-size:10.5px;font-weight:700;color:#DA2C38;background:#FBE7E9;padding:2px 8px;border-radius:6px">3건 대기</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #EEF0F4"><span style="font-size:14px;font-weight:700">재처리 큐 · Retry Queue</span><span style="font-size:10.5px;font-weight:700;color:{{ retryBadgeFg }};background:{{ retryBadgeBg }};padding:2px 8px;border-radius:6px">{{ retryBadge }}</span></div>
                 <div style="padding:8px 10px">
                   <sc-for list="{{ retryQueue }}" as="q" hint-placeholder-count="3">
                     <div style="display:flex;align-items:center;gap:11px;padding:10px 10px;border-radius:9px" data-hv="5">
-                      <span style="display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:#FBE7E9;color:#DA2C38;flex:none"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2l6 11H2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M8 6v3M8 11.2v.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
+                      <span style="display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:{{ q.iconBg }};color:{{ q.iconFg }};flex:none"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2l6 11H2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M8 6v3M8 11.2v.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></span>
                       <div style="flex:1;min-width:0"><div style="font-size:12.5px;font-weight:600;color:#23272F">{{ q.title }}</div><div class="mono" style="font-size:10.5px;color:#9AA2B1">{{ q.meta }}</div></div>
-                      <button data-ev-click="{{ q.retry }}" style="height:29px;padding:0 12px;border:1px solid #E4E7ED;border-radius:7px;background:#fff;cursor:pointer;font-size:11.5px;font-weight:600;color:#2B50D8;flex:none" data-hv="6">재처리</button>
+                      <button data-ev-click="{{ q.retry }}" style="height:29px;padding:0 12px;border:{{ q.btnBorder }};border-radius:7px;background:{{ q.btnBg }};cursor:pointer;font-size:11.5px;font-weight:600;color:{{ q.btnFg }};flex:none" data-hv="6">{{ q.btnLabel }}</button>
                     </div>
                   </sc-for>
                 </div>
@@ -764,11 +770,9 @@
               <div style="background:#fff;border:1px solid #E4E7ED;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(20,24,31,.04)">
                 <div style="padding:14px 18px;border-bottom:1px solid #EEF0F4"><span style="font-size:14px;font-weight:700">동기화 로그 · Sync Log</span></div>
                 <div style="padding:6px 8px">
-                  <div style="display:flex;align-items:center;gap:10px;padding:9px 10px"><span style="width:7px;height:7px;border-radius:50%;background:#0E9F6E;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">SAP 구매오더 3,410건 동기화 완료</span><span class="mono" style="font-size:10px;color:#AAB2C0">09:43</span></div>
-                  <div style="display:flex;align-items:center;gap:10px;padding:9px 10px"><span style="width:7px;height:7px;border-radius:50%;background:#0E9F6E;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">홈택스 전자세금계산서 1,208건 수취</span><span class="mono" style="font-size:10px;color:#AAB2C0">09:32</span></div>
-                  <div style="display:flex;align-items:center;gap:10px;padding:9px 10px"><span style="width:7px;height:7px;border-radius:50%;background:#DA2C38;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">현대카드 매입내역 동기화 실패 — 타임아웃</span><span class="mono" style="font-size:10px;color:#AAB2C0">08:58</span></div>
-                  <div style="display:flex;align-items:center;gap:10px;padding:9px 10px"><span style="width:7px;height:7px;border-radius:50%;background:#0E9F6E;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">SAP 전표 42건 posting 완료</span><span class="mono" style="font-size:10px;color:#AAB2C0">08:41</span></div>
-                  <div style="display:flex;align-items:center;gap:10px;padding:9px 10px"><span style="width:7px;height:7px;border-radius:50%;background:#C77A0A;flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">문서 저장소 임베딩 2건 처리 중</span><span class="mono" style="font-size:10px;color:#AAB2C0">08:20</span></div>
+                  <sc-for list="{{ integrationLogs }}" as="l" hint-placeholder-count="6">
+                    <div style="display:flex;align-items:center;gap:10px;padding:9px 10px"><span style="width:7px;height:7px;border-radius:50%;background:{{ l.dot }};flex:none"></span><span style="flex:1;font-size:12px;color:#3D4658">{{ l.text }}</span><span class="mono" style="font-size:10px;color:#AAB2C0">{{ l.time }}</span></div>
+                  </sc-for>
                 </div>
               </div>
             </div>
@@ -1515,6 +1519,18 @@ class Component extends DCLogic {
     searchOpen: false,
     searchQuery: '',
     syncRunning: false,
+    lastFullSyncAt: null,
+    cardRecovered: false,
+    cardReconnectRunning: false,
+    retryState: {},
+    integrationPanel: null,
+    integrationLogs: [
+      { kind:'ok', text:'SAP 구매오더 3,410건 동기화 완료', time:'09:43' },
+      { kind:'ok', text:'홈택스 전자세금계산서 1,208건 수취', time:'09:32' },
+      { kind:'err', text:'현대카드 매입내역 동기화 실패 — 타임아웃', time:'08:58' },
+      { kind:'ok', text:'SAP 전표 42건 posting 완료', time:'08:41' },
+      { kind:'warn', text:'문서 저장소 임베딩 2건 처리 중', time:'08:20' },
+    ],
     toast: null,
     userMenu: false,
     notifOpen: false,
@@ -1554,11 +1570,67 @@ class Component extends DCLogic {
     this.setState({ dashboardRange: next });
     this.toast(next === '7' ? '최근 7일 기준으로 전환했습니다' : (next === '90' ? '최근 90일 기준으로 전환했습니다' : '최근 30일 기준으로 전환했습니다'));
   };
+  _clock(){
+    const d = new Date();
+    return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+  _logEntry(text, kind){
+    return { text, kind: kind || 'ok', time: this._clock() };
+  }
+  _withIntegrationLog(state, text, kind, extra = {}){
+    return Object.assign({
+      integrationLogs: [this._logEntry(text, kind)].concat(state.integrationLogs || []).slice(0, 8)
+    }, extra);
+  }
   runFullSync = () => {
-    this.setState({ syncRunning: true });
+    if (this.state.syncRunning) return;
+    this.setState(s => this._withIntegrationLog(s, '전체 동기화 작업을 시작했습니다', 'run', {
+      syncRunning: true,
+      integrationPanel: { id:'all', type:'log' },
+    }));
     this.toast('전체 동기화를 시작했습니다');
     clearTimeout(this._sync);
-    this._sync = setTimeout(() => this.setState({ syncRunning: false }), 1400);
+    this._sync = setTimeout(() => {
+      this.setState(s => this._withIntegrationLog(s, 'SAP · 홈택스 · 문서 저장소 동기화 완료, 카드사 오류 3건은 재처리 큐 유지', 'ok', {
+        syncRunning: false,
+        lastFullSyncAt: '방금 전',
+      }));
+      this.toast('전체 동기화가 완료되었습니다');
+    }, 1600);
+  };
+  openIntegrationPanel = (id, type) => {
+    this.setState({ integrationPanel: { id, type } });
+  };
+  closeIntegrationPanel = () => this.setState({ integrationPanel: null });
+  startRetry = (id) => {
+    const labels = {
+      card: '현대카드 매입내역',
+      sapPosting: 'SAP 전표 posting',
+      hometax: '홈택스 재수취',
+    };
+    if (!labels[id]) return;
+    const current = this.state.retryState[id];
+    if (current === 'running' || current === 'done') return;
+    const nextRetry = Object.assign({}, this.state.retryState, { [id]: 'running' });
+    this.setState(s => this._withIntegrationLog(s, `${labels[id]} 재처리를 시작했습니다`, 'run', {
+      retryState: nextRetry,
+      cardReconnectRunning: id === 'card' ? true : s.cardReconnectRunning,
+      integrationPanel: { id, type:'log' },
+    }));
+    this.toast(`${labels[id]} 재처리를 시작했습니다`);
+    this._retryTimers = this._retryTimers || {};
+    clearTimeout(this._retryTimers[id]);
+    this._retryTimers[id] = setTimeout(() => {
+      this.setState(s => {
+        const retryState = Object.assign({}, s.retryState, { [id]: 'done' });
+        return this._withIntegrationLog(s, `${labels[id]} 재처리 완료`, 'ok', {
+          retryState,
+          cardRecovered: id === 'card' ? true : s.cardRecovered,
+          cardReconnectRunning: id === 'card' ? false : s.cardReconnectRunning,
+        });
+      });
+      this.toast(`${labels[id]} 재처리가 완료되었습니다`);
+    }, 1450);
   };
   _routeFromUrl(){
     const q = new URLSearchParams(location.search);
@@ -1895,6 +1967,85 @@ class Component extends DCLogic {
       { initial:'세', name:'세종식품 주식회사', meta:'식품 제조 · #FMC-0018 · Starter', iconBg:'#E6F5EE', iconFg:'#0A7D57', current:false, bg:'transparent', go:()=>{ this.set('tenantOpen', false); this.toast('데모에서는 ㈜한빛리테일 테넌트만 활성화되어 있습니다'); } },
       { initial:'B', name:'한국BPO파트너스', meta:'회계 BPO · #BPO-0007 · Partner', iconBg:'#EFEBFE', iconFg:'#6B4DF5', current:false, bg:'transparent', go:()=>{ this.set('tenantOpen', false); this.toast('데모에서는 ㈜한빛리테일 테넌트만 활성화되어 있습니다'); } },
     ];
+    const retryState = s.retryState || {};
+    const statusUi = {
+      ok: { label:'연결됨', fg:'#0E9F6E', bg:'#E6F5EE', dot:'#0E9F6E' },
+      warn: { label:'지연', fg:'#C77A0A', bg:'#FBF0DB', dot:'#C77A0A' },
+      run: { label:'진행 중', fg:'#2B50D8', bg:'#EAF0FF', dot:'#2B50D8' },
+    };
+    const cardRunning = s.cardReconnectRunning || retryState.card === 'running';
+    const cardDone = s.cardRecovered || retryState.card === 'done';
+    const cardStatus = Object.assign({}, cardRunning ? statusUi.run : (cardDone ? statusUi.ok : statusUi.warn), {
+      label: cardRunning ? '재연결 중' : (cardDone ? '연결됨' : '지연')
+    });
+    const commonCardAction = (id, type) => () => this.openIntegrationPanel(id, type);
+    const outlineBtn = { bg:'#fff', fg:'#3D4658', border:'1px solid #E4E7ED' };
+    const integrationCards = [
+      Object.assign({
+        id:'sap', icon:'SAP', iconBg:'#F0F2F6', iconFg:'#3D4658', title:'S/4HANA', sub:'OData v4',
+        last:s.syncRunning ? '동기화 중' : (s.lastFullSyncAt || '2분 전'), count:s.syncRunning ? '3,410 → 3,438건' : '3,410건', errors:'0건', errorColor:'#0E9F6E',
+        primaryLabel:'상세', secondaryLabel:'로그', primaryAction:commonCardAction('sap','detail'), secondaryAction:commonCardAction('sap','log'),
+      }, s.syncRunning ? statusUi.run : statusUi.ok, { primaryBg:outlineBtn.bg, primaryFg:outlineBtn.fg, primaryBorder:outlineBtn.border, secondaryBg:outlineBtn.bg, secondaryFg:outlineBtn.fg, secondaryBorder:outlineBtn.border }),
+      Object.assign({
+        id:'hometax', icon:'홈택스', iconBg:'#F0F2F6', iconFg:'#3D4658', title:'전자세금계산서', sub:'국세청 API',
+        last:s.syncRunning ? '동기화 중' : (s.lastFullSyncAt || '11분 전'), count:s.syncRunning ? '1,208 → 1,236건' : '1,208건', errors:'0건', errorColor:'#0E9F6E',
+        primaryLabel:'상세', secondaryLabel:'로그', primaryAction:commonCardAction('hometax','detail'), secondaryAction:commonCardAction('hometax','log'),
+      }, s.syncRunning ? statusUi.run : statusUi.ok, { primaryBg:outlineBtn.bg, primaryFg:outlineBtn.fg, primaryBorder:outlineBtn.border, secondaryBg:outlineBtn.bg, secondaryFg:outlineBtn.fg, secondaryBorder:outlineBtn.border }),
+      Object.assign({
+        id:'card', icon:'카드', iconBg:cardDone?'#E6F5EE':'#FBF0DB', iconFg:cardDone?'#0A7D57':'#C77A0A', title:'신한·삼성·현대', sub:'카드사 API',
+        last:cardRunning ? '재연결 중' : (cardDone ? '방금 전' : '47분 전'), count:cardDone ? '3,838건' : '2,946건', errors:cardDone ? '0건' : '3건', errorColor:cardDone ? '#0E9F6E' : '#DA2C38',
+        primaryLabel:cardRunning ? '재연결 중...' : (cardDone ? '완료' : '재연결'), secondaryLabel:'로그',
+        primaryAction:() => this.startRetry('card'), secondaryAction:commonCardAction('card','log'),
+        primaryBg:cardDone ? '#E6F5EE' : (cardRunning ? '#EAF0FF' : '#2B50D8'),
+        primaryFg:cardDone ? '#0A7D57' : (cardRunning ? '#2B50D8' : '#fff'),
+        primaryBorder:cardDone ? '1px solid #BFE8D5' : (cardRunning ? '1px solid #C8D6FA' : 'none'),
+        secondaryBg:'#fff', secondaryFg:'#3D4658', secondaryBorder:'1px solid #E4E7ED',
+      }, cardStatus),
+      Object.assign({
+        id:'docs', icon:'DOC', iconBg:'#EFEBFE', iconFg:'#6B4DF5', title:'문서 저장소', sub:'Evidence Vault',
+        last:s.syncRunning ? '임베딩 중' : (s.lastFullSyncAt || '23분 전'), count:s.syncRunning ? '418 → 420건' : '418건', errors:'0건', errorColor:'#0E9F6E',
+        primaryLabel:'상세', secondaryLabel:'로그', primaryAction:commonCardAction('docs','detail'), secondaryAction:commonCardAction('docs','log'),
+      }, s.syncRunning ? statusUi.run : statusUi.ok, { primaryBg:outlineBtn.bg, primaryFg:outlineBtn.fg, primaryBorder:outlineBtn.border, secondaryBg:outlineBtn.bg, secondaryFg:outlineBtn.fg, secondaryBorder:outlineBtn.border }),
+    ];
+    const retryBase = [
+      { id:'card', title:'현대카드 매입내역', pending:'892건 · 타임아웃 · 08:58', running:'892건 · 재수집 중 · 현재', done:'892건 · 재처리 완료 · 방금 전' },
+      { id:'sapPosting', title:'SAP 전표 posting', pending:'5건 · 잠금 충돌 · 08:41', running:'5건 · 락 재확인 중 · 현재', done:'5건 · posting 완료 · 방금 전' },
+      { id:'hometax', title:'홈택스 재수취', pending:'3건 · 인증 만료 · 08:12', running:'3건 · 인증 갱신 중 · 현재', done:'3건 · 재수취 완료 · 방금 전' },
+    ];
+    const retryQueue = retryBase.map(item => {
+      const st = retryState[item.id] || 'pending';
+      const running = st === 'running', done = st === 'done';
+      return {
+        title:item.title,
+        meta:running ? item.running : (done ? item.done : item.pending),
+        iconBg:running ? '#EAF0FF' : (done ? '#E6F5EE' : '#FBE7E9'),
+        iconFg:running ? '#2B50D8' : (done ? '#0A7D57' : '#DA2C38'),
+        btnLabel:running ? '처리 중...' : (done ? '완료' : '재처리'),
+        btnBg:done ? '#E6F5EE' : '#fff',
+        btnFg:done ? '#0A7D57' : '#2B50D8',
+        btnBorder:done ? '1px solid #BFE8D5' : '1px solid #E4E7ED',
+        retry:() => this.startRetry(item.id),
+      };
+    });
+    const retryPending = retryBase.filter(item => (retryState[item.id] || 'pending') === 'pending').length;
+    const retryRunning = retryBase.filter(item => retryState[item.id] === 'running').length;
+    const retryBadge = retryRunning ? `${retryRunning}건 처리 중` : (retryPending ? `${retryPending}건 대기` : '대기 없음');
+    const retryBadgeFg = retryRunning ? '#2B50D8' : (retryPending ? '#DA2C38' : '#0A7D57');
+    const retryBadgeBg = retryRunning ? '#EAF0FF' : (retryPending ? '#FBE7E9' : '#E6F5EE');
+    const logColor = { ok:'#0E9F6E', warn:'#C77A0A', err:'#DA2C38', run:'#2B50D8' };
+    const integrationLogs = (s.integrationLogs || []).map(l => Object.assign({}, l, { dot: logColor[l.kind] || '#0E9F6E' }));
+    const panelId = s.integrationPanel && s.integrationPanel.id;
+    const panelType = s.integrationPanel && s.integrationPanel.type;
+    const panelCopy = {
+      all: { title:'전체 동기화', body:'SAP, 홈택스, 카드사, 문서 저장소를 순차 동기화하고 실패 건은 재처리 큐에 남깁니다.', rows:[['범위','4개 커넥터 전체'],['실행 모드','읽기 동기화 + 실패 큐 보존'],['최근 결과',s.lastFullSyncAt ? '완료 · 방금 전' : '대기 중']] },
+      sap: { title:'SAP S/4HANA', body:'OData v4로 구매오더, 입고, 전표 posting 결과를 동기화합니다.', rows:[['Endpoint','/sap/opu/odata4/finance/v1'],['인증','OAuth2 Client Credentials'],['동기화 주기','5분'],['Write-back','전표 posting 42건 완료']] },
+      hometax: { title:'홈택스 전자세금계산서', body:'국세청 API에서 전자세금계산서 수취 데이터를 가져와 3-Way Matching 입력으로 전달합니다.', rows:[['API','전자세금계산서 수취 조회'],['인증 상태','토큰 유효'],['최근 수집','1,208건'],['오류','0건']] },
+      card: { title:'카드사 API', body:'신한·삼성·현대카드 매입내역을 수집하고 실패 건은 재처리 큐로 분리합니다.', rows:[['대상 카드사','신한 · 삼성 · 현대'],['현재 상태',cardDone ? '연결됨' : (cardRunning ? '재연결 중' : '현대카드 지연')],['오류 건수',cardDone ? '0건' : '3건'],['재처리 정책','타임아웃 발생 시 3회 백오프 재시도']] },
+      docs: { title:'문서 저장소', body:'규정 문서와 증빙 파일을 저장하고 임베딩 상태를 RAG 검색 가능 상태로 갱신합니다.', rows:[['저장소','Evidence Vault'],['임베딩 큐',s.syncRunning ? '2건 처리 중' : '0건'],['검색 인덱스','Finance-RAG v1'],['최근 처리','규정 문서 418건']] },
+      sapPosting: { title:'SAP 전표 posting', body:'잠금 충돌이 발생한 SAP 전표를 락 해제 확인 후 다시 posting합니다.', rows:[['대상','전표 5건'],['원인','SAP object lock collision'],['재처리 방식','락 확인 후 순차 posting']] },
+    };
+    const panel = panelCopy[panelId] || null;
+    const integrationPanelRows = panel ? (panelType === 'log' ? integrationLogs.slice(0, 5).map(l => [l.time, l.text]) : panel.rows) : [];
 
     return {
       dashboardRangeLabel: s.dashboardRange === '7' ? '최근 7일' : (s.dashboardRange === '90' ? '최근 90일' : '최근 30일'),
@@ -1942,9 +2093,16 @@ class Component extends DCLogic {
       reviewSodAlert: () => this.toast('직무분리 경고 항목으로 이동했습니다'),
       runFullSync: this.runFullSync,
       syncButtonLabel: s.syncRunning ? '동기화 중...' : '전체 동기화',
-      showIntegrationDetail: () => this.toast('연동 상세 패널을 열었습니다'),
-      showIntegrationLog: () => this.toast('연동 로그를 열었습니다'),
-      reprocessAll: () => this.toast('카드사 재연결·재처리를 시작했습니다', 'ok'),
+      integrationCards,
+      integrationLogs,
+      integrationPanelOpen: !!panel,
+      integrationPanelTitle: panel ? `${panel.title} ${panelType === 'log' ? '로그' : '상세'}` : '',
+      integrationPanelBody: panel ? panel.body : '',
+      integrationPanelRows,
+      closeIntegrationPanel: this.closeIntegrationPanel,
+      retryBadge,
+      retryBadgeFg,
+      retryBadgeBg,
       uploadPolicyDoc: () => this.toast('규정 문서 업로드 대기열을 열었습니다'),
       exportAuditCsv: () => this.toast('감사 로그 CSV 내보내기를 시작했습니다'),
       setAuditFilter: {
@@ -1970,11 +2128,7 @@ class Component extends DCLogic {
         { name:'전자세금계산서 처리 절차', type:'세무', version:'v1.1', wf:'세금계산서 3-Way', emb:'임베딩 중', embColor:'#C77A0A', date:'2026.06.28' },
       ],
       auditRows,
-      retryQueue: [
-        { title: '현대카드 매입내역', meta: '892건 · 타임아웃 · 08:58', retry: () => this.toast('현대카드 매입내역 재처리를 시작했습니다', 'ok') },
-        { title: 'SAP 전표 posting', meta: '5건 · 잠금 충돌 · 08:41', retry: () => this.toast('SAP 전표 재처리를 시작했습니다', 'ok') },
-        { title: '홈택스 재수취', meta: '3건 · 인증 만료 · 08:12', retry: () => this.toast('홈택스 재수취를 시작했습니다', 'ok') },
-      ],
+      retryQueue,
       ...this.reviewData(),
       ...this.onbData(),
       hasToast: !!s.toast,
